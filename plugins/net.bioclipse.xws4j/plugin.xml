@@ -31,22 +31,21 @@
          point="org.eclipse.ui.actionSets">
       <actionSet
             id="net.bioclipse.xws4j.actionSet"
-            label="XMPP Action Set"
+            label="Xws4j Action Set"
             visible="true">
          <menu
                id="Xws4jMenu"
-               label="Xws4j">
+               label="XMPP Web Services">
             <separator name="Xws4jGroup"/>
          </menu>
          <action
                class="net.bioclipse.xws4j.actions.ActionPulldown"
                icon="icons/png/disconnected.png"
-               id="net.bioclipse.xws4j.actions.ActionPulldown"
-               label="&amp;Xws4j Connection"
-               menubarPath="Xws4jMenu/Xws4jGroup"
+               id="net.bioclipse.xws4j.ToolbarActionPulldown"
+               label="XWS Toolbar Button"
                style="pulldown"
                toolbarPath="Xws4jGroup"
-               tooltip="Xws4j Connection"/>
-      </actionSet>
+               tooltip="&amp;XMPP Web Services - Show Console"/>
+         </actionSet>
    </extension>
 </plugin>

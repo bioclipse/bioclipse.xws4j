@@ -2,7 +2,6 @@ package net.bioclipse.xws4j.actions;
 
 import net.bioclipse.xws4j.XwsConsole;
 import net.bioclipse.xws4j.Activator;
-import net.bioclipse.xws4j.XwsLogPipe;
 import net.bioclipse.xws4j.PluginLogger;
 
 import org.eclipse.jface.action.IAction;
@@ -11,7 +10,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
@@ -42,10 +40,7 @@ import org.eclipse.swt.widgets.Menu;
 //run()
 public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
 	private static MenuManager pulldownMenuManager = null;
-	private static ToggleConnectionAction toggleConnectionAction = null;
-	private static IAction theAction = null,
-					show_console = null,
-					debugmode = null;
+	private static IAction theAction = null;
 	
 	public ActionPulldown() {
 	}
@@ -60,48 +55,30 @@ public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
 			pulldownMenuManager = new MenuManager();
 			pulldownMenuManager.createContextMenu(parent);
 			
-			// keep a link to the toggle connection action to update it's description later.
-			toggleConnectionAction = new ToggleConnectionAction();
-			
-			pulldownMenuManager.add(toggleConnectionAction);
-			
 			// ... and all the other features
 			fillMenu(pulldownMenuManager);
 		}
 		
 		// update toggle connection action description and icon!
-		toggleConnectionAction.update();
+		ToggleConnectionAction.getStatic().update();
 		
 		return pulldownMenuManager.getMenu();
 	}
 	
 	private void fillMenu(MenuManager manager) {
 		
-		debugmode = new Action("Debug Mode", Action.AS_CHECK_BOX) {
-			public void run() {
-				XwsLogPipe.setDebugMode(!XwsLogPipe.isDebugMode());
-				setChecked(XwsLogPipe.isDebugMode());
-			}
-		};
-		debugmode.setChecked(XwsLogPipe.isDebugMode());
-		
-		show_console = new Action("Show Console") {
-			public void run() {
-				XwsConsole.show();
-			}
-		};
-
 		// TODO: extend with additional actions to
 		// - show queued processes
 		// ...
 
 		MenuManager options = new MenuManager("Options");
 		
+		manager.add(ToggleConnectionAction.getStatic());		
 		manager.add(new Separator());
-		options.add(debugmode);
+		options.add(DebugModeAction.getStatic());
 		manager.add(options);
 		manager.add(new Separator());
-		manager.add(show_console);
+		manager.add(ShowConsoleAction.getStatic());
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {

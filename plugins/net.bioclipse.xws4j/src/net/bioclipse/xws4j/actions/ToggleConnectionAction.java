@@ -27,6 +27,15 @@ import net.bioclipse.xws4j.DefaultClientCurator;
 public class ToggleConnectionAction extends Action {
 	final String CONNECT_DESC = "Connect";
 	final String DISCONNECT_DESC = "Disconnect";
+	
+	private static ToggleConnectionAction static_action = null;
+
+	public static ToggleConnectionAction getStatic() {
+		if (static_action == null) {
+			static_action = new ToggleConnectionAction();
+		}
+		return static_action;
+	}
 
 	public ToggleConnectionAction() {
 		super();
