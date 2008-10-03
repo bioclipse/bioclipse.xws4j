@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="net.bioclipse.xws4j.preferences.PreferencePage"
+            id="net.bioclipse.xws4j.preferencepage"
+            name="XMPP Web Services">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="net.bioclipse.xws4j.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+      <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="net.bioclipse.xws4j.actionSet"
+            label="XMPP Action Set"
+            visible="true">
+         <menu
+               id="Xws4jMenu"
+               label="Xws4j">
+            <separator name="Xws4jGroup"/>
+         </menu>
+         <action
+               class="net.bioclipse.xws4j.actions.ActionPulldown"
+               icon="icons/png/disconnected.png"
+               id="net.bioclipse.xws4j.actions.ActionPulldown"
+               label="&amp;Xws4j Connection"
+               menubarPath="Xws4jMenu/Xws4jGroup"
+               style="pulldown"
+               toolbarPath="Xws4jGroup"
+               tooltip="Xws4j Connection"/>
+      </actionSet>
+   </extension>
+</plugin>

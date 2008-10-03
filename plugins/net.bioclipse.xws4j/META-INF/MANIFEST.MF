@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xws4j Plug-in
+Bundle-SymbolicName: net.bioclipse.xws4j;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: net.bioclipse.xws4j.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.console
+Eclipse-LazyStart: true
+Bundle-Vendor: Johannes Wagener
+Export-Package: net.bioclipse.xws4j.actions
