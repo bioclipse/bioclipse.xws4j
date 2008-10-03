@@ -92,7 +92,7 @@ public class Activator extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	public Object getXWSManager() {
+	public IXWSManager getXWSManager() {
 		IXWSManager manager = null;
         try {
             manager = (IXWSManager) finderTracker.waitForService(1000*10);
