@@ -32,4 +32,11 @@ public interface IXWSManager extends IBioclipseManager{
     @PublishedMethod( methodSummary = "Returns the default XWS client" )
     @Recorded
     public Client getDefaultClient() throws BioclipseException, InvocationTargetException, Xws4jException;
+
+    /**
+     * Connect to XMPP server by credentials in prefs
+     */
+    @PublishedMethod( methodSummary = "Connects to the XMPP server in preferences" )
+    @Recorded
+	void connect();
 }

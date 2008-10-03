@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws4j.Activator;
+import net.bioclipse.xws4j.DefaultClientCurator;
 import net.bioclipse.xws4j.exceptions.Xws4jException;
 
 
@@ -27,8 +28,33 @@ public class XWSManager implements IXWSManager{
 
 	public Client getDefaultClient() throws BioclipseException,
 			InvocationTargetException, Xws4jException {
+
+		DefaultClientCurator clientcurator = Activator.getDefaultClientCurator();
 		
-		return Activator.getDefaultClientCurator().getDefaultClient();
+		if (clientcurator.isClientConnected() == true)
+			return Activator.getDefaultClientCurator().getDefaultClient();
+		else {
+			return null;
+		}
+
 	}
+	
+	public void connect(){
+
+		DefaultClientCurator clientcurator = Activator.getDefaultClientCurator();
+		
+		if (clientcurator.isClientConnected() == true)
+			clientcurator.disconnectClient();
+		else {
+			try {
+				clientcurator.connectClient();
+			} catch (Exception e) {
+				e.printStackTrace();
+				clientcurator.disconnectClient();
+			}
+		}
+
+	}
+
 
 }
