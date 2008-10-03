@@ -40,7 +40,7 @@ import org.eclipse.ui.console.MessageConsoleStream;
 public class XwsConsole {
 	
 	private static MessageConsole messageConsole = null;
-	private static String consoleName = "XWS Console";
+	private static String consoleName = "XMPP Web Services Console";
 	private static MessageConsoleStream out = null,
 										out_blue = null,
 										out_red = null;
