@@ -51,6 +51,7 @@ public class ToggleConnectionAction extends Action {
 			try {
 				clientcurator.connectClient();
 			} catch (Exception e) {
+				clientcurator.disconnectClient();
 			}
 		}
 	}
