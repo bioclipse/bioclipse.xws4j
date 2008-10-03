@@ -44,6 +44,7 @@ public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
 	private static MenuManager pulldownMenuManager = null;
 	private static ToggleConnectionAction toggleConnectionAction = null;
 	private static IAction theAction = null,
+					show_console = null,
 					debugmode = null;
 	
 	public ActionPulldown() {
@@ -63,7 +64,7 @@ public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
 			toggleConnectionAction = new ToggleConnectionAction();
 			
 			pulldownMenuManager.add(toggleConnectionAction);
-
+			
 			// ... and all the other features
 			fillMenu(pulldownMenuManager);
 		}
@@ -76,8 +77,6 @@ public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
 	
 	private void fillMenu(MenuManager manager) {
 		
-		MenuManager conFilters = new MenuManager("Console Logging");
-		
 		debugmode = new Action("Debug Mode", Action.AS_CHECK_BOX) {
 			public void run() {
 				XwsLogPipe.setDebugMode(!XwsLogPipe.isDebugMode());
@@ -86,14 +85,23 @@ public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
 		};
 		debugmode.setChecked(XwsLogPipe.isDebugMode());
 		
+		show_console = new Action("Show Console") {
+			public void run() {
+				XwsConsole.show();
+			}
+		};
+
 		// TODO: extend with additional actions to
 		// - show queued processes
 		// ...
 
-		conFilters.add(debugmode);
-
-		manager.add(new Separator());		
-		manager.add(conFilters);
+		MenuManager options = new MenuManager("Options");
+		
+		manager.add(new Separator());
+		options.add(debugmode);
+		manager.add(options);
+		manager.add(new Separator());
+		manager.add(show_console);
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {
