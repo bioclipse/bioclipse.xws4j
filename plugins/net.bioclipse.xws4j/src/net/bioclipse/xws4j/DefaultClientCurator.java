@@ -61,7 +61,7 @@ public class DefaultClientCurator {
 		disconnectClient();		 
 	}
 	
-	public Client getDafaultClient() throws Xws4jException {
+	public Client getDefaultClient() throws Xws4jException {
 		
 		// if there is already a connected client return this
 		if (default_client != null && default_client.isConnected()) {
@@ -131,7 +131,7 @@ public class DefaultClientCurator {
 	}
 	
 	public void connectClient() throws Xws4jException {
-		Client client = getDafaultClient();
+		Client client = getDefaultClient();
 		
 		XwsConsole.writeToConsoleBlueT("Connecting default client ...");
 		

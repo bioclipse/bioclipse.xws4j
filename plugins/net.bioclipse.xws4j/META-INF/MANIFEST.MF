@@ -6,7 +6,8 @@ Bundle-Version: 1.0.0
 Bundle-Activator: net.bioclipse.xws4j.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.ui.console
+ org.eclipse.ui.console,
+ net.bioclipse.core;bundle-version="2.0.0"
 Eclipse-LazyStart: true
 Bundle-Vendor: Johannes Wagener
 Export-Package: net.bioclipse.xws4j.actions

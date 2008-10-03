@@ -1,8 +1,13 @@
 package net.bioclipse.xws4j;
 
+import net.bioclipse.core.util.LogUtils;
+import net.bioclipse.xws4j.business.IXWSManager;
+
+import org.apache.log4j.Logger;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * 
@@ -29,10 +34,14 @@ public class Activator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "net.bioclipse.xws4j";
 
+    private static final Logger logger = Logger.getLogger(Activator.class);
+
 	// The shared instance
 	private static Activator plugin;
 	private static DefaultClientCurator clientcurator;
-		
+
+    private ServiceTracker finderTracker;
+
 	/**
 	 * The constructor
 	 */
@@ -47,6 +56,12 @@ public class Activator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		clientcurator = new DefaultClientCurator();
+		
+        finderTracker = new ServiceTracker( context, 
+                IXWSManager.class.getName(), 
+                null );
+        finderTracker.open();
+
 	}
 
 	/*
@@ -75,5 +90,19 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
+	}
+
+	public Object getXWSManager() {
+		IXWSManager manager = null;
+        try {
+            manager = (IXWSManager) finderTracker.waitForService(1000*10);
+        } catch (InterruptedException e) {
+            logger.warn("Exception occurred while attempting to get the XWSManager" + e);
+            LogUtils.debugTrace(logger, e);
+        }
+        if(manager == null) {
+            throw new IllegalStateException("Could not get the XWS manager");
+        }
+        return manager;
 	}
 }
