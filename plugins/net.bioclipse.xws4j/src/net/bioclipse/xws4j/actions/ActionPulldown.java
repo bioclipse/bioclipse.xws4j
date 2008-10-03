@@ -83,6 +83,7 @@ public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
 				setChecked(XwsLogPipe.isDebugMode());
 			}
 		};
+		debugmode.setChecked(XwsLogPipe.isDebugMode());
 		
 		// TODO: extend with additional actions to
 		// - show queued processes
