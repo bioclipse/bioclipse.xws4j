@@ -17,6 +17,7 @@ import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.business.IBioclipseManager;
+import net.bioclipse.core.jobs.Job;
 import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.exceptions.XmppException;
 import net.bioclipse.xws.exceptions.XwsException;
@@ -40,6 +41,7 @@ public interface IXWSManager extends IBioclipseManager{
      */
     @PublishedMethod( methodSummary = "Connects to the XMPP server in preferences" )
     @Recorded
+    @Job
 	void connect();
 
     /**
