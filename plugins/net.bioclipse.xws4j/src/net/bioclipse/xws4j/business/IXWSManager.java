@@ -18,6 +18,8 @@ import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.business.IBioclipseManager;
 import net.bioclipse.xws.client.Client;
+import net.bioclipse.xws.exceptions.XmppException;
+import net.bioclipse.xws.exceptions.XwsException;
 import net.bioclipse.xws4j.exceptions.Xws4jException;
 
 public interface IXWSManager extends IBioclipseManager{
@@ -39,4 +41,22 @@ public interface IXWSManager extends IBioclipseManager{
     @PublishedMethod( methodSummary = "Connects to the XMPP server in preferences" )
     @Recorded
 	void connect();
+
+    /**
+     * 
+     * @param server The server to list services and functions from
+     * @return
+     * @throws BioclipseException
+     * @throws InvocationTargetException
+     * @throws Xws4jException
+     * @throws XmppException
+     * @throws XwsException
+     * @throws InterruptedException
+     */
+    @PublishedMethod( methodSummary = "List XWS services from a server", 
+    		params="server = the XMPP server" )
+    @Recorded
+	String listServices(String server) throws BioclipseException,
+			InvocationTargetException, Xws4jException, XmppException,
+			XwsException, InterruptedException;
 }
