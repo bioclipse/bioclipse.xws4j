@@ -1,5 +1,6 @@
 package net.bioclipse.xws4j.actions;
 
+import net.bioclipse.xws4j.XwsConsole;
 import net.bioclipse.xws4j.Activator;
 import net.bioclipse.xws4j.XwsLogPipe;
 import net.bioclipse.xws4j.PluginLogger;
@@ -49,7 +50,7 @@ public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
 	}
 
 	public void run(IAction action) {
-//		XwsConsole.show();
+		XwsConsole.show();
 	}
 
 	public Menu getMenu(Control parent) {
