@@ -33,11 +33,6 @@
             id="net.bioclipse.xws4j.actionSet"
             label="Xws4j Action Set"
             visible="true">
-         <menu
-               id="Xws4jMenu"
-               label="XMPP Web Services">
-            <separator name="Xws4jGroup"/>
-         </menu>
          <action
                class="net.bioclipse.xws4j.actions.ActionPulldown"
                icon="icons/png/disconnected.png"
