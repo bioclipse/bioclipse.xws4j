@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="jars/jso-0.12.5/bin/jso-full.jar"/>
+	<classpathentry exported="true" kind="lib" path="jars/xws4j-current/xws4j-test_03.10.08_1_5.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="lib" path="jars/jso-0.12.5/bin/jso-full.jar"/>
-	<classpathentry kind="lib" path="jars/xws4j-current/xws4j-test_03.10.08.jar"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

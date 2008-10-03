@@ -10,3 +10,6 @@ Require-Bundle: org.eclipse.ui,
 Eclipse-LazyStart: true
 Bundle-Vendor: Johannes Wagener
 Export-Package: net.bioclipse.xws4j.actions
+Bundle-ClassPath: .,
+ jars/jso-0.12.5/bin/jso-full.jar,
+ jars/xws4j-current/xws4j-test_03.10.08_1_5.jar
