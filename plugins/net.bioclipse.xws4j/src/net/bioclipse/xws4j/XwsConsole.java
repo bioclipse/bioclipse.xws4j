@@ -124,8 +124,8 @@ public class XwsConsole {
 	public static MessageConsoleStream getConsoleStreamRed() {
 		if (out_red == null) {
 			Color color_red = PlatformUI.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_RED);
-			out_blue = getXwsConsole().newMessageStream();
-			out_blue.setColor(color_red);
+			out_red = getXwsConsole().newMessageStream();
+			out_red.setColor(color_red);
 		}
 		return out_red;
 	}
