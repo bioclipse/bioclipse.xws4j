@@ -131,28 +131,41 @@ public class DefaultClientCurator {
 	}
 	
 	public void connectClient() throws Xws4jException {
-		Client client = getDefaultClient();
+		final Client client = getDefaultClient();
 		
-		XwsConsole.writeToConsoleBlueT("Connecting default client ...");
-		
-		try {
-			client.connect();
-		} catch (Exception e) {
-			XwsConsole.writeToConsoleBlueT("Could not connect default client: " + e);
-			throw new Xws4jException("Could not connect default client: " + e.getMessage());
-		}
+		Runnable r = new Runnable() {
+			public void run() {
+				XwsConsole.writeToConsoleBlueT("Connecting default client ...");
+				
+				try {
+					client.connect();
+				} catch (Exception e) {
+					XwsConsole.writeToConsoleBlueT("Could not connect default client: " + e);
+				}
+			}
+		};
+		Thread connectThread = new Thread(r);
+		connectThread.start();
 	}
 	
 	public void disconnectClient() {
 		if (default_client != null && default_client.isConnected()) {
 			
-			XwsConsole.writeToConsoleBlueT("Disconnecting default client ...");
+			final Client client = default_client;
 			
-			try {
-				default_client.disconnect();
-			} catch (Exception e) {
-				XwsConsole.writeToConsoleBlueT("Could not disconnect default client: " + e);
-			}
+			Runnable r = new Runnable() {
+				public void run() {
+					XwsConsole.writeToConsoleBlueT("Disconnecting default client ...");
+					
+					try {
+						client.disconnect();
+					} catch (Exception e) {
+						XwsConsole.writeToConsoleBlueT("Could not disconnect default client: " + e);
+					}		
+				}
+			};
+			Thread disconnectThread = new Thread(r);
+			disconnectThread.start();
 		}
 	}
 }
