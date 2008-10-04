@@ -53,12 +53,6 @@ public class ToggleConnectionAction extends Action {
 
 	public void run() {
 		
-		//This method should be replaced by calling the below when threading 
-		// problem is fixed
-		//FIXME
-
-		//		Activator.getDefault().getXWSManager().connect();
-		
 		DefaultClientCurator clientcurator = Activator.getDefaultClientCurator();
 		
 		if (clientcurator.isClientConnected() == true)
