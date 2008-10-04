@@ -1,7 +1,7 @@
 package net.bioclipse.xws4j;
 
 import net.bioclipse.core.util.LogUtils;
-import net.bioclipse.xws4j.business.IXWSManager;
+import net.bioclipse.xws4j.business.IXwsManager;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -58,7 +58,7 @@ public class Activator extends AbstractUIPlugin {
 		clientcurator = new DefaultClientCurator();
 		
         finderTracker = new ServiceTracker( context, 
-                IXWSManager.class.getName(), 
+                IXwsManager.class.getName(), 
                 null );
         finderTracker.open();
 
@@ -92,16 +92,16 @@ public class Activator extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	public IXWSManager getXWSManager() {
-		IXWSManager manager = null;
+	public IXwsManager getXwsManager() {
+		IXwsManager manager = null;
         try {
-            manager = (IXWSManager) finderTracker.waitForService(1000*10);
+            manager = (IXwsManager) finderTracker.waitForService(1000*10);
         } catch (InterruptedException e) {
-            logger.warn("Exception occurred while attempting to get the XWSManager" + e);
+            logger.warn("Exception occurred while attempting to get the XwsManager" + e);
             LogUtils.debugTrace(logger, e);
         }
         if(manager == null) {
-            throw new IllegalStateException("Could not get the XWS manager");
+            throw new IllegalStateException("Could not get the XMPP Web Services manager");
         }
         return manager;
 	}
