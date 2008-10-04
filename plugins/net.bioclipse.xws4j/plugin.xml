@@ -7,7 +7,7 @@
          point="net.bioclipse.scripting.contribution">
       <scriptContribution
             id="net.bioclipse.xws4j.business.xwsManager"
-            service="net.bioclipse.xws4j.business.XWSManagerFactory">
+            service="net.bioclipse.xws4j.business.XwsManagerFactory">
       </scriptContribution>
    </extension>
 

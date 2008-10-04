@@ -10,7 +10,7 @@
 
   <osgi:service id="xwsManagerOSGI" 
                 ref="xwsManager"
-                interface="net.bioclipse.xws4j.business.IXWSManager" />
+                interface="net.bioclipse.xws4j.business.IXwsManager" />
 
   <osgi:reference id="recordingAdvice" 
                   interface="net.bioclipse.recording.IRecordingAdvice" />
@@ -29,7 +29,7 @@
   	<property name="target" 
   	          ref="xwsManagerTarget" />
   	<property name="proxyInterfaces" 
-  	          value="net.bioclipse.xws4j.business.IXWSManager" />
+  	          value="net.bioclipse.xws4j.business.IXwsManager" />
   	<property name="interceptorNames">
   	    <list>
   	        <value>recordingAdvisor</value>
