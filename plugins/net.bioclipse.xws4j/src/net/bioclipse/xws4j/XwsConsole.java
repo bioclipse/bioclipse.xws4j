@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -80,15 +81,30 @@ public class XwsConsole {
 	}
 	
 	public static void writeToConsole(final String message) {
-		getConsoleStream().println(message);
+		Runnable r = new Runnable() {
+			public void run() {
+				getConsoleStream().println(message);
+			}
+		};
+		Display.getDefault().asyncExec(r);
 	}
 
 	public static void writeToConsoleBlue(final String message) {
-		getConsoleStreamBlue().println(message);
+		Runnable r = new Runnable() {
+			public void run() {
+				getConsoleStreamBlue().println(message);
+			}
+		};
+		Display.getDefault().asyncExec(r);
 	}
 
 	public static void writeToConsoleRed(final String message) {
-		getConsoleStreamRed().println(message);
+		Runnable r = new Runnable() {
+			public void run() {
+				getConsoleStreamRed().println(message);
+			}
+		};
+		Display.getDefault().asyncExec(r);
 	}
 
 	// with time-stamp
