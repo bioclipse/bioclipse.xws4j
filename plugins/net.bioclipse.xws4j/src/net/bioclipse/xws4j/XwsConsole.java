@@ -59,7 +59,7 @@ public class XwsConsole {
         }
 	}
 
-	public static MessageConsole getXwsConsole() {
+	private static MessageConsole getXwsConsole() {
 		if (messageConsole == null) {
 			messageConsole = findConsole(consoleName);
 		}
@@ -79,40 +79,40 @@ public class XwsConsole {
 		return xwsConsole;
 	}
 	
-	public static void writeToConsole(String message) {
+	public static void writeToConsole(final String message) {
 		getConsoleStream().println(message);
 	}
 
-	// with time-stamp
-	public static void writeToConsoleT(String message) {
-		getConsoleStream().println(getCurrentTime() + " " + message);
-	}
-	
-	public static void writeToConsoleBlue(String message) {
+	public static void writeToConsoleBlue(final String message) {
 		getConsoleStreamBlue().println(message);
 	}
 
-	// with time-stamp
-	public static void writeToConsoleBlueT(String message) {
-		getConsoleStreamBlue().println(getCurrentTime() + " " + message);
-	}
-	
-	public static void writeToConsoleRed(String message) {
+	public static void writeToConsoleRed(final String message) {
 		getConsoleStreamRed().println(message);
 	}
 
 	// with time-stamp
-	public static void writeToConsoleRedT(String message) {
-		getConsoleStreamRed().println(getCurrentTime() + " " + message);
+	public static void writeToConsoleBlueT(String message) {
+		writeToConsoleBlue(getCurrentTime() + " " + message);
+	}
+
+	// with time-stamp
+	public static void writeToConsoleT(String message) {
+		writeToConsole(getCurrentTime() + " " + message);
 	}
 	
-	public static MessageConsoleStream getConsoleStream() {
+	// with time-stamp
+	public static void writeToConsoleRedT(String message) {
+		writeToConsoleRed(getCurrentTime() + " " + message);
+	}
+	
+	private static MessageConsoleStream getConsoleStream() {
 		if (out == null)
 			out = getXwsConsole().newMessageStream();
 		return out;
 	}
-
-	public static MessageConsoleStream getConsoleStreamBlue() {
+	
+	private static MessageConsoleStream getConsoleStreamBlue() {
 		if (out_blue == null) {
 			Color color_blue = PlatformUI.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_BLUE);
 			out_blue = getXwsConsole().newMessageStream();
@@ -121,7 +121,7 @@ public class XwsConsole {
 		return out_blue;
 	}
 	
-	public static MessageConsoleStream getConsoleStreamRed() {
+	private static MessageConsoleStream getConsoleStreamRed() {
 		if (out_red == null) {
 			Color color_red = PlatformUI.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_RED);
 			out_red = getXwsConsole().newMessageStream();
@@ -130,7 +130,7 @@ public class XwsConsole {
 		return out_red;
 	}
 	
-	public static String getCurrentTime() {
+	private static String getCurrentTime() {
 		SimpleDateFormat simpleDateForm = new SimpleDateFormat("hh:mm:ss");
 		Date current = new Date();
 		current.setTime(System.currentTimeMillis());
