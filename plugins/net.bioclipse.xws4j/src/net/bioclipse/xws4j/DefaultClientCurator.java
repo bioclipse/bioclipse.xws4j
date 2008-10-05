@@ -47,7 +47,7 @@ public class DefaultClientCurator {
 	private boolean isAccountDataSet() {
 		if (preferences != null) {
 			if (preferences.getString(PreferenceConstants.P_STRING_SERVER).length() > 0 &&
-				preferences.getString(PreferenceConstants.P_STRING_USERNAME).length() > 0 &&
+				preferences.getString(PreferenceConstants.P_STRING_JID).length() > 0 &&
 				preferences.getString(PreferenceConstants.P_STRING_PASSWORD).length() > 0 &&
 				preferences.getString(PreferenceConstants.P_STRING_RESOURCE).length() > 0 &&
 				preferences.getString(PreferenceConstants.P_STRING_SERVERPORT).length() > 0)
@@ -77,9 +77,7 @@ public class DefaultClientCurator {
 					" the plug-in has set invalide account data in preferences.");
 		}
 		
-		String clientJID = preferences.getString(PreferenceConstants.P_STRING_USERNAME) +
-							"@" +
-							preferences.getString(PreferenceConstants.P_STRING_SERVER) +
+		String clientJID = preferences.getString(PreferenceConstants.P_STRING_JID) +
 							"/" +
 							preferences.getString(PreferenceConstants.P_STRING_RESOURCE),
 				pwd = preferences.getString(PreferenceConstants.P_STRING_PASSWORD),

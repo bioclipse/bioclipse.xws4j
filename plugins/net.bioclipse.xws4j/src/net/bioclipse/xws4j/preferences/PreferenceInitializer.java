@@ -31,7 +31,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		IPreferenceStore store = Activator.getDefault()
 				.getPreferenceStore();
 		store.setDefault(PreferenceConstants.P_STRING_SERVER, "");
-		store.setDefault(PreferenceConstants.P_STRING_USERNAME, "");
+		store.setDefault(PreferenceConstants.P_STRING_JID, "");
 		store.setDefault(PreferenceConstants.P_STRING_PASSWORD, "");
 		store.setDefault(PreferenceConstants.P_STRING_RESOURCE, "Bioclipse");
 		store.setDefault(PreferenceConstants.P_STRING_SERVERPORT, "5222");

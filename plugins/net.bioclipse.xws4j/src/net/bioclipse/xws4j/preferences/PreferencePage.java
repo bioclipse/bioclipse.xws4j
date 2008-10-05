@@ -2,6 +2,7 @@ package net.bioclipse.xws4j.preferences;
 
 import org.eclipse.jface.preference.*;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -51,34 +52,39 @@ public class PreferencePage
 	 */
 	public void createFieldEditors() {
 		Composite composite_all, composite_general,
-		composite_experts, composite_presence;
+		composite_experts, composite_debug;
 
-composite_all = createComposite(getFieldEditorParent());
+		composite_all = createComposite(getFieldEditorParent());
+		
+		composite_general = createComposite(composite_all);
+		createComposite(composite_all);
+		composite_experts = createComposite(createGroupComposite(composite_all,
+												"Advanced options"));
+		createComposite(composite_all);
+		composite_debug = createComposite(composite_all);
+		
+		addField(new StringFieldEditor(PreferenceConstants.P_STRING_SERVER,
+			"&Server:", composite_general));
+		addField(new StringFieldEditor(PreferenceConstants.P_STRING_JID,
+			"&Jabber ID:", composite_general));
 
-composite_general = createComposite(composite_all);
-createComposite(composite_all);
-composite_experts = 
-createComposite(createGroupComposite(composite_all,
-										"Advanced options"));
-createComposite(composite_all);
-composite_presence = createComposite(composite_all);
-
-addField(new StringFieldEditor(PreferenceConstants.P_STRING_SERVER,
-	"&Server:", composite_general));
-addField(new StringFieldEditor(PreferenceConstants.P_STRING_USERNAME,
-	"&Username:", composite_general));
-StringFieldEditor strFieldEditor = new StringFieldEditor(PreferenceConstants.P_STRING_PASSWORD,
-	"&Password:", composite_general);
-strFieldEditor.getTextControl(composite_general).setEchoChar('*');
-addField(strFieldEditor);
-
-addField(new StringFieldEditor(PreferenceConstants.P_STRING_RESOURCE,
-	"&Resource:", composite_experts));
-addField(new StringFieldEditor(PreferenceConstants.P_STRING_SERVERPORT,
-	"S&erver Port:", composite_experts));
-
-addField(new BooleanFieldEditor(PreferenceConstants.P_BOOLEAN_LOGDEFAULT,
-	"&Activate xws4j debug mode by default", composite_presence));
+		new Label(composite_general, SWT.LEFT);
+		Label example_jid = new Label(composite_general, SWT.LEFT);
+		example_jid.setText("  Example: user@server.example.com");
+		example_jid.setEnabled(false);
+		
+		StringFieldEditor strFieldEditor = new StringFieldEditor(PreferenceConstants.P_STRING_PASSWORD,
+			"&Password:", composite_general);
+		strFieldEditor.getTextControl(composite_general).setEchoChar('*');
+		addField(strFieldEditor);
+		
+		addField(new StringFieldEditor(PreferenceConstants.P_STRING_RESOURCE,
+			"&Resource:", composite_experts));
+		addField(new StringFieldEditor(PreferenceConstants.P_STRING_SERVERPORT,
+			"S&erver Port:", composite_experts));
+		
+		addField(new BooleanFieldEditor(PreferenceConstants.P_BOOLEAN_LOGDEFAULT,
+			"&Activate xws4j debug mode by default", composite_debug));
 	}
 
 	/* (non-Javadoc)

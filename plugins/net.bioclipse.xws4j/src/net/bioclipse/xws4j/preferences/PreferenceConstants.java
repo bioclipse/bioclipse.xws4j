@@ -23,7 +23,7 @@ package net.bioclipse.xws4j.preferences;
 public class PreferenceConstants {
 
 	public static final String P_STRING_SERVER = "SERVER";
-	public static final String P_STRING_USERNAME = "USERNAME";
+	public static final String P_STRING_JID = "JID";
 	public static final String P_STRING_PASSWORD = "PASSWORD";
 	public static final String P_STRING_RESOURCE = "RESOURCE";
 	public static final String P_STRING_SERVERPORT = "SERVERPORT";
