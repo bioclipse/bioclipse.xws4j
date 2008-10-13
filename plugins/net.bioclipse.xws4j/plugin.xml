@@ -77,4 +77,11 @@
          </menu>
       </menuContribution>
 	</extension>
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            class="net.bioclipse.xws4j.XwsConsole"
+            label="XMPP Web Services Console">
+      </consoleFactory>
+   </extension>
 </plugin>

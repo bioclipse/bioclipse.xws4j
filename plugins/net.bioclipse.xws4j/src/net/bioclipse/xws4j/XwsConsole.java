@@ -17,6 +17,7 @@ import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.IConsoleView;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
+import org.eclipse.ui.console.IConsoleFactory;
 
 /**
  * 
@@ -38,13 +39,17 @@ import org.eclipse.ui.console.MessageConsoleStream;
  * 
  * @author Johannes Wagener
  */
-public class XwsConsole {
+public class XwsConsole implements IConsoleFactory {
 	
 	private static MessageConsole messageConsole = null;
 	private static String consoleName = "XMPP Web Services Console";
 	private static MessageConsoleStream out = null,
 										out_blue = null,
 										out_red = null;
+	
+	public void openConsole() {
+		show();
+	}
 	
 	public static void show() {
 		IWorkbench wb = PlatformUI.getWorkbench();
