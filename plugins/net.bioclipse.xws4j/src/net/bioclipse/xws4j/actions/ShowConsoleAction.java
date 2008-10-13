@@ -1,6 +1,7 @@
 package net.bioclipse.xws4j.actions;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import net.bioclipse.xws4j.XwsConsole;
 
 /**
@@ -24,6 +25,12 @@ import net.bioclipse.xws4j.XwsConsole;
  * @author Johannes Wagener
  */
 public class ShowConsoleAction extends Action {
+	
+	public static class ShowConsoleActionContribution extends ActionContributionItem {
+		public ShowConsoleActionContribution() {
+			super (getStatic());
+		}
+	}
 	
 	private static ShowConsoleAction static_action = null;
 

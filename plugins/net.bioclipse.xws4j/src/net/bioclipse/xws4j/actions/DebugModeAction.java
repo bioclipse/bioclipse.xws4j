@@ -1,6 +1,8 @@
 package net.bioclipse.xws4j.actions;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
+
 import net.bioclipse.xws4j.XwsLogPipe;
 
 /**
@@ -26,6 +28,12 @@ import net.bioclipse.xws4j.XwsLogPipe;
 public class DebugModeAction extends Action {
 	
 	private static DebugModeAction static_action = null;
+	
+	public static class DebugModeActionContribution extends ActionContributionItem {
+		public DebugModeActionContribution() {
+			super (getStatic());
+		}
+	}
 
 	public static DebugModeAction getStatic() {
 		if (static_action == null) {

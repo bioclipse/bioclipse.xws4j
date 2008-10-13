@@ -43,4 +43,38 @@
                tooltip="&amp;XMPP Web Services - Show Console"/>
          </actionSet>
    </extension>
+   <extension 
+         id="add.item"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI= "menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="net.bc.dummyMenu"
+               label="XWS">
+            <dynamic
+                  class="net.bioclipse.xws4j.actions.ToggleConnectionAction$ToggleConnectionActionContribution"
+                  id="net.bioclipse.xws4j.dynamic.toggleConnectionAction">
+            </dynamic>
+            <separator
+                  name="net.bioclipse.xws4j.menu.separator1"
+                  visible="true">
+            </separator>
+            <menu
+                  label="Options">
+               <dynamic
+                     class="net.bioclipse.xws4j.actions.DebugModeAction$DebugModeActionContribution"
+                     id="net.bioclipse.xws4j.dynamic.debugModeAction">
+               </dynamic>
+            </menu>
+            <separator
+                  name="net.bioclipse.xws4j.menu.separator2"
+                  visible="true">
+            </separator>
+            <dynamic
+                  class="net.bioclipse.xws4j.actions.ShowConsoleAction$ShowConsoleActionContribution"
+                  id="net.bioclipse.xws4j.dynamic.showConsoleAction">
+            </dynamic>
+         </menu>
+      </menuContribution>
+	</extension>
 </plugin>

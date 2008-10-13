@@ -1,6 +1,8 @@
 package net.bioclipse.xws4j.actions;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
+
 import net.bioclipse.xws4j.Activator;
 import net.bioclipse.xws4j.DefaultClientCurator;
 
@@ -29,10 +31,17 @@ public class ToggleConnectionAction extends Action {
 	final String DISCONNECT_DESC = "Disconnect";
 	
 	private static ToggleConnectionAction static_action = null;
+	
+	public static class ToggleConnectionActionContribution extends ActionContributionItem {
+		public ToggleConnectionActionContribution() {
+			super (getStatic());
+		}
+	}
 
 	public static ToggleConnectionAction getStatic() {
 		if (static_action == null) {
 			static_action = new ToggleConnectionAction();
+			static_action.update(); // update at least once before it gets used
 		}
 		return static_action;
 	}
