@@ -1,9 +1,9 @@
 package net.bioclipse.xws4j.business;
 
 import net.bioclipse.xws.client.Client;
-import net.bioclipse.xws.client.XmppItem;
-import net.bioclipse.xws.client.adhoc.Function;
-import net.bioclipse.xws.client.adhoc.Service;
+import net.bioclipse.xws.client.IXmppItem;
+import net.bioclipse.xws.client.adhoc.IFunction;
+import net.bioclipse.xws.client.adhoc.IService;
 import net.bioclipse.xws.exceptions.XmppException;
 import net.bioclipse.xws4j.Activator;
 import net.bioclipse.xws4j.exceptions.Xws4jException;
@@ -66,85 +66,21 @@ public class XwsManager implements IXwsManager {
    		return client.isConnected();
     }
 
-    public XmppItem getXmppItem(String jid, String node) throws Xws4jException {
+    public IXmppItem getXmppItem(String jid, String node) throws Xws4jException {
     	Client client;
    		client = Activator.getDefaultClientCurator().getDefaultClient();
    		return client.getXmppItem(jid, node);
     }
 
-    public Service getService(String service_jid) throws Xws4jException {
+    public IService getService(String service_jid) throws Xws4jException {
     	Client client;
 		client = Activator.getDefaultClientCurator().getDefaultClient();
 		return client.getService(service_jid);
     }
 
-    public Function getFunction(String service_jid, String function_name) throws Xws4jException {
+    public IFunction getFunction(String service_jid, String function_name) throws Xws4jException {
     	Client client;
 		client = Activator.getDefaultClientCurator().getDefaultClient();
 		return client.getFunction(service_jid, function_name);
     }
-    
-/*	public Client getDefaultClient() throws Xws4jException {
-
-		DefaultClientCurator clientcurator = Activator.getDefaultClientCurator();
-
-		if (clientcurator.isClientConnected() == true)
-			return Activator.getDefaultClientCurator().getDefaultClient();
-		else {
-			return null;
-		}
-
-	}*/
-
-/*	public void connect(){
-
-		DefaultClientCurator clientcurator = Activator.getDefaultClientCurator();
-
-		if (clientcurator.isClientConnected() == true)
-			clientcurator.disconnectClient();
-		else {
-			try {
-				clientcurator.connectClient();
-			} catch (Exception e) {
-				e.printStackTrace();
-				clientcurator.disconnectClient();
-			}
-		}
-
-	}
-
-	public String listServices(String server) throws BioclipseException, InvocationTargetException, Xws4jException, XmppException, XwsException, InterruptedException{
-
-		String ret="";
-
-//		Service x = getDefaultClient().getService("xws.ayena.de");
-		Service x = getDefaultClient().getService(server);
-
-		XmppItem x2 = x.discoverSync(10000);
-
-		Items items = x2.getItems();
-		List<XmppItem> items_list = items.getList();
-		Iterator<XmppItem> it = items_list.iterator();
-		while (it.hasNext()) {
-			XmppItem i = it.next();
-			System.out.println(" * " + i.getJid() + " " + i.getNode() + " - " + i.getDescription());
-		}
-
-		if (x2 instanceof Service) {
-			Service service=(Service)x2;
-			System.out.println("Functions:");
-			Functions functions = service.getFunctions();
-			List<Function> functions_list = functions.getList();
-			Iterator<Function> it2 = functions_list.iterator();
-			while (it2.hasNext()) {
-				Function f = it2.next();
-				ret=ret+"\n  * " + f.getJid() + " " + f.getNode() + " - " + f.getDescription();
-				System.out.println(" * " + f.getJid() + " " + f.getNode() + " - " + f.getDescription());
-
-			}
-		}
-
-		return ret;
-
-	}*/
 }
