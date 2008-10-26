@@ -39,6 +39,7 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 	private static DefaultClientCurator clientcurator;
+	private static DefaultBindingDefinitions bindingdefinitions;
 
     private ServiceTracker finderTracker;
 
@@ -56,6 +57,7 @@ public class Activator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		clientcurator = new DefaultClientCurator();
+//		bindingdefinitions = new DefaultBindingDefinitions(context);
 		
         finderTracker = new ServiceTracker( context, 
                 IXwsManager.class.getName(), 
@@ -69,6 +71,7 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
+		bindingdefinitions = null;
 		clientcurator.stop();
 		clientcurator = null;
 		plugin = null;
@@ -83,6 +86,10 @@ public class Activator extends AbstractUIPlugin {
 		return clientcurator;
 	}
 	
+	public static DefaultBindingDefinitions getDefaultBindingDefinitions() {
+		return bindingdefinitions;
+	}
+		
 	/**
 	 * Returns the shared instance
 	 *

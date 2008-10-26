@@ -5,10 +5,13 @@ import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.IBioclipseManager;
 import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.client.IXmppItem;
+import net.bioclipse.xws.client.adhoc.IoSchemata;
 import net.bioclipse.xws.client.adhoc.IFunction;
 import net.bioclipse.xws.client.adhoc.IService;
 import net.bioclipse.xws.exceptions.XmppException;
 import net.bioclipse.xws4j.exceptions.Xws4jException;
+import net.bioclipse.xws.binding.IIoFactory;
+import net.bioclipse.xws.binding.exceptions.XwsBindingException;
 
 /**
  * 
@@ -105,22 +108,14 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Creates a Function with the specified service JID and function name" )
     @Recorded
     public IFunction getFunction(String service_jid, String function_name) throws Xws4jException;
-    
+
     /**
-     * 
-     * @param server The server to list services and functions from
-     * @return
-     * @throws BioclipseException
-     * @throws InvocationTargetException
+     * Creates a new IoDataFactory for the specified input/output xml schemata.
+     * @param ioschemata the IoSchemata object
+     * @return The created IoDataFactory
      * @throws Xws4jException
-     * @throws XmppException
-     * @throws XwsException
-     * @throws InterruptedException
-     *
-    @PublishedMethod( methodSummary = "List XWS services from a server", 
-    		params="server = the XMPP server" )
+     */
+    @PublishedMethod( methodSummary = "Creates a new IoDataFactory for the specified input/output xml schemata." )
     @Recorded
-	String listServices(String server) throws BioclipseException,
-			InvocationTargetException, Xws4jException, XmppException,
-			XwsException, InterruptedException;*/
+    public IIoFactory getIoDataFactory(IoSchemata ioschemata) throws XwsBindingException;
 }

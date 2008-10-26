@@ -5,7 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="jars/xws4j-current/xws4j-26.10.08-1_5.jar"/>
-	<classpathentry kind="lib" path="jars/xws4j-current/xws4j-binding-26.10.08-1_5.jar"/>
 	<classpathentry kind="lib" path="jars/ecj-3.4.1/ecj-3.4.1.jar"/>
 	<classpathentry kind="lib" path="jars/xmlbeans-2.4.0/lib/jsr173_1.0_api.jar"/>
 	<classpathentry kind="lib" path="jars/xmlbeans-2.4.0/lib/resolver.jar"/>
@@ -13,5 +12,6 @@
 	<classpathentry kind="lib" path="jars/xmlbeans-2.4.0/lib/xbean.jar"/>
 	<classpathentry kind="lib" path="jars/xmlbeans-2.4.0/lib/xmlbeans-qname.jar"/>
 	<classpathentry kind="lib" path="jars/xmlbeans-2.4.0/lib/xmlpublic.jar"/>
+	<classpathentry kind="lib" path="jars/xws4j-current/xws4j-binding-26.10.08-1_5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

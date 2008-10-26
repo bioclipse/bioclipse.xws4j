@@ -4,9 +4,13 @@ import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.adhoc.IFunction;
 import net.bioclipse.xws.client.adhoc.IService;
+import net.bioclipse.xws.client.adhoc.IoSchemata;
 import net.bioclipse.xws.exceptions.XmppException;
 import net.bioclipse.xws4j.Activator;
 import net.bioclipse.xws4j.exceptions.Xws4jException;
+import net.bioclipse.xws.binding.BindingManager;
+import net.bioclipse.xws.binding.IIoFactory;
+import net.bioclipse.xws.binding.exceptions.XwsBindingException;
 
 /**
  * 
@@ -82,5 +86,9 @@ public class XwsManager implements IXwsManager {
     	Client client;
 		client = Activator.getDefaultClientCurator().getDefaultClient();
 		return client.getFunction(service_jid, function_name);
+    }
+    
+    public IIoFactory getIoDataFactory(IoSchemata ioschemata) throws XwsBindingException {
+    	return BindingManager.getIoFactory(ioschemata);
     }
 }
