@@ -117,5 +117,5 @@ public interface IXwsManager extends IBioclipseManager {
      */
     @PublishedMethod( methodSummary = "Creates a new IoDataFactory for the specified input/output xml schemata." )
     @Recorded
-    public IIoFactory getIoDataFactory(IoSchemata ioschemata) throws XwsBindingException;
+    public IIoFactory getIoFactory(IoSchemata ioschemata) throws XwsBindingException;
 }

@@ -1,6 +1,10 @@
 package net.bioclipse.xws4j;
 
+import org.eclipse.core.runtime.FileLocator; 
+
 import org.osgi.framework.BundleContext;
+
+import java.io.File;
 
 import java.net.URL;
 
@@ -31,28 +35,38 @@ import net.bioclipse.xws.binding.BindingDefinitions;
 public class DefaultBindingDefinitions extends BindingDefinitions {
 	
 	private static String getTargetDirectory(BundleContext context) {
-		return "c:/test123-xw";
+		
+		String target_dir = "c:/test123-ws";
+		
+		XwsConsole.writeToConsole("Target directory for bindings is: " + target_dir);
+		
+		return target_dir;
 	}
 	
 	@SuppressWarnings("unchecked")
 	private static String getClasspathString(BundleContext context) {
 		
-		// List all .jar files in the jars directory and below
-		Enumeration elements = context.getBundle().findEntries("jars", "*.jar", true);
-		
-		String location = context.getBundle().getLocation();
-		
 		StringBuilder builder = new StringBuilder();
 		
-		while (elements.hasMoreElements()) {
-		 	URL url = (URL)elements.nextElement();
-		 	builder.append(location + url.getFile() + ";");
+		try {
+			File plugin_dir = FileLocator.getBundleFile(context.getBundle());
+			
+			// List all .jar files in the jars directory and below
+			Enumeration elements = context.getBundle().findEntries("jars", "*.jar", true);
+			
+			while (elements.hasMoreElements()) {
+			 	URL url = (URL)elements.nextElement();
+			 	File jar_file_location = new File(plugin_dir, File.separator + url.getFile());
+			 	builder.append(jar_file_location.getAbsoluteFile() + ";");
+			}
+			
+			// try to add rt.jar (hope that it is on the classpath.)
+			builder.append("rt.jar");
+			
+			XwsConsole.writeToConsole("Classpath for binding compiler is: " + builder.toString());
+		} catch (Exception e) {
+			XwsConsole.writeToConsoleRed("Error, could not construct classpath for binding compiler.");
 		}
-		
-		// try to add rt.jar (hope that it is on the classpath.)
-		builder.append("rt.jar");
-		
-		XwsConsole.writeToConsoleBlue(builder.toString());
 		
 		return builder.toString();
 	}

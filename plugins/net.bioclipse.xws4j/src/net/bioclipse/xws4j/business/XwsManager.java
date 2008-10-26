@@ -88,7 +88,7 @@ public class XwsManager implements IXwsManager {
 		return client.getFunction(service_jid, function_name);
     }
     
-    public IIoFactory getIoDataFactory(IoSchemata ioschemata) throws XwsBindingException {
+    public IIoFactory getIoFactory(IoSchemata ioschemata) throws XwsBindingException {
     	return BindingManager.getIoFactory(ioschemata, Activator.getDefaultBindingDefinitions());
     }
 }
