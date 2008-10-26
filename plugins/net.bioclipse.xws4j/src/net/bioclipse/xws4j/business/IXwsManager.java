@@ -4,9 +4,9 @@ import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.IBioclipseManager;
 import net.bioclipse.xws.client.Client;
-import net.bioclipse.xws.client.XmppItem;
-import net.bioclipse.xws.client.adhoc.Function;
-import net.bioclipse.xws.client.adhoc.Service;
+import net.bioclipse.xws.client.IXmppItem;
+import net.bioclipse.xws.client.adhoc.IFunction;
+import net.bioclipse.xws.client.adhoc.IService;
 import net.bioclipse.xws.exceptions.XmppException;
 import net.bioclipse.xws4j.exceptions.Xws4jException;
 
@@ -83,7 +83,7 @@ public interface IXwsManager extends IBioclipseManager {
      */
     @PublishedMethod( methodSummary = "Creates a XmppItem with the specified JID and node" )
     @Recorded
-    public XmppItem getXmppItem(String jid, String node) throws Xws4jException;
+    public IXmppItem getXmppItem(String jid, String node) throws Xws4jException;
     
     /**
      * Creates a Service with the specified JID.
@@ -93,7 +93,7 @@ public interface IXwsManager extends IBioclipseManager {
      */
     @PublishedMethod( methodSummary = "Creates a Service with the specified JID" )
     @Recorded
-    public Service getService(String service_jid) throws Xws4jException;
+    public IService getService(String service_jid) throws Xws4jException;
     
     /**
      * Creates a Function with the specified service JID and function name.
@@ -104,7 +104,7 @@ public interface IXwsManager extends IBioclipseManager {
      */
     @PublishedMethod( methodSummary = "Creates a Function with the specified service JID and function name" )
     @Recorded
-    public Function getFunction(String service_jid, String function_name) throws Xws4jException;
+    public IFunction getFunction(String service_jid, String function_name) throws Xws4jException;
     
     /**
      * 
