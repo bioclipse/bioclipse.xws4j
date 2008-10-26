@@ -57,7 +57,7 @@ public class Activator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		clientcurator = new DefaultClientCurator();
-//		bindingdefinitions = new DefaultBindingDefinitions(context);
+		bindingdefinitions = new DefaultBindingDefinitions(context);
 		
         finderTracker = new ServiceTracker( context, 
                 IXwsManager.class.getName(), 

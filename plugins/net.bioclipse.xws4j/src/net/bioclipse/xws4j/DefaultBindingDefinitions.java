@@ -40,15 +40,19 @@ public class DefaultBindingDefinitions extends BindingDefinitions {
 		// List all .jar files in the jars directory and below
 		Enumeration elements = context.getBundle().findEntries("jars", "*.jar", true);
 		
+		String location = context.getBundle().getLocation();
+		
 		StringBuilder builder = new StringBuilder();
 		
 		while (elements.hasMoreElements()) {
 		 	URL url = (URL)elements.nextElement();
-		 	builder.append(url.getFile() + ";");
+		 	builder.append(location + url.getFile() + ";");
 		}
 		
 		// try to add rt.jar (hope that it is on the classpath.)
 		builder.append("rt.jar");
+		
+		XwsConsole.writeToConsoleBlue(builder.toString());
 		
 		return builder.toString();
 	}
