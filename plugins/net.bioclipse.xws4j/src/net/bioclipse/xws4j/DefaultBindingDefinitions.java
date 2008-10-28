@@ -48,6 +48,8 @@ public class DefaultBindingDefinitions extends BindingDefinitions {
 		
 		StringBuilder builder = new StringBuilder();
 		
+		String sep = System.getProperty("line.separator");
+		
 		try {
 			File plugin_dir = FileLocator.getBundleFile(context.getBundle());
 			
@@ -57,7 +59,7 @@ public class DefaultBindingDefinitions extends BindingDefinitions {
 			while (elements.hasMoreElements()) {
 			 	URL url = (URL)elements.nextElement();
 			 	File jar_file_location = new File(plugin_dir, File.separator + url.getFile());
-			 	builder.append(jar_file_location.getAbsoluteFile() + ";");
+			 	builder.append(jar_file_location.getAbsoluteFile() + sep);
 			}
 			
 			// try to add rt.jar (hope that it is on the classpath.)
