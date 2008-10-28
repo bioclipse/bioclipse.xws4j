@@ -110,7 +110,7 @@ public interface IXwsManager extends IBioclipseManager {
     public IFunction getFunction(String service_jid, String function_name) throws Xws4jException;
 
     /**
-     * Creates a new IoDataFactory for the specified input/output xml schemata.
+     * Creates a new IoDataFactory for the specified input/output xml schemata and saves files in binding directory.
      * @param ioschemata the IoSchemata object
      * @return The created IoDataFactory
      * @throws Xws4jException
@@ -118,4 +118,14 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Creates a new IoDataFactory for the specified input/output xml schemata." )
     @Recorded
     public IIoFactory getIoFactory(IoSchemata ioschemata) throws XwsBindingException;
+    
+    /**
+     * Loads an existing IoDataFactory for the specified function from binding directory.
+     * @param ioschemata the IoSchemata object
+     * @return The created IoDataFactory
+     * @throws Xws4jException
+     */
+    @PublishedMethod( methodSummary = "Loads an existing IoDataFactory for the specified function." )
+    @Recorded
+    public IIoFactory getIoFactory(IFunction function) throws XwsBindingException;
 }

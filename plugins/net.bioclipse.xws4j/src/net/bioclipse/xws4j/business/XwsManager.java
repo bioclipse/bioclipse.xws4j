@@ -91,4 +91,8 @@ public class XwsManager implements IXwsManager {
     public IIoFactory getIoFactory(IoSchemata ioschemata) throws XwsBindingException {
     	return BindingManager.getIoFactory(ioschemata, Activator.getDefaultBindingDefinitions());
     }
+    
+    public IIoFactory getIoFactory(IFunction function) throws XwsBindingException {
+    	return BindingManager.getIoFactory(function, Activator.getDefaultBindingDefinitions());
+    }
 }

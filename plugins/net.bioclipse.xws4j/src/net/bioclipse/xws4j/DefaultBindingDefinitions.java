@@ -48,7 +48,7 @@ public class DefaultBindingDefinitions extends BindingDefinitions {
 		
 		StringBuilder builder = new StringBuilder();
 		
-		String sep = System.getProperty("line.separator");
+		String sep = System.getProperty("path.separator");
 		
 		try {
 			File plugin_dir = FileLocator.getBundleFile(context.getBundle());
