@@ -1,5 +1,11 @@
 package net.bioclipse.xws4j.business;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+
 import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.adhoc.IFunction;
@@ -7,6 +13,7 @@ import net.bioclipse.xws.client.adhoc.IService;
 import net.bioclipse.xws.client.adhoc.IoSchemata;
 import net.bioclipse.xws.exceptions.XmppException;
 import net.bioclipse.xws4j.Activator;
+import net.bioclipse.xws4j.DefaultBindingDefinitions;
 import net.bioclipse.xws4j.exceptions.Xws4jException;
 import net.bioclipse.xws.binding.BindingManager;
 import net.bioclipse.xws.binding.IIoFactory;
@@ -89,7 +96,21 @@ public class XwsManager implements IXwsManager {
     }
     
     public IIoFactory getIoFactory(IoSchemata ioschemata) throws XwsBindingException {
-    	return BindingManager.getIoFactory(ioschemata, Activator.getDefaultBindingDefinitions());
+    	
+    	IIoFactory iofactory =
+    		BindingManager.getIoFactory(ioschemata, Activator.getDefaultBindingDefinitions());
+    	
+    	IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IWorkspaceRoot root = workspace.getRoot();
+
+		IProject project  = root.getProject(DefaultBindingDefinitions.WORKSPACE_PROJECT);
+		try {
+			project.refreshLocal(IProject.DEPTH_ONE, null);
+		} catch (CoreException e2) {
+			e2.printStackTrace();
+		}
+
+		return iofactory;
     }
     
     public IIoFactory getIoFactory(IFunction function) throws XwsBindingException {

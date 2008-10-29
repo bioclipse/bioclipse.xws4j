@@ -38,12 +38,15 @@ import net.bioclipse.xws.binding.BindingDefinitions;
  * @author Johannes Wagener
  */
 public class DefaultBindingDefinitions extends BindingDefinitions {
+	
+	public static String WORKSPACE_PROJECT = "XMPP Web Service Bindings";
 
 	private static String getTargetDirectory(BundleContext context) {
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
-		IProject project  = root.getProject("XWS");
+
+		IProject project  = root.getProject(WORKSPACE_PROJECT);
 		try {
 			//at this point, no resources have been created
 			if (!project.exists())
