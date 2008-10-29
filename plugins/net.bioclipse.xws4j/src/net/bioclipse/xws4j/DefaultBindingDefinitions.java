@@ -1,23 +1,16 @@
 package net.bioclipse.xws4j;
 
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator; 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 import org.osgi.framework.BundleContext;
 
 import java.io.File;
 
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 
 import java.util.Enumeration;
@@ -47,7 +40,6 @@ import net.bioclipse.xws.binding.BindingDefinitions;
 public class DefaultBindingDefinitions extends BindingDefinitions {
 
 	private static String getTargetDirectory(BundleContext context) {
-
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
