@@ -34,16 +34,31 @@ public class XwsLogPipe implements ILogPipe {
 		debug_mode = preferences.getBoolean(PreferenceConstants.P_BOOLEAN_LOGDEFAULT);
 	}
 	
-	public void write(String text) {
-		if (debug_mode)
-			XwsConsole.writeToConsoleRedT(text);
-	}
-	
 	public static boolean isDebugMode() {
 		return debug_mode;
 	}
 	
 	public static void setDebugMode(boolean mode) {
 		debug_mode = mode;
+	}
+
+	public void error(String text) {
+		if (debug_mode)
+			XwsConsole.writeToConsoleRedT(text);
+	}
+
+	public void fatal(String text) {
+		if (debug_mode)
+			XwsConsole.writeToConsoleRedT(text);
+	}
+
+	public void info(String text) {
+		if (debug_mode)
+			XwsConsole.writeToConsoleRedT(text);
+	}
+
+	public void warn(String text) {
+		if (debug_mode)
+			XwsConsole.writeToConsoleRedT(text);
 	}
 }
