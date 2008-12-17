@@ -1,5 +1,4 @@
 package net.bioclipse.xws4j.business;
-
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.IBioclipseManager;
@@ -12,7 +11,6 @@ import net.bioclipse.xws.exceptions.XmppException;
 import net.bioclipse.xws4j.exceptions.Xws4jException;
 import net.bioclipse.xws.binding.IIoFactory;
 import net.bioclipse.xws.binding.exceptions.XwsBindingException;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -34,7 +32,6 @@ import net.bioclipse.xws.binding.exceptions.XwsBindingException;
  * @author Johannes Wagener, Ola Spjuth
  */
 public interface IXwsManager extends IBioclipseManager {
-
     /**
      * Get the default XMPP Web Services Client.
      * @throws Xws4jException
@@ -42,7 +39,6 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Returns the default XMPP Web Services Client object" )
     @Recorded
     public Client getDefaultClient() throws Xws4jException;
-
     /**
      * Returns the status of the default XMPP Web Services Client.
      * @return The status of the default XMPP Web Services Client
@@ -50,7 +46,6 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Returns the status of the default XMPP Web Services Client" )
     @Recorded
     public String getStatus();
-    
     /**
      * Connect to XMPP server.
      * @throws Xws4jException, XmppException
@@ -58,7 +53,6 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Connect to XMPP server" )
     @Recorded
     public void connect() throws Xws4jException, XmppException;
-
     /**
      * Disconnect from XMPP server.
      * @throws Xws4jException, XmppException
@@ -66,7 +60,6 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Disconnect from XMPP server" )
     @Recorded
     public void disconnect() throws Xws4jException, XmppException;
-    
     /**
      * Returns true if connected to XMPP server. 
      * @throws XmppException
@@ -76,7 +69,6 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Returns true if connected to XMPP server" )
     @Recorded
     public boolean isConnected() throws Xws4jException;
-    
     /**
      * Creates a XmppItem with the specified JID and node.
      * @param jid The JabberID
@@ -87,7 +79,6 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Creates a XmppItem with the specified JID and node" )
     @Recorded
     public IXmppItem getXmppItem(String jid, String node) throws Xws4jException;
-    
     /**
      * Creates a Service with the specified JID.
      * @param service_jid The JabberID of the Service
@@ -97,7 +88,6 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Creates a Service with the specified JID" )
     @Recorded
     public IService getService(String service_jid) throws Xws4jException;
-    
     /**
      * Creates a Function with the specified service JID and function name.
      * @param service_jid The JabberID of the Service that hosts the function
@@ -108,7 +98,6 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Creates a Function with the specified service JID and function name" )
     @Recorded
     public IFunction getFunction(String service_jid, String function_name) throws Xws4jException;
-
     /**
      * Creates a new IoDataFactory for the specified input/output xml schemata and saves files in binding directory.
      * @param ioschemata the IoSchemata object
@@ -118,7 +107,6 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Creates a new IoDataFactory for the specified input/output xml schemata." )
     @Recorded
     public IIoFactory getIoFactory(IoSchemata ioschemata) throws XwsBindingException;
-    
     /**
      * Loads an existing IoDataFactory for the specified function from binding directory.
      * @param ioschemata the IoSchemata object

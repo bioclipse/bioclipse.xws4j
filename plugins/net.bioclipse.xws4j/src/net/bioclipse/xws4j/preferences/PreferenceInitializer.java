@@ -1,10 +1,7 @@
 package net.bioclipse.xws4j.preferences;
-
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-
 import net.bioclipse.xws4j.Activator;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -26,16 +23,14 @@ import net.bioclipse.xws4j.Activator;
  * @author Johannes Wagener
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
-
-	public void initializeDefaultPreferences() {
-		IPreferenceStore store = Activator.getDefault()
-				.getPreferenceStore();
-		store.setDefault(PreferenceConstants.P_STRING_SERVER, "");
-		store.setDefault(PreferenceConstants.P_STRING_JID, "");
-		store.setDefault(PreferenceConstants.P_STRING_PASSWORD, "");
-		store.setDefault(PreferenceConstants.P_STRING_RESOURCE, "Bioclipse");
-		store.setDefault(PreferenceConstants.P_STRING_SERVERPORT, "5222");
-		store.setDefault(PreferenceConstants.P_BOOLEAN_LOGDEFAULT, false);
-	}
-
+        public void initializeDefaultPreferences() {
+                IPreferenceStore store = Activator.getDefault()
+                                .getPreferenceStore();
+                store.setDefault(PreferenceConstants.P_STRING_SERVER, "");
+                store.setDefault(PreferenceConstants.P_STRING_JID, "");
+                store.setDefault(PreferenceConstants.P_STRING_PASSWORD, "");
+                store.setDefault(PreferenceConstants.P_STRING_RESOURCE, "Bioclipse");
+                store.setDefault(PreferenceConstants.P_STRING_SERVERPORT, "5222");
+                store.setDefault(PreferenceConstants.P_BOOLEAN_LOGDEFAULT, false);
+        }
 }

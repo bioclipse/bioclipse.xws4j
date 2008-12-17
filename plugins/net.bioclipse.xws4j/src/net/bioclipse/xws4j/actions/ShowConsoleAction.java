@@ -1,9 +1,7 @@
 package net.bioclipse.xws4j.actions;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import net.bioclipse.xws4j.XwsConsole;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -25,27 +23,22 @@ import net.bioclipse.xws4j.XwsConsole;
  * @author Johannes Wagener
  */
 public class ShowConsoleAction extends Action {
-	
-	public static class ShowConsoleActionContribution extends ActionContributionItem {
-		public ShowConsoleActionContribution() {
-			super (getStatic());
-		}
-	}
-	
-	private static ShowConsoleAction static_action = null;
-
-	public static ShowConsoleAction getStatic() {
-		if (static_action == null) {
-			static_action = new ShowConsoleAction();
-		}
-		return static_action;
-	}
-
-	public ShowConsoleAction() {
-		super("Show Console");
-	}
-	
-	public void run() {
-		XwsConsole.show();
-	}
+        public static class ShowConsoleActionContribution extends ActionContributionItem {
+                public ShowConsoleActionContribution() {
+                        super (getStatic());
+                }
+        }
+        private static ShowConsoleAction static_action = null;
+        public static ShowConsoleAction getStatic() {
+                if (static_action == null) {
+                        static_action = new ShowConsoleAction();
+                }
+                return static_action;
+        }
+        public ShowConsoleAction() {
+                super("Show Console");
+        }
+        public void run() {
+                XwsConsole.show();
+        }
 }

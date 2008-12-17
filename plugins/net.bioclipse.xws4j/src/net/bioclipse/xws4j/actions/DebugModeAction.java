@@ -1,10 +1,7 @@
 package net.bioclipse.xws4j.actions;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
-
 import net.bioclipse.xws4j.XwsLogPipe;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -26,29 +23,24 @@ import net.bioclipse.xws4j.XwsLogPipe;
  * @author Johannes Wagener
  */
 public class DebugModeAction extends Action {
-	
-	private static DebugModeAction static_action = null;
-	
-	public static class DebugModeActionContribution extends ActionContributionItem {
-		public DebugModeActionContribution() {
-			super (getStatic());
-		}
-	}
-
-	public static DebugModeAction getStatic() {
-		if (static_action == null) {
-			static_action = new DebugModeAction();
-			static_action.setChecked(XwsLogPipe.isDebugMode());
-		}
-		return static_action;
-	}
-	
-	public DebugModeAction() {
-		super("Debug Mode", Action.AS_CHECK_BOX);
-	}
-	
-	public void run() {
-		XwsLogPipe.setDebugMode(!XwsLogPipe.isDebugMode());
-		setChecked(XwsLogPipe.isDebugMode());
-	}
+        private static DebugModeAction static_action = null;
+        public static class DebugModeActionContribution extends ActionContributionItem {
+                public DebugModeActionContribution() {
+                        super (getStatic());
+                }
+        }
+        public static DebugModeAction getStatic() {
+                if (static_action == null) {
+                        static_action = new DebugModeAction();
+                        static_action.setChecked(XwsLogPipe.isDebugMode());
+                }
+                return static_action;
+        }
+        public DebugModeAction() {
+                super("Debug Mode", Action.AS_CHECK_BOX);
+        }
+        public void run() {
+                XwsLogPipe.setDebugMode(!XwsLogPipe.isDebugMode());
+                setChecked(XwsLogPipe.isDebugMode());
+        }
 }

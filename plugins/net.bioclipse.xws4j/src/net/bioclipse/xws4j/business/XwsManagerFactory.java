@@ -1,12 +1,9 @@
 package net.bioclipse.xws4j.business;
-
 import net.bioclipse.xws4j.Activator;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.core.runtime.IExecutableExtensionFactory;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -29,18 +26,14 @@ import org.eclipse.core.runtime.IExecutableExtensionFactory;
  */
 public class XwsManagerFactory implements IExecutableExtension, 
                                               IExecutableExtensionFactory {
-
     private Object xwsManager;
-    
     public void setInitializationData(IConfigurationElement config,
             String propertyName, Object data) throws CoreException {
-        
         xwsManager = Activator.getDefault().getXwsManager();
         if(xwsManager==null) {
             xwsManager = new Object();
         }
     }
-
     public Object create() throws CoreException {
         return xwsManager;
     }

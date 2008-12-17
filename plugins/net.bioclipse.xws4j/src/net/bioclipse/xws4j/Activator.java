@@ -1,14 +1,11 @@
 package net.bioclipse.xws4j;
-
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.xws4j.business.IXwsManager;
-
 import org.apache.log4j.Logger;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -30,77 +27,63 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Johannes Wagener
  */
 public class Activator extends AbstractUIPlugin {
-
-	// The plug-in ID
-	public static final String PLUGIN_ID = "net.bioclipse.xws4j";
-
+        // The plug-in ID
+        public static final String PLUGIN_ID = "net.bioclipse.xws4j";
     private static final Logger logger = Logger.getLogger(Activator.class);
-
-	// The shared instance
-	private static Activator plugin;
-	private static DefaultClientCurator clientcurator;
-	private static DefaultBindingDefinitions bindingdefinitions;
-
+        // The shared instance
+        private static Activator plugin;
+        private static DefaultClientCurator clientcurator;
+        private static DefaultBindingDefinitions bindingdefinitions;
     private ServiceTracker finderTracker;
-
-	/**
-	 * The constructor
-	 */
-	public Activator() {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-		clientcurator = new DefaultClientCurator();
-		bindingdefinitions = new DefaultBindingDefinitions(context);
-		
+        /**
+         * The constructor
+         */
+        public Activator() {
+        }
+        /*
+         * (non-Javadoc)
+         * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+         */
+        public void start(BundleContext context) throws Exception {
+                super.start(context);
+                plugin = this;
+                clientcurator = new DefaultClientCurator();
+                bindingdefinitions = new DefaultBindingDefinitions(context);
         finderTracker = new ServiceTracker( context, 
                 IXwsManager.class.getName(), 
                 null );
         finderTracker.open();
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext context) throws Exception {
-		bindingdefinitions = null;
-		clientcurator.stop();
-		clientcurator = null;
-		plugin = null;
-		super.stop(context);
-	}
-	
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
-	
-	public static DefaultClientCurator getDefaultClientCurator() {
-		return clientcurator;
-	}
-	
-	public static DefaultBindingDefinitions getDefaultBindingDefinitions() {
-		return bindingdefinitions;
-	}
-		
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static Activator getDefault() {
-		return plugin;
-	}
-
-	public IXwsManager getXwsManager() {
-		IXwsManager manager = null;
+        }
+        /*
+         * (non-Javadoc)
+         * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+         */
+        public void stop(BundleContext context) throws Exception {
+                bindingdefinitions = null;
+                clientcurator.stop();
+                clientcurator = null;
+                plugin = null;
+                super.stop(context);
+        }
+        public static ImageDescriptor getImageDescriptor(String path) {
+                return imageDescriptorFromPlugin(PLUGIN_ID, path);
+        }
+        public static DefaultClientCurator getDefaultClientCurator() {
+                return clientcurator;
+        }
+        public static DefaultBindingDefinitions getDefaultBindingDefinitions() {
+                return bindingdefinitions;
+        }
+        /**
+         * Returns the shared instance
+         *
+         * @return the shared instance
+         */
+        public static Activator getDefault() {
+                return plugin;
+        }
+        public IXwsManager getXwsManager() {
+                IXwsManager manager = null;
         try {
             manager = (IXwsManager) finderTracker.waitForService(1000*10);
         } catch (InterruptedException e) {
@@ -111,5 +94,5 @@ public class Activator extends AbstractUIPlugin {
             throw new IllegalStateException("Could not get the XMPP Web Services manager");
         }
         return manager;
-	}
+        }
 }

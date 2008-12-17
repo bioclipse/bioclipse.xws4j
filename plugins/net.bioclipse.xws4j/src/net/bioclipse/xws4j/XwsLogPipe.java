@@ -1,10 +1,7 @@
 package net.bioclipse.xws4j;
-
 import org.eclipse.jface.preference.IPreferenceStore;
-
 import net.bioclipse.xws4j.preferences.PreferenceConstants;
 import net.bioclipse.xws.ILogPipe;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -26,39 +23,31 @@ import net.bioclipse.xws.ILogPipe;
  * @author Johannes Wagener
  */
 public class XwsLogPipe implements ILogPipe {
-	
-	private static boolean debug_mode;
-	
-	public XwsLogPipe() {
-		IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
-		debug_mode = preferences.getBoolean(PreferenceConstants.P_BOOLEAN_LOGDEFAULT);
-	}
-	
-	public static boolean isDebugMode() {
-		return debug_mode;
-	}
-	
-	public static void setDebugMode(boolean mode) {
-		debug_mode = mode;
-	}
-
-	public void error(String text) {
-		if (debug_mode)
-			XwsConsole.writeToConsoleRedT(text);
-	}
-
-	public void fatal(String text) {
-		if (debug_mode)
-			XwsConsole.writeToConsoleRedT(text);
-	}
-
-	public void info(String text) {
-		if (debug_mode)
-			XwsConsole.writeToConsoleRedT(text);
-	}
-
-	public void warn(String text) {
-		if (debug_mode)
-			XwsConsole.writeToConsoleRedT(text);
-	}
+        private static boolean debug_mode;
+        public XwsLogPipe() {
+                IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
+                debug_mode = preferences.getBoolean(PreferenceConstants.P_BOOLEAN_LOGDEFAULT);
+        }
+        public static boolean isDebugMode() {
+                return debug_mode;
+        }
+        public static void setDebugMode(boolean mode) {
+                debug_mode = mode;
+        }
+        public void error(String text) {
+                if (debug_mode)
+                        XwsConsole.writeToConsoleRedT(text);
+        }
+        public void fatal(String text) {
+                if (debug_mode)
+                        XwsConsole.writeToConsoleRedT(text);
+        }
+        public void info(String text) {
+                if (debug_mode)
+                        XwsConsole.writeToConsoleRedT(text);
+        }
+        public void warn(String text) {
+                if (debug_mode)
+                        XwsConsole.writeToConsoleRedT(text);
+        }
 }

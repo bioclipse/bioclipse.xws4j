@@ -1,11 +1,9 @@
 package net.bioclipse.xws4j.business;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-
 import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.adhoc.IFunction;
@@ -18,7 +16,6 @@ import net.bioclipse.xws4j.exceptions.Xws4jException;
 import net.bioclipse.xws.binding.BindingManager;
 import net.bioclipse.xws.binding.IIoFactory;
 import net.bioclipse.xws.binding.exceptions.XwsBindingException;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -40,15 +37,12 @@ import net.bioclipse.xws.binding.exceptions.XwsBindingException;
  * @author Johannes Wagener, Ola Spjuth
  */
 public class XwsManager implements IXwsManager {
-	
-	public String getNamespace() {
-		return "xws";
-	}
-		
+        public String getNamespace() {
+                return "xws";
+        }
     public Client getDefaultClient() throws Xws4jException {
     	return Activator.getDefaultClientCurator().getDefaultClient();
     }
-
     public String getStatus() {
     	Client client;
     	try {
@@ -58,61 +52,49 @@ public class XwsManager implements IXwsManager {
     	}
     	return client.toString();
     }
-
     public void connect() throws Xws4jException, XmppException {
     	Client client;
    		client = Activator.getDefaultClientCurator().getDefaultClient();
    		client.connect();
     }
-
     public void disconnect() throws Xws4jException, XmppException {
     	Client client;
    		client = Activator.getDefaultClientCurator().getDefaultClient();
    		client.disconnect();
     }
-
     public boolean isConnected() throws Xws4jException {
     	Client client;
    		client = Activator.getDefaultClientCurator().getDefaultClient();
    		return client.isConnected();
     }
-
     public IXmppItem getXmppItem(String jid, String node) throws Xws4jException {
     	Client client;
    		client = Activator.getDefaultClientCurator().getDefaultClient();
    		return client.getXmppItem(jid, node);
     }
-
     public IService getService(String service_jid) throws Xws4jException {
     	Client client;
-		client = Activator.getDefaultClientCurator().getDefaultClient();
-		return client.getService(service_jid);
+                client = Activator.getDefaultClientCurator().getDefaultClient();
+                return client.getService(service_jid);
     }
-
     public IFunction getFunction(String service_jid, String function_name) throws Xws4jException {
     	Client client;
-		client = Activator.getDefaultClientCurator().getDefaultClient();
-		return client.getFunction(service_jid, function_name);
+                client = Activator.getDefaultClientCurator().getDefaultClient();
+                return client.getFunction(service_jid, function_name);
     }
-    
     public IIoFactory getIoFactory(IoSchemata ioschemata) throws XwsBindingException {
-    	
     	IIoFactory iofactory =
     		BindingManager.getIoFactory(ioschemata, Activator.getDefaultBindingDefinitions());
-    	
     	IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot root = workspace.getRoot();
-
-		IProject project  = root.getProject(DefaultBindingDefinitions.WORKSPACE_PROJECT);
-		try {
-			project.refreshLocal(IProject.DEPTH_ONE, null);
-		} catch (CoreException e2) {
-			e2.printStackTrace();
-		}
-
-		return iofactory;
+                IWorkspaceRoot root = workspace.getRoot();
+                IProject project  = root.getProject(DefaultBindingDefinitions.WORKSPACE_PROJECT);
+                try {
+                        project.refreshLocal(IProject.DEPTH_ONE, null);
+                } catch (CoreException e2) {
+                        e2.printStackTrace();
+                }
+                return iofactory;
     }
-    
     public IIoFactory getIoFactory(IFunction function) throws XwsBindingException {
     	return BindingManager.getIoFactory(function, Activator.getDefaultBindingDefinitions());
     }

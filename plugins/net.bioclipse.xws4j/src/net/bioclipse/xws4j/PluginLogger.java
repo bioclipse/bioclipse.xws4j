@@ -1,7 +1,5 @@
 package net.bioclipse.xws4j;
-
 import org.apache.log4j.Logger;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -23,10 +21,8 @@ import org.apache.log4j.Logger;
  * @author Johannes Wagener
  */
 public class PluginLogger {
-	
-	private static final Logger logger = Logger.getLogger(Activator.class);
-	
-	public static void log(String text) {
-		logger.warn("Bioclipse xws4j Plug-in: " + text);
-	}
+        private static final Logger logger = Logger.getLogger(Activator.class);
+        public static void log(String text) {
+                logger.warn("Bioclipse xws4j Plug-in: " + text);
+        }
 }

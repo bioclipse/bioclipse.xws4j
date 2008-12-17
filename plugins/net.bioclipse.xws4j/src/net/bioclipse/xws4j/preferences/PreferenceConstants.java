@@ -1,5 +1,4 @@
 package net.bioclipse.xws4j.preferences;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -21,11 +20,10 @@ package net.bioclipse.xws4j.preferences;
  * @author Johannes Wagener
  */
 public class PreferenceConstants {
-
-	public static final String P_STRING_SERVER = "SERVER";
-	public static final String P_STRING_JID = "JID";
-	public static final String P_STRING_PASSWORD = "PASSWORD";
-	public static final String P_STRING_RESOURCE = "RESOURCE";
-	public static final String P_STRING_SERVERPORT = "SERVERPORT";
-	public static final String P_BOOLEAN_LOGDEFAULT = "LOGDEFAULT";
+        public static final String P_STRING_SERVER = "SERVER";
+        public static final String P_STRING_JID = "JID";
+        public static final String P_STRING_PASSWORD = "PASSWORD";
+        public static final String P_STRING_RESOURCE = "RESOURCE";
+        public static final String P_STRING_SERVERPORT = "SERVERPORT";
+        public static final String P_BOOLEAN_LOGDEFAULT = "LOGDEFAULT";
 }

@@ -1,8 +1,6 @@
 package net.bioclipse.xws4j;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
@@ -18,7 +16,6 @@ import org.eclipse.ui.console.IConsoleView;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.console.IConsoleFactory;
-
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -40,121 +37,106 @@ import org.eclipse.ui.console.IConsoleFactory;
  * @author Johannes Wagener
  */
 public class XwsConsole implements IConsoleFactory {
-	
-	private static MessageConsole messageConsole = null;
-	private static String consoleName = "XMPP Web Services Console";
-	private static MessageConsoleStream out = null,
-										out_blue = null,
-										out_red = null;
-	
-	public void openConsole() {
-		show();
-	}
-	
-	public static void show() {
-		IWorkbench wb = PlatformUI.getWorkbench();
-		IWorkbenchPage wbPage = wb.getActiveWorkbenchWindow().getActivePage(); 
+        private static MessageConsole messageConsole = null;
+        private static String consoleName = "XMPP Web Services Console";
+        private static MessageConsoleStream out = null,
+                                                                                out_blue = null,
+                                                                                out_red = null;
+        public void openConsole() {
+                show();
+        }
+        public static void show() {
+                IWorkbench wb = PlatformUI.getWorkbench();
+                IWorkbenchPage wbPage = wb.getActiveWorkbenchWindow().getActivePage(); 
         if (wbPage != null) {
         	try {
         		IConsoleView conView = (IConsoleView) wbPage.showView(
-						IConsoleConstants.ID_CONSOLE_VIEW);
+                                                IConsoleConstants.ID_CONSOLE_VIEW);
         		conView.display(getXwsConsole());
         	} catch (PartInitException e) {
         		PluginLogger.log("XwsConsole.show() - PartInitException: " + e.getMessage());
         	}
         }
-	}
-
-	private static MessageConsole getXwsConsole() {
-		if (messageConsole == null) {
-			messageConsole = findConsole(consoleName);
-		}
-		return messageConsole;
-	}
-
-	private static MessageConsole findConsole(String name) {
-		ConsolePlugin conPlugin = ConsolePlugin.getDefault();
-		IConsoleManager conManager = conPlugin.getConsoleManager();
-		IConsole[] consAll = conManager.getConsoles();
-		for (int i = 0; i < consAll.length; i++)
-			if (name.equals(consAll[i].getName()))
-				return (MessageConsole) consAll[i];
-		//no console found, so we create a new one
-		MessageConsole xwsConsole = new MessageConsole(name, null);
-		conManager.addConsoles(new IConsole[]{xwsConsole});
-		return xwsConsole;
-	}
-	
-	public static void writeToConsole(final String message) {
-		Runnable r = new Runnable() {
-			public void run() {
-				getConsoleStream().println(message);
-			}
-		};
-		Display.getDefault().asyncExec(r);
-	}
-
-	public static void writeToConsoleBlue(final String message) {
-		Runnable r = new Runnable() {
-			public void run() {
-				getConsoleStreamBlue().println(message);
-			}
-		};
-		Display.getDefault().asyncExec(r);
-	}
-
-	public static void writeToConsoleRed(final String message) {
-		Runnable r = new Runnable() {
-			public void run() {
-				getConsoleStreamRed().println(message);
-			}
-		};
-		Display.getDefault().asyncExec(r);
-	}
-
-	// with time-stamp
-	public static void writeToConsoleBlueT(String message) {
-		writeToConsoleBlue(getCurrentTime() + " " + message);
-	}
-
-	// with time-stamp
-	public static void writeToConsoleT(String message) {
-		writeToConsole(getCurrentTime() + " " + message);
-	}
-	
-	// with time-stamp
-	public static void writeToConsoleRedT(String message) {
-		writeToConsoleRed(getCurrentTime() + " " + message);
-	}
-	
-	private static MessageConsoleStream getConsoleStream() {
-		if (out == null)
-			out = getXwsConsole().newMessageStream();
-		return out;
-	}
-	
-	private static MessageConsoleStream getConsoleStreamBlue() {
-		if (out_blue == null) {
-			Color color_blue = PlatformUI.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_BLUE);
-			out_blue = getXwsConsole().newMessageStream();
-			out_blue.setColor(color_blue);
-		}
-		return out_blue;
-	}
-	
-	private static MessageConsoleStream getConsoleStreamRed() {
-		if (out_red == null) {
-			Color color_red = PlatformUI.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_RED);
-			out_red = getXwsConsole().newMessageStream();
-			out_red.setColor(color_red);
-		}
-		return out_red;
-	}
-	
-	private static String getCurrentTime() {
-		SimpleDateFormat simpleDateForm = new SimpleDateFormat("hh:mm:ss");
-		Date current = new Date();
-		current.setTime(System.currentTimeMillis());
-		return simpleDateForm.format(current);
-	}
+        }
+        private static MessageConsole getXwsConsole() {
+                if (messageConsole == null) {
+                        messageConsole = findConsole(consoleName);
+                }
+                return messageConsole;
+        }
+        private static MessageConsole findConsole(String name) {
+                ConsolePlugin conPlugin = ConsolePlugin.getDefault();
+                IConsoleManager conManager = conPlugin.getConsoleManager();
+                IConsole[] consAll = conManager.getConsoles();
+                for (int i = 0; i < consAll.length; i++)
+                        if (name.equals(consAll[i].getName()))
+                                return (MessageConsole) consAll[i];
+                //no console found, so we create a new one
+                MessageConsole xwsConsole = new MessageConsole(name, null);
+                conManager.addConsoles(new IConsole[]{xwsConsole});
+                return xwsConsole;
+        }
+        public static void writeToConsole(final String message) {
+                Runnable r = new Runnable() {
+                        public void run() {
+                                getConsoleStream().println(message);
+                        }
+                };
+                Display.getDefault().asyncExec(r);
+        }
+        public static void writeToConsoleBlue(final String message) {
+                Runnable r = new Runnable() {
+                        public void run() {
+                                getConsoleStreamBlue().println(message);
+                        }
+                };
+                Display.getDefault().asyncExec(r);
+        }
+        public static void writeToConsoleRed(final String message) {
+                Runnable r = new Runnable() {
+                        public void run() {
+                                getConsoleStreamRed().println(message);
+                        }
+                };
+                Display.getDefault().asyncExec(r);
+        }
+        // with time-stamp
+        public static void writeToConsoleBlueT(String message) {
+                writeToConsoleBlue(getCurrentTime() + " " + message);
+        }
+        // with time-stamp
+        public static void writeToConsoleT(String message) {
+                writeToConsole(getCurrentTime() + " " + message);
+        }
+        // with time-stamp
+        public static void writeToConsoleRedT(String message) {
+                writeToConsoleRed(getCurrentTime() + " " + message);
+        }
+        private static MessageConsoleStream getConsoleStream() {
+                if (out == null)
+                        out = getXwsConsole().newMessageStream();
+                return out;
+        }
+        private static MessageConsoleStream getConsoleStreamBlue() {
+                if (out_blue == null) {
+                        Color color_blue = PlatformUI.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_BLUE);
+                        out_blue = getXwsConsole().newMessageStream();
+                        out_blue.setColor(color_blue);
+                }
+                return out_blue;
+        }
+        private static MessageConsoleStream getConsoleStreamRed() {
+                if (out_red == null) {
+                        Color color_red = PlatformUI.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_RED);
+                        out_red = getXwsConsole().newMessageStream();
+                        out_red.setColor(color_red);
+                }
+                return out_red;
+        }
+        private static String getCurrentTime() {
+                SimpleDateFormat simpleDateForm = new SimpleDateFormat("hh:mm:ss");
+                Date current = new Date();
+                current.setTime(System.currentTimeMillis());
+                return simpleDateForm.format(current);
+        }
 }
