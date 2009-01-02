@@ -33,17 +33,17 @@ import net.bioclipse.xws.binding.exceptions.XwsBindingException;
  */
 public interface IXwsManager extends IBioclipseManager {
     /**
-     * Get the default XMPP Web Services Client.
+     * Get the default XMPP Client.
      * @throws Xws4jException
      */
-    @PublishedMethod( methodSummary = "Returns the default XMPP Web Services Client object" )
+    @PublishedMethod( methodSummary = "Returns the default XMPP Client object" )
     @Recorded
     public Client getDefaultClient() throws Xws4jException;
     /**
-     * Returns the status of the default XMPP Web Services Client.
-     * @return The status of the default XMPP Web Services Client
+     * Returns the status of the default XMPP Client.
+     * @return The status of the default XMPP Client
      */
-    @PublishedMethod( methodSummary = "Returns the status of the default XMPP Web Services Client" )
+    @PublishedMethod( methodSummary = "Returns the status of the default XMPP Client" )
     @Recorded
     public String getStatus();
     /**
@@ -63,7 +63,7 @@ public interface IXwsManager extends IBioclipseManager {
     /**
      * Returns true if connected to XMPP server. 
      * @throws XmppException
-     * @return true if the default XMPP Web Services Client is connected
+     * @return true if the default XMPP Client is connected
      * @throws Xws4jException
      */
     @PublishedMethod( methodSummary = "Returns true if connected to XMPP server" )
