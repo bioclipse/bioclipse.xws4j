@@ -91,7 +91,7 @@ public class Activator extends AbstractUIPlugin {
             LogUtils.debugTrace(logger, e);
         }
         if(manager == null) {
-            throw new IllegalStateException("Could not get the XMPP Web Services manager");
+            throw new IllegalStateException("Could not get the XMPP Services manager");
         }
         return manager;
         }

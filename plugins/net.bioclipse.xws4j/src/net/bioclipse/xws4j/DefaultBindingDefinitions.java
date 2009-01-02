@@ -31,7 +31,7 @@ import net.bioclipse.xws.binding.BindingDefinitions;
  * @author Johannes Wagener
  */
 public class DefaultBindingDefinitions extends BindingDefinitions {
-        public static String WORKSPACE_PROJECT = "XMPP Web Service Bindings";
+        public static String WORKSPACE_PROJECT = "XMPP Service Bindings";
         private static String getTargetDirectory(BundleContext context) {
                 IWorkspace workspace = ResourcesPlugin.getWorkspace();
                 IWorkspaceRoot root = workspace.getRoot();
@@ -72,7 +72,7 @@ public class DefaultBindingDefinitions extends BindingDefinitions {
         public DefaultBindingDefinitions(BundleContext context) {
                 /**
                  *  TODO: update this! the target directory must point to
-                 *  a XMPP Web Services Binding folder within the local resources.
+                 *  a XMPP Services Binding folder within the local resources.
                  */
                 super(getTargetDirectory(context), getClasspathString(context));
         }
