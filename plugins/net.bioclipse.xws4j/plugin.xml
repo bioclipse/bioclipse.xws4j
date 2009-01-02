@@ -40,7 +40,7 @@
                label="XMPP Toolbar Button"
                style="pulldown"
                toolbarPath="Xws4jGroup"
-               tooltip="&amp;XMPP - Show Console"/>
+               tooltip="&amp;XMPP - Show Service Discovery View"/>
          </actionSet>
    </extension>
    <extension 
@@ -70,6 +70,10 @@
                   name="net.bioclipse.xws4j.menu.separator2"
                   visible="true">
             </separator>
+            <dynamic
+                  class="net.bioclipse.xws4j.actions.ShowServiceDiscoveryViewAction$ShowServiceDiscoveryViewContribution"
+                  id="net.bioclipse.xws4j.dynamic.showDiscoViewAction">
+            </dynamic>
             <dynamic
                   class="net.bioclipse.xws4j.actions.ShowConsoleAction$ShowConsoleActionContribution"
                   id="net.bioclipse.xws4j.dynamic.showConsoleAction">
