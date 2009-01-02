@@ -1,7 +1,8 @@
 package net.bioclipse.xws4j.actions;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
-import net.bioclipse.xws4j.XwsConsole;
+import net.bioclipse.xws4j.views.servicediscovery.ServiceDiscoveryView;
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -22,23 +23,23 @@ import net.bioclipse.xws4j.XwsConsole;
  * 
  * @author Johannes Wagener
  */
-public class ShowConsoleAction extends Action {
-        public static class ShowConsoleActionContribution extends ActionContributionItem {
-                public ShowConsoleActionContribution() {
+public class ShowServiceDiscoveryViewAction extends Action {
+        public static class ShowServiceDiscoveryViewContribution extends ActionContributionItem {
+                public ShowServiceDiscoveryViewContribution() {
                         super (getStatic());
                 }
         }
-        private static ShowConsoleAction static_action = null;
-        public static ShowConsoleAction getStatic() {
+        private static ShowServiceDiscoveryViewAction static_action = null;
+        public static ShowServiceDiscoveryViewAction getStatic() {
                 if (static_action == null) {
-                        static_action = new ShowConsoleAction();
+                        static_action = new ShowServiceDiscoveryViewAction();
                 }
                 return static_action;
         }
-        public ShowConsoleAction() {
-                super("Show XMPP Console");
+        public ShowServiceDiscoveryViewAction() {
+                super("Show XMPP Service Discovery View");
         }
         public void run() {
-                XwsConsole.show();
+        	ServiceDiscoveryView.show();
         }
 }

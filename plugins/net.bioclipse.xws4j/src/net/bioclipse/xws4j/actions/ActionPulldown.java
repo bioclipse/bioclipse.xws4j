@@ -1,6 +1,7 @@
 package net.bioclipse.xws4j.actions;
-import net.bioclipse.xws4j.XwsConsole;
+
 import net.bioclipse.xws4j.Activator;
+import net.bioclipse.xws4j.views.servicediscovery.ServiceDiscoveryView;
 import net.bioclipse.xws4j.PluginLogger;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -41,7 +42,7 @@ public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
         public ActionPulldown() {
         }
         public void run(IAction action) {
-                XwsConsole.show();
+        	ServiceDiscoveryView.show();
         }
         public Menu getMenu(Control parent) {
                 if (pulldownMenuManager == null) {
@@ -65,6 +66,7 @@ public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
                 options.add(DebugModeAction.getStatic());
                 manager.add(options);
                 manager.add(new Separator());
+                manager.add(ShowServiceDiscoveryViewAction.getStatic());
                 manager.add(ShowConsoleAction.getStatic());
         }
         public void selectionChanged(IAction action, ISelection selection) {
