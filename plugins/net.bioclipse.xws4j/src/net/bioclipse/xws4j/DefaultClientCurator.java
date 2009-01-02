@@ -8,6 +8,7 @@ import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.client.IExecutionPipe;
 import net.bioclipse.xws.client.listeners.IConnectionListener;
 import net.bioclipse.xws.XwsLogger;
+import net.bioclipse.xws4j.views.servicediscovery.ServiceDiscoveryView;
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
@@ -92,10 +93,12 @@ public class DefaultClientCurator {
                         public void onConnected() {
                                 XwsConsole.writeToConsoleBlueT("Default client connected.");
                                 ActionPulldown.setStatusConnected(true);
+                                ServiceDiscoveryView.setStatusConnected(true);
                         }			
                         public void onDisconnected() {
                                 XwsConsole.writeToConsoleBlueT("Default client disconnected.");
                                 ActionPulldown.setStatusConnected(false);
+                                ServiceDiscoveryView.setStatusConnected(false);
                         }
                 };
                 default_client.addConnectionListener(listener);
