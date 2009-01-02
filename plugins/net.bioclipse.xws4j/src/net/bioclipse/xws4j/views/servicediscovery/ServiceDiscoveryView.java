@@ -1,7 +1,9 @@
 package net.bioclipse.xws4j.views.servicediscovery;
 
 import net.bioclipse.xws4j.Activator;
+import net.bioclipse.xws4j.PluginLogger;
 import net.bioclipse.xws4j.XwsConsole;
+import net.bioclipse.xws4j.preferences.PreferenceConstants;
 
 import net.bioclipse.xws.xmpp.XmppTools;
 import net.bioclipse.xws.client.Client;
@@ -10,38 +12,27 @@ import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.disco.DiscoStatus;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 
 /**
@@ -66,6 +57,8 @@ import org.eclipse.ui.part.ViewPart;
  */
 public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 	
+	public static final String ID_SERVICEDISCOVIEW = "net.bioclipse.xws4j.servicediscoveryview";
+	
 	private static ServiceDiscoveryView viewpart = null;
 	private static boolean connected = false;
 
@@ -80,7 +73,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 	private static final String OFFLINE_STAT		= "Not connected to XMPP server. An active connection to a XMPP server is required to use XMPP Service Discovery.";
 	private static final String ONLINE_READY		= "Ready.";
 	private static final String ONLINE_DISCOVERING	= "Discovering: ";
-	private static final String ONLINE_CANCELED		= "Discovery canceled.";
+	private static final String ONLINE_CANCELED		= "Discovery was canceled.";
 	private static final String ONLINE_DISCOERROR	= "Error on discovering: ";
 	
 	class NameSorter extends ViewerSorter {
@@ -119,6 +112,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		   		IXmppItem current_xi = viewpart.current_xmppitem;
 		   		
 		   		if (current_xi == null) {
+		   			viewpart.action_cancel.setEnabled(false);
 		   			viewpart.setContentDescription(ONLINE_READY);
 		   			viewpart.progressbar.setVisible(false);	
 		   		} else {
@@ -147,6 +141,18 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		   		}
 		   	}
 			//viewpart.getViewSite().getActionBars().updateActionBars();
+		}
+	}
+	
+	public static void show() {
+		IWorkbench wb = PlatformUI.getWorkbench();
+		IWorkbenchPage wbPage = wb.getActiveWorkbenchWindow().getActivePage(); 
+		if (wbPage != null) {
+			try {
+				wbPage.showView(ID_SERVICEDISCOVIEW);
+			} catch (PartInitException e) {
+				PluginLogger.log("ServiceDiscoveryView.show() - PartInitException: " + e.getMessage());
+			}
 		}
 	}
 	
@@ -195,14 +201,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 			public void widgetSelected(SelectionEvent event) {
 				String jid = text_address.getText();
 				if (!jid.equals("")) {
-					try {
-						Client client = Activator.getDefaultClientCurator().getDefaultClient();
-						current_xmppitem = client.getXmppItem(jid, "");
-						current_xmppitem.discoverAsync(viewpart);
-						updateNavigation();
-					} catch (Exception e) {
-						XwsConsole.writeToConsoleBlueT("Could not get default client: " + e);
-					}
+					discover(jid, "");
 				}
 			}
 		});
@@ -262,7 +261,9 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		
 		action_cancel = new Action() {
 			public void run() {
-				//
+				current_xmppitem = null;
+				updateNavigation();
+				viewpart.setContentDescription(ONLINE_CANCELED);
 			}
 		};
 		action_cancel.setText("Cancel");
@@ -273,7 +274,13 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		
 		action_reload = new Action() {
 			public void run() {
-				//
+				if (current_xmppitem != null) {
+					String jid = current_xmppitem.getJid();
+					if (!jid.equals("")) {
+						text_address.setText(jid);
+						discover(jid, "");
+					}
+				}
 			}
 		};
 		action_reload.setText("Reload");
@@ -284,7 +291,12 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 
 		action_home = new Action() {
 			public void run() {
-				//
+				IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
+				String jid = preferences.getString(PreferenceConstants.P_STRING_SERVER);
+				if (!jid.equals("")) {
+					text_address.setText(jid);
+					discover(jid, "");
+				}
 			}
 		};
 		action_home.setText("Home");
@@ -303,6 +315,17 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		action_bind.setImageDescriptor(
 				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_ETOOL_PRINT_EDIT));
 		action_bind.setEnabled(false);
+	}
+	
+	public void discover(String jid, String node) {
+		try {
+			Client client = Activator.getDefaultClientCurator().getDefaultClient();
+			current_xmppitem = client.getXmppItem(jid, node);
+			current_xmppitem.discoverAsync(viewpart);
+			updateNavigation();
+		} catch (Exception e) {
+			XwsConsole.writeToConsoleBlueT("Could not get default client: " + e);
+		}
 	}
 	
 	public void setFocus() {
