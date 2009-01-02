@@ -27,6 +27,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -65,6 +67,7 @@ import org.eclipse.ui.part.ViewPart;
 public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 	
 	private static ServiceDiscoveryView viewpart = null;
+	private static boolean connected = false;
 
 	private Text text_address;
 	private TreeViewer viewer;
@@ -87,10 +90,12 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 	}
 	
 	public static void setStatusConnected(boolean connected) {
+		ServiceDiscoveryView.connected = connected;
 		if (viewpart != null) {
 			viewpart.text_address.setEnabled(connected);
 			viewpart.viewer.getTree().setEnabled(connected);
 			viewpart.button_go.setEnabled(connected);
+			viewpart.action_home.setEnabled(connected);
 			
 			updateNavigation();
 		}
@@ -98,54 +103,62 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 	
 	private static void updateNavigation() {
 		if (viewpart != null) {
-			try {
-		   		if (Activator.getDefaultClientCurator().isClientConnected() == false) {
-		   			viewpart.action_foward.setEnabled(false);
-		   			viewpart.action_reverse.setEnabled(false);
-		   			viewpart.action_cancel.setEnabled(false);
-		   			viewpart.action_reload.setEnabled(false);
-		   			viewpart.action_home.setEnabled(false);
-					viewpart.action_bind.setEnabled(false);
+			if (!connected) {
+				viewpart.action_foward.setEnabled(false);
+		   		viewpart.action_reverse.setEnabled(false);
+		   		viewpart.action_cancel.setEnabled(false);
+		   		viewpart.action_reload.setEnabled(false);
+				viewpart.action_bind.setEnabled(false);
 					
-					viewpart.setContentDescription(OFFLINE_STAT);
-					viewpart.progressbar.setVisible(false);
+				viewpart.setContentDescription(OFFLINE_STAT);
+				viewpart.progressbar.setVisible(false);
+		   	} else {
+		   		// depends on disco status...
+		   		
+		   		
+		   		IXmppItem current_xi = viewpart.current_xmppitem;
+		   		
+		   		if (current_xi == null) {
+		   			viewpart.setContentDescription(ONLINE_READY);
+		   			viewpart.progressbar.setVisible(false);	
 		   		} else {
-		   			// depends on disco status...
+		   			DiscoStatus status = current_xi.getDiscoStatus();
 		   			
-		   			IXmppItem current_xi = viewpart.current_xmppitem;
-		   			
-		   			if (current_xi == null) {
-		   				viewpart.setContentDescription(ONLINE_READY);
-		   				viewpart.progressbar.setVisible(false);	
-		   			} else {
-		   				DiscoStatus status = current_xi.getDiscoStatus();
-		   				
-		   				String item_text = current_xi.getJid();
-		   				if (current_xi.getNode().equals(""))
-		   					item_text = item_text + " Node: " + current_xi.getNode();
+		   			String item_text = current_xi.getJid();
+		   			if (!current_xi.getNode().equals(""))
+		   				item_text = item_text + " Node: " + current_xi.getNode();
 
-		   				if (status == DiscoStatus.NOT_DISCOVERED) {
-			   				viewpart.setContentDescription(ONLINE_DISCOVERING + item_text);
-			   				viewpart.progressbar.setVisible(true);
-			   			} else if (status == DiscoStatus.DISCOVERED) {
-			   				viewpart.setContentDescription(ONLINE_READY);
-			   				viewpart.progressbar.setVisible(false);
-			   			} else if (status == DiscoStatus.DISCOVERED_WITH_ERROR) {
-			   				viewpart.setContentDescription(ONLINE_DISCOERROR + item_text);
-			   				viewpart.progressbar.setVisible(false);
-			   			}
-		   			}
+		   			if (status == DiscoStatus.NOT_DISCOVERED) {
+			   			viewpart.setContentDescription(ONLINE_DISCOVERING + item_text);
+			   			viewpart.progressbar.setVisible(true);
+			   			viewpart.action_cancel.setEnabled(true);
+			   			viewpart.action_reload.setEnabled(false);
+			   		} else if (status == DiscoStatus.DISCOVERED) {
+			   			viewpart.setContentDescription(ONLINE_READY);
+			   			viewpart.progressbar.setVisible(false);
+			   			viewpart.action_cancel.setEnabled(false);
+			   			viewpart.action_reload.setEnabled(true);
+			   		} else if (status == DiscoStatus.DISCOVERED_WITH_ERROR) {
+			   			viewpart.setContentDescription(ONLINE_DISCOERROR + item_text);
+			   			viewpart.progressbar.setVisible(false);
+			   			viewpart.action_cancel.setEnabled(false);
+			   			viewpart.action_reload.setEnabled(true);
+			   		}
 		   		}
-			} catch (Exception e) {
-				XwsConsole.writeToConsoleBlueT("Could not get default client: " + e);
-			}
+		   	}
+			//viewpart.getViewSite().getActionBars().updateActionBars();
 		}
 	}
 	
 	public void onDiscovered(IXmppItem i, DiscoStatus disco_status) {
 		if (current_xmppitem != null) {
 			if (XmppTools.compareJids(current_xmppitem.getJid(), i.getJid()) == 0) {
-				
+				if (disco_status == DiscoStatus.DISCOVERED) {
+					
+				} else {
+					
+				}
+				updateNavigation();
 			}
 		}
 	}
@@ -178,6 +191,22 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		button_go = new Button(comp_address, SWT.PUSH);
 		button_go.setText("Go");
 		button_go.setEnabled(false);
+		button_go.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				String jid = text_address.getText();
+				if (!jid.equals("")) {
+					try {
+						Client client = Activator.getDefaultClientCurator().getDefaultClient();
+						current_xmppitem = client.getXmppItem(jid, "");
+						current_xmppitem.discoverAsync(viewpart);
+						updateNavigation();
+					} catch (Exception e) {
+						XwsConsole.writeToConsoleBlueT("Could not get default client: " + e);
+					}
+				}
+			}
+		});
+
 						
 		// the tree viewer
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -193,7 +222,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		
 		viewpart = this;
 		
-		setStatusConnected(Activator.getDefaultClientCurator().isClientConnected());
+		setStatusConnected(connected);
 	}
 
 	private void contributeToActionBars() {
