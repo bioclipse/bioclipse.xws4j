@@ -18,7 +18,7 @@
       <page
             class="net.bioclipse.xws4j.preferences.PreferencePage"
             id="net.bioclipse.xws4j.preferencepage"
-            name="XMPP Web Services">
+            name="XMPP">
       </page>
    </extension>
    <extension
@@ -37,10 +37,10 @@
                class="net.bioclipse.xws4j.actions.ActionPulldown"
                icon="icons/png/disconnected.png"
                id="net.bioclipse.xws4j.ToolbarActionPulldown"
-               label="XWS Toolbar Button"
+               label="XMPP Toolbar Button"
                style="pulldown"
                toolbarPath="Xws4jGroup"
-               tooltip="&amp;XMPP Web Services - Show Console"/>
+               tooltip="&amp;XMPP - Show Console"/>
          </actionSet>
    </extension>
    <extension 
@@ -50,7 +50,7 @@
             locationURI= "menu:org.eclipse.ui.main.menu?after=additions">
          <menu
                id="net.bc.dummyMenu"
-               label="XWS">
+               label="XMPP">
             <dynamic
                   class="net.bioclipse.xws4j.actions.ToggleConnectionAction$ToggleConnectionActionContribution"
                   id="net.bioclipse.xws4j.dynamic.toggleConnectionAction">
@@ -81,7 +81,22 @@
          point="org.eclipse.ui.console.consoleFactories">
       <consoleFactory
             class="net.bioclipse.xws4j.XwsConsole"
-            label="XMPP Web Services Console">
+            label="XMPP Console">
       </consoleFactory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="net.bioclipse.xws4j.category"
+            class="net.bioclipse.xws4j.views.servicediscovery.ServiceDiscoveryView"
+            id="net.bioclipse.xws4j.servicediscoveryview"
+            name="XMPP Service Discovery"
+            restorable="true">
+      </view>
+      <category
+            id="net.bioclipse.xws4j.category"
+            name="XMPP">
+      </category>
    </extension>
 </plugin>
