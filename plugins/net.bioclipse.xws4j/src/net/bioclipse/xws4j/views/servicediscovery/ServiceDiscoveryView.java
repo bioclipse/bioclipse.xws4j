@@ -69,6 +69,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 	private Button button_go;
 	private ProgressBar progressbar;
 	private IXmppItem current_xmppitem = null;
+	private TreeViewerContentProvider contentprovider;
 	
 	private static final String OFFLINE_STAT		= "Not connected to XMPP server. An active connection to a XMPP server is required to use XMPP Service Discovery.";
 	private static final String ONLINE_READY		= "Ready.";
@@ -159,11 +160,12 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 	public void onDiscovered(IXmppItem i, DiscoStatus disco_status) {
 		if (current_xmppitem != null) {
 			if (XmppTools.compareJids(current_xmppitem.getJid(), i.getJid()) == 0) {
-				if (disco_status == DiscoStatus.DISCOVERED) {
-					
-				} else {
-					
-				}
+				current_xmppitem = i;
+				TreeViewerContentProvider.ITreeObject firstlevelobject =
+					new TreeObject(current_xmppitem, null);
+				contentprovider.reset();
+				contentprovider.addFirstLevelObject(firstlevelobject);
+				viewer.refresh();
 				updateNavigation();
 			}
 		}
@@ -208,8 +210,9 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 
 						
 		// the tree viewer
+		contentprovider = new TreeViewerContentProvider(this);
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer.setContentProvider(new TreeViewerContentProvider());
+		viewer.setContentProvider(contentprovider);
 		viewer.setLabelProvider(new TreeViewerLabelProvider());
 		viewer.setSorter(new NameSorter());
 		viewer.setInput(getViewSite());
