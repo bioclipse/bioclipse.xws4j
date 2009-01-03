@@ -7,9 +7,7 @@ import net.bioclipse.xws4j.preferences.PreferenceConstants;
 
 import net.bioclipse.xws.client.adhoc.IFunction;
 
-import net.bioclipse.xws.xmpp.XmppTools;
 import net.bioclipse.xws.client.Client;
-import net.bioclipse.xws.client.listeners.IDiscoListener;
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.disco.DiscoStatus;
 
@@ -63,7 +61,7 @@ import org.eclipse.ui.part.ViewPart;
  * 
  * @author Johannes Wagener
  */
-public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
+public class ServiceDiscoveryView extends ViewPart {
 	
 	public static final String ID_SERVICEDISCOVIEW = "net.bioclipse.xws4j.servicediscoveryview";
 	
@@ -76,7 +74,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 					action_reload, action_home, action_bind;
 	private Button button_go;
 	private ProgressBar progressbar;
-	private IXmppItem current_xmppitem = null;
+	private TreeObject current_treeobject = null;
 	private TreeViewerContentProvider contentprovider;
 	
 	private static final String OFFLINE_STAT		= "Not connected to XMPP server. An active connection to a XMPP server is required to use XMPP Service Discovery.";
@@ -88,9 +86,6 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 	class NameSorter extends ViewerSorter {
 	}
 
-	public ServiceDiscoveryView() {
-	}
-	
 	public static void setStatusConnected(boolean connected) {
 		ServiceDiscoveryView.connected = connected;
 		if (viewpart != null) {
@@ -99,57 +94,50 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 			viewpart.button_go.setEnabled(connected);
 			viewpart.action_home.setEnabled(connected);
 			
-			updateNavigation();
+			viewpart.updateNavigation();
 		}
 	}
 	
-	private static void updateNavigation() {
-		if (viewpart != null) {
-			if (!connected) {
-				viewpart.action_foward.setEnabled(false);
-		   		viewpart.action_reverse.setEnabled(false);
-		   		viewpart.action_cancel.setEnabled(false);
-		   		viewpart.action_reload.setEnabled(false);
-				viewpart.action_bind.setEnabled(false);
+	private void updateNavigation() {
+		if (!connected) {
+			action_foward.setEnabled(false);
+	   		action_reverse.setEnabled(false);
+	   		action_cancel.setEnabled(false);
+	   		action_reload.setEnabled(false);
+			action_bind.setEnabled(false);
 					
-				viewpart.setContentDescription(OFFLINE_STAT);
-				viewpart.progressbar.setVisible(false);
-		   	} else {
-		   		// depends on disco status...
-		   		
-		   		
-		   		IXmppItem current_xi = viewpart.current_xmppitem;
-		   		
-		   		if (current_xi == null) {
-		   			viewpart.action_cancel.setEnabled(false);
-		   			viewpart.setContentDescription(ONLINE_READY);
-		   			viewpart.progressbar.setVisible(false);	
-		   		} else {
-		   			DiscoStatus status = current_xi.getDiscoStatus();
-		   			
-		   			String item_text = current_xi.getJid();
-		   			if (!current_xi.getNode().equals(""))
-		   				item_text = item_text + " Node: " + current_xi.getNode();
+			setContentDescription(OFFLINE_STAT);
+			progressbar.setVisible(false);
+		} else if (current_treeobject != null && current_treeobject.getXmppItem() != null) {
+			// depends on disco status...
+			IXmppItem current_xi = current_treeobject.getXmppItem();
+			DiscoStatus status = current_xi.getDiscoStatus();
 
-		   			if (status == DiscoStatus.NOT_DISCOVERED) {
-			   			viewpart.setContentDescription(ONLINE_DISCOVERING + item_text);
-			   			viewpart.progressbar.setVisible(true);
-			   			viewpart.action_cancel.setEnabled(true);
-			   			viewpart.action_reload.setEnabled(false);
-			   		} else if (status == DiscoStatus.DISCOVERED) {
-			   			viewpart.setContentDescription(ONLINE_READY);
-			   			viewpart.progressbar.setVisible(false);
-			   			viewpart.action_cancel.setEnabled(false);
-			   			viewpart.action_reload.setEnabled(true);
-			   		} else if (status == DiscoStatus.DISCOVERED_WITH_ERROR) {
-			   			viewpart.setContentDescription(ONLINE_DISCOERROR + item_text);
-			   			viewpart.progressbar.setVisible(false);
-			   			viewpart.action_cancel.setEnabled(false);
-			   			viewpart.action_reload.setEnabled(true);
-			   		}
-		   		}
-		   	}
-		}
+			String item_text = current_xi.getJid();
+			if (!current_xi.getNode().equals(""))
+				item_text = item_text + " Node: " + current_xi.getNode();
+
+			if (status == DiscoStatus.NOT_DISCOVERED) {
+				setContentDescription(ONLINE_DISCOVERING + item_text);
+				progressbar.setVisible(true);
+				action_cancel.setEnabled(true);
+				action_reload.setEnabled(false);
+			} else if (status == DiscoStatus.DISCOVERED) {
+				setContentDescription(ONLINE_READY);
+				progressbar.setVisible(false);
+				action_cancel.setEnabled(false);
+				action_reload.setEnabled(true);
+			} else if (status == DiscoStatus.DISCOVERED_WITH_ERROR) {
+				setContentDescription(ONLINE_DISCOERROR + item_text);
+				progressbar.setVisible(false);
+				action_cancel.setEnabled(false);
+				action_reload.setEnabled(true);
+			}
+	   	} else {
+  			action_cancel.setEnabled(false);
+   			setContentDescription(ONLINE_READY);
+   			progressbar.setVisible(false);	
+   		}
 	}
 	
 	public static void show() {
@@ -164,20 +152,11 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		}
 	}
 	
-	public void onDiscovered(IXmppItem i, DiscoStatus disco_status) {
-		if (current_xmppitem != null) {
-			if (XmppTools.compareJids(current_xmppitem.getJid(), i.getJid()) == 0) {
-				current_xmppitem = i;
-				TreeViewerContentProvider.ITreeObject firstlevelobject =
-					new TreeObject(current_xmppitem, null, viewer);
-				contentprovider.reset();
-				contentprovider.addFirstLevelObject(firstlevelobject);
-				viewer.refresh();
-				updateNavigation();
-			}
-		}
+	public void refresh(Object object) {
+		updateNavigation();
+		viewer.refresh(object);
 	}
-
+	
 	public void createPartControl(Composite parent) {
 		GridLayout gl = new GridLayout();
 		gl.numColumns = 1;
@@ -210,7 +189,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 			public void widgetSelected(SelectionEvent event) {
 				String jid = text_address.getText();
 				if (!jid.equals("")) {
-					discover(jid, "");
+					discoverNew(jid, "");
 				}
 			}
 		});
@@ -272,7 +251,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		
 		action_cancel = new Action() {
 			public void run() {
-				current_xmppitem = null;
+				current_treeobject = null;
 				updateNavigation();
 				viewpart.setContentDescription(ONLINE_CANCELED);
 			}
@@ -285,11 +264,11 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		
 		action_reload = new Action() {
 			public void run() {
-				if (current_xmppitem != null) {
-					String jid = current_xmppitem.getJid();
+				if (current_treeobject != null && current_treeobject.getXmppItem() != null) {
+					String jid = current_treeobject.getXmppItem().getJid();
 					if (!jid.equals("")) {
 						text_address.setText(jid);
-						discover(jid, "");
+						discoverNew(jid, "");
 					}
 				}
 			}
@@ -306,7 +285,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 				String jid = preferences.getString(PreferenceConstants.P_STRING_SERVER);
 				if (!jid.equals("")) {
 					text_address.setText(jid);
-					discover(jid, "");
+					discoverNew(jid, "");
 				}
 			}
 		};
@@ -333,21 +312,15 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 			public void treeCollapsed(TreeExpansionEvent event) {
 			}
 			public void treeExpanded(TreeExpansionEvent event) {
-				/*Object object = event.getElement();
+				Object object = event.getElement();
 				if (object != null && object instanceof TreeObject) {
 					TreeObject treeobject = (TreeObject)object;
 					IXmppItem xitem = treeobject.getXmppItem();
+						
 					if (xitem.getDiscoStatus() == DiscoStatus.NOT_DISCOVERED) {
-						treeobject.setTempDiscoChild();
-						try {
-							xitem.discoverAsync(treeobject);
-						} catch (Exception e) {
-							XwsConsole.writeToConsoleBlueT("Could not discover: " + e);
-						}
-						//viewer.update(object, null);
-						//viewer.refresh();
+						discover(treeobject);
 					}
-				}*/
+				}
 			}
 		};
 		viewer.addTreeListener(tvlistener);
@@ -365,12 +338,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 							
 							return;
 						} else if (xitem.getDiscoStatus() == DiscoStatus.NOT_DISCOVERED) {
-							treeobject.setTempDiscoChild();
-							try {
-								xitem.discoverAsync(treeobject);
-							} catch (Exception e) {
-								XwsConsole.writeToConsoleBlueT("Could not discover: " + e);
-							}
+							discover(treeobject);
 						}
 
 						if (treeobject.hasChildren() == true)
@@ -382,14 +350,31 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		viewer.addDoubleClickListener(dblistener);
 	}
 	
-	public void discover(String jid, String node) {
+	public void discoverNew(String jid, String node) {
 		try {
 			Client client = Activator.getDefaultClientCurator().getDefaultClient();
-			current_xmppitem = client.getXmppItem(jid, node);
-			current_xmppitem.discoverAsync(viewpart);
-			updateNavigation();
+			IXmppItem xitem = client.getXmppItem(jid, node);
+			TreeObject firstlevelobject = new TreeObject(xitem, null, this);
+			contentprovider.reset();
+			contentprovider.addFirstLevelObject(firstlevelobject);
+			viewer.refresh();
+			discover(firstlevelobject);
 		} catch (Exception e) {
-			XwsConsole.writeToConsoleBlueT("Could not discover: " + e);
+			viewpart.setContentDescription("Could get default client: " + e);
+			XwsConsole.writeToConsoleBlueT("Could get default client: " + e);
+		}
+	}
+	
+	public void discover(TreeObject treeobject) {
+		current_treeobject = treeobject;
+		if (current_treeobject != null && current_treeobject.getXmppItem() != null) {
+			try {
+				current_treeobject.getXmppItem().discoverAsync(treeobject);
+				updateNavigation();
+			} catch (Exception e) {
+				viewpart.setContentDescription("Could not discover: " + e);
+				XwsConsole.writeToConsoleBlueT("Could not discover: " + e);
+			}
 		}
 	}
 	

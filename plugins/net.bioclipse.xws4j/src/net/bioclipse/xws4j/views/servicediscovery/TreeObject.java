@@ -3,8 +3,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.eclipse.jface.viewers.TreeViewer;
-
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.adhoc.IFunction;
 import net.bioclipse.xws.client.adhoc.IService;
@@ -37,12 +35,12 @@ public class TreeObject implements TreeViewerContentProvider.ITreeObject, IDisco
 	
 	private IXmppItem xmppitem;
 	private Object parent;
-	private TreeViewer viewer;
+	private ServiceDiscoveryView discoview;
 	private List<Object> children = new ArrayList<Object>();
 	
-	public TreeObject(IXmppItem xmppitem, TreeObject parent, TreeViewer viewer) {
+	public TreeObject(IXmppItem xmppitem, TreeObject parent, ServiceDiscoveryView discoview) {
 		this.parent = parent;
-		this.viewer = viewer;
+		this.discoview = discoview;
 		updateXmppItem(xmppitem);
 	}
 	
@@ -52,36 +50,35 @@ public class TreeObject implements TreeViewerContentProvider.ITreeObject, IDisco
 		return xmppitem.getJid();
 	}
 	
-	public void setTempDiscoChild() {
-		children.clear();
-		children.add(new TempTreeObject(this));
-	}
-	
 	public void updateXmppItem(IXmppItem xmppitem) {
 		children.clear();
 		this.xmppitem = xmppitem;
 		
-		Items items = xmppitem.getItems();
-		if (items != null) {
-			List<IXmppItem> xitems = items.getList();
-			Iterator<IXmppItem> it = xitems.iterator();
-			while (it.hasNext() == true) {
-				children.add(new TreeObject(it.next(), this, viewer));
-			}
-		}
-		
-		if (xmppitem instanceof IService) {
-			Functions functions = ((IService)xmppitem).getFunctions();
-			if (functions != null) {
-				List<IFunction> xfunctions = functions.getList();
-				Iterator<IFunction> it = xfunctions.iterator();
+		if (xmppitem.getDiscoStatus() == DiscoStatus.NOT_DISCOVERED) {
+			children.add(new TempTreeObject(this));
+		} else {
+			Items items = xmppitem.getItems();
+			if (items != null) {
+				List<IXmppItem> xitems = items.getList();
+				Iterator<IXmppItem> it = xitems.iterator();
 				while (it.hasNext() == true) {
-					children.add(new TreeObject(it.next(), this, viewer));
+					children.add(new TreeObject(it.next(), this, discoview));
+				}
+			}
+			
+			if (xmppitem instanceof IService) {
+				Functions functions = ((IService)xmppitem).getFunctions();
+				if (functions != null) {
+					List<IFunction> xfunctions = functions.getList();
+					Iterator<IFunction> it = xfunctions.iterator();
+					while (it.hasNext() == true) {
+						children.add(new TreeObject(it.next(), this, discoview));
+					}
 				}
 			}
 		}
-		
-		viewer.refresh(this);
+
+		discoview.refresh(this);
 	}
 	
 	public IXmppItem getXmppItem() {
@@ -99,8 +96,6 @@ public class TreeObject implements TreeViewerContentProvider.ITreeObject, IDisco
 	}
 	
 	public boolean hasChildren() {
-		if (xmppitem.getDiscoStatus() == DiscoStatus.NOT_DISCOVERED)
-			return true;
 		if (children != null && children.size() > 0)
 			return true;
 		return false;
