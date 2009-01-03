@@ -3,14 +3,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.eclipse.jface.viewers.TreeViewer;
+
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.adhoc.IFunction;
 import net.bioclipse.xws.client.adhoc.IService;
 import net.bioclipse.xws.client.disco.DiscoStatus;
 import net.bioclipse.xws.client.disco.Functions;
-import net.bioclipse.xws.client.disco.Info;
 import net.bioclipse.xws.client.disco.Items;
-import net.bioclipse.xws4j.XwsConsole;
+import net.bioclipse.xws.client.listeners.IDiscoListener;
 
 /**
  * 
@@ -32,36 +33,40 @@ import net.bioclipse.xws4j.XwsConsole;
  * 
  * @author Johannes Wagener
  */
-public class TreeObject implements TreeViewerContentProvider.ITreeObject {
+public class TreeObject implements TreeViewerContentProvider.ITreeObject, IDiscoListener {
 	
 	private IXmppItem xmppitem;
 	private Object parent;
+	private TreeViewer viewer;
 	private List<Object> children = new ArrayList<Object>();
 	
-	public TreeObject(IXmppItem xmppitem, TreeObject parent) {
+	public TreeObject(IXmppItem xmppitem, TreeObject parent, TreeViewer viewer) {
 		this.parent = parent;
+		this.viewer = viewer;
 		updateXmppItem(xmppitem);
 	}
 	
-	public String getName() {
+	private String getName() {
 		if (xmppitem instanceof IFunction)
 			return xmppitem.getNode();
 		return xmppitem.getJid();
+	}
+	
+	public void setTempDiscoChild() {
+		children.clear();
+		children.add(new TempTreeObject(this));
 	}
 	
 	public void updateXmppItem(IXmppItem xmppitem) {
 		children.clear();
 		this.xmppitem = xmppitem;
 		
-XwsConsole.writeToConsoleBlueT("updateXmppItem");
-		
 		Items items = xmppitem.getItems();
 		if (items != null) {
 			List<IXmppItem> xitems = items.getList();
 			Iterator<IXmppItem> it = xitems.iterator();
 			while (it.hasNext() == true) {
-				children.add(new TreeObject(it.next(), this));
-XwsConsole.writeToConsoleBlueT("add item child" + items);
+				children.add(new TreeObject(it.next(), this, viewer));
 			}
 		}
 		
@@ -71,11 +76,12 @@ XwsConsole.writeToConsoleBlueT("add item child" + items);
 				List<IFunction> xfunctions = functions.getList();
 				Iterator<IFunction> it = xfunctions.iterator();
 				while (it.hasNext() == true) {
-					children.add(new TreeObject(it.next(), this));
-XwsConsole.writeToConsoleBlueT("add function child:" + functions);
+					children.add(new TreeObject(it.next(), this, viewer));
 				}
 			}
 		}
+		
+		viewer.refresh(this);
 	}
 	
 	public IXmppItem getXmppItem() {
@@ -102,5 +108,9 @@ XwsConsole.writeToConsoleBlueT("add function child:" + functions);
 	
 	public String toString() {
 		return getName();
+	}
+
+	public void onDiscovered(IXmppItem i, DiscoStatus disco_status) {
+		updateXmppItem(i);
 	}
 }

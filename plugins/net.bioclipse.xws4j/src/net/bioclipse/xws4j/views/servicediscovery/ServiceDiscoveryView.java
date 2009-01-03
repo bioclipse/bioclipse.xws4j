@@ -5,6 +5,8 @@ import net.bioclipse.xws4j.PluginLogger;
 import net.bioclipse.xws4j.XwsConsole;
 import net.bioclipse.xws4j.preferences.PreferenceConstants;
 
+import net.bioclipse.xws.client.adhoc.IFunction;
+
 import net.bioclipse.xws.xmpp.XmppTools;
 import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.client.listeners.IDiscoListener;
@@ -15,8 +17,14 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ITreeViewerListener;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -141,7 +149,6 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 			   		}
 		   		}
 		   	}
-			//viewpart.getViewSite().getActionBars().updateActionBars();
 		}
 	}
 	
@@ -162,7 +169,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 			if (XmppTools.compareJids(current_xmppitem.getJid(), i.getJid()) == 0) {
 				current_xmppitem = i;
 				TreeViewerContentProvider.ITreeObject firstlevelobject =
-					new TreeObject(current_xmppitem, null);
+					new TreeObject(current_xmppitem, null, viewer);
 				contentprovider.reset();
 				contentprovider.addFirstLevelObject(firstlevelobject);
 				viewer.refresh();
@@ -221,6 +228,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 
 		makeActions();
 		contributeToActionBars();
+		addViewerListeners();		
 		
 		viewpart = this;
 		
@@ -320,6 +328,60 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 		action_bind.setEnabled(false);
 	}
 	
+	public void addViewerListeners() {
+		ITreeViewerListener tvlistener = new ITreeViewerListener() {
+			public void treeCollapsed(TreeExpansionEvent event) {
+			}
+			public void treeExpanded(TreeExpansionEvent event) {
+				/*Object object = event.getElement();
+				if (object != null && object instanceof TreeObject) {
+					TreeObject treeobject = (TreeObject)object;
+					IXmppItem xitem = treeobject.getXmppItem();
+					if (xitem.getDiscoStatus() == DiscoStatus.NOT_DISCOVERED) {
+						treeobject.setTempDiscoChild();
+						try {
+							xitem.discoverAsync(treeobject);
+						} catch (Exception e) {
+							XwsConsole.writeToConsoleBlueT("Could not discover: " + e);
+						}
+						//viewer.update(object, null);
+						//viewer.refresh();
+					}
+				}*/
+			}
+		};
+		viewer.addTreeListener(tvlistener);
+		
+		IDoubleClickListener dblistener = new IDoubleClickListener() {
+			public void doubleClick(DoubleClickEvent event) {
+				ISelection selection = event.getSelection();
+				if (selection != null && selection instanceof IStructuredSelection) {
+					Object object = ((IStructuredSelection)selection).getFirstElement();
+					if (object != null && object instanceof TreeObject) {
+						TreeObject treeobject = (TreeObject)object;
+						IXmppItem xitem = treeobject.getXmppItem();
+						
+						if (xitem instanceof IFunction) {
+							
+							return;
+						} else if (xitem.getDiscoStatus() == DiscoStatus.NOT_DISCOVERED) {
+							treeobject.setTempDiscoChild();
+							try {
+								xitem.discoverAsync(treeobject);
+							} catch (Exception e) {
+								XwsConsole.writeToConsoleBlueT("Could not discover: " + e);
+							}
+						}
+
+						if (treeobject.hasChildren() == true)
+							viewer.setExpandedState(treeobject, !viewer.getExpandedState(treeobject));
+					}
+				}
+			}
+		};
+		viewer.addDoubleClickListener(dblistener);
+	}
+	
 	public void discover(String jid, String node) {
 		try {
 			Client client = Activator.getDefaultClientCurator().getDefaultClient();
@@ -327,7 +389,7 @@ public class ServiceDiscoveryView extends ViewPart implements IDiscoListener {
 			current_xmppitem.discoverAsync(viewpart);
 			updateNavigation();
 		} catch (Exception e) {
-			XwsConsole.writeToConsoleBlueT("Could not get default client: " + e);
+			XwsConsole.writeToConsoleBlueT("Could not discover: " + e);
 		}
 	}
 	

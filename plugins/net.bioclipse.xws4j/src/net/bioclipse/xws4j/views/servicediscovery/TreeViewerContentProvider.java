@@ -3,8 +3,6 @@ package net.bioclipse.xws4j.views.servicediscovery;
 import java.util.List;
 import java.util.ArrayList;
 
-import net.bioclipse.xws4j.XwsConsole;
-
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
