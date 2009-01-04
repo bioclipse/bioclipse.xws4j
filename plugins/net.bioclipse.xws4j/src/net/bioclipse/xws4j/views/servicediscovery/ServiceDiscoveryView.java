@@ -24,6 +24,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,6 +35,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
@@ -207,14 +210,28 @@ public class ServiceDiscoveryView extends ViewPart {
 		});
 						
 		// the tree viewer
+		Composite comp_treeviewer = new Composite(parent, SWT.NONE);
+		comp_treeviewer.setLayoutData(new GridData(GridData.FILL_BOTH));
 		contentprovider = new TreeViewerContentProvider(this);
-		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		viewer = new TreeViewer(comp_treeviewer, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(contentprovider);
 		viewer.setLabelProvider(new TreeViewerLabelProvider());
 		viewer.setSorter(new NameSorter());
 		viewer.setInput(getViewSite());
 		viewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		viewer.getTree().setEnabled(false);
+		viewer.getTree().setHeaderVisible(true);
+		TreeColumn c1 = new TreeColumn(viewer.getTree(), SWT.LEFT),
+					c2 = new TreeColumn(viewer.getTree(), SWT.LEFT),
+					c3 = new TreeColumn(viewer.getTree(), SWT.LEFT);
+		c1.setText("Name");
+		c2.setText("Jabber-ID");
+		c3.setText("Node");
+		TreeColumnLayout layout = new TreeColumnLayout();
+		layout.setColumnData( c1, new ColumnWeightData(50));
+		layout.setColumnData( c2, new ColumnWeightData(25));
+		layout.setColumnData( c3, new ColumnWeightData(25));
+		comp_treeviewer.setLayout(layout);
 
 		makeActions();
 		contributeToActionBars();
