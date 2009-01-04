@@ -8,6 +8,7 @@ import net.bioclipse.xws4j.preferences.PreferenceConstants;
 import net.bioclipse.xws.client.adhoc.IFunction;
 
 import net.bioclipse.xws.client.Client;
+import net.bioclipse.xws.xmpp.XmppTools;
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.disco.DiscoStatus;
 
@@ -40,6 +41,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+
+import java.util.LinkedList;
 
 /**
  * 
@@ -74,8 +77,9 @@ public class ServiceDiscoveryView extends ViewPart {
 					action_reload, action_home, action_bind;
 	private Button button_go;
 	private ProgressBar progressbar;
-	private TreeObject current_treeobject = null;
+	private TreeObject current_treeobject = null, current_firstleveltreeobject = null;
 	private TreeViewerContentProvider contentprovider;
+	private LinkedList<TreeObject> visited_treeobjects = new LinkedList<TreeObject>();
 	
 	private static final String OFFLINE_STAT		= "Not connected to XMPP server. An active connection to a XMPP server is required to use XMPP Service Discovery.";
 	private static final String ONLINE_READY		= "Ready.";
@@ -108,7 +112,10 @@ public class ServiceDiscoveryView extends ViewPart {
 					
 			setContentDescription(OFFLINE_STAT);
 			progressbar.setVisible(false);
-		} else if (current_treeobject != null && current_treeobject.getXmppItem() != null) {
+			return;
+		}
+
+		if (current_treeobject != null) {
 			// depends on disco status...
 			IXmppItem current_xi = current_treeobject.getXmppItem();
 			DiscoStatus status = current_xi.getDiscoStatus();
@@ -138,6 +145,11 @@ public class ServiceDiscoveryView extends ViewPart {
    			setContentDescription(ONLINE_READY);
    			progressbar.setVisible(false);	
    		}
+		
+		if (!visited_treeobjects.isEmpty()) {
+			action_foward.setEnabled(!visited_treeobjects.getLast().equals(current_firstleveltreeobject));
+			action_reverse.setEnabled(!visited_treeobjects.getFirst().equals(current_firstleveltreeobject));
+		}
 	}
 	
 	public static void show() {
@@ -152,7 +164,7 @@ public class ServiceDiscoveryView extends ViewPart {
 		}
 	}
 	
-	public void refresh(Object object) {
+	protected void refresh(Object object) {
 		updateNavigation();
 		viewer.refresh(object);
 	}
@@ -193,7 +205,6 @@ public class ServiceDiscoveryView extends ViewPart {
 				}
 			}
 		});
-
 						
 		// the tree viewer
 		contentprovider = new TreeViewerContentProvider(this);
@@ -229,7 +240,17 @@ public class ServiceDiscoveryView extends ViewPart {
 	private void makeActions() {
 		action_foward = new Action() {
 			public void run() {
-				//
+				if (!visited_treeobjects.isEmpty()) {
+					int index = visited_treeobjects.indexOf(current_firstleveltreeobject);
+					if (index < visited_treeobjects.size()-1) {
+						current_firstleveltreeobject = visited_treeobjects.get(index+1);
+						text_address.setText(current_firstleveltreeobject.getXmppItem().getJid());
+						contentprovider.reset();
+						contentprovider.addFirstLevelObject(current_firstleveltreeobject);
+						viewer.refresh();
+						updateNavigation();
+					}
+				}
 			}
 		};
 		action_foward.setText("Forward");
@@ -240,7 +261,17 @@ public class ServiceDiscoveryView extends ViewPart {
 		
 		action_reverse = new Action() {
 			public void run() {
-				//
+				if (!visited_treeobjects.isEmpty()) {
+					int index = visited_treeobjects.indexOf(current_firstleveltreeobject);
+					if (index > 0) {
+						current_firstleveltreeobject = visited_treeobjects.get(index-1);
+						text_address.setText(current_firstleveltreeobject.getXmppItem().getJid());
+						contentprovider.reset();
+						contentprovider.addFirstLevelObject(current_firstleveltreeobject);
+						viewer.refresh();
+						updateNavigation();
+					}
+				}
 			}
 		};
 		action_reverse.setText("Back");
@@ -264,12 +295,10 @@ public class ServiceDiscoveryView extends ViewPart {
 		
 		action_reload = new Action() {
 			public void run() {
-				if (current_treeobject != null && current_treeobject.getXmppItem() != null) {
-					String jid = current_treeobject.getXmppItem().getJid();
-					if (!jid.equals("")) {
-						text_address.setText(jid);
-						discoverNew(jid, "");
-					}
+				if (current_firstleveltreeobject != null) {
+					IXmppItem xitem = current_firstleveltreeobject.getXmppItem();
+					if (xitem != null)
+						discoverNew(xitem.getJid(), xitem.getNode());
 				}
 			}
 		};
@@ -307,7 +336,7 @@ public class ServiceDiscoveryView extends ViewPart {
 		action_bind.setEnabled(false);
 	}
 	
-	public void addViewerListeners() {
+	private void addViewerListeners() {
 		ITreeViewerListener tvlistener = new ITreeViewerListener() {
 			public void treeCollapsed(TreeExpansionEvent event) {
 			}
@@ -350,24 +379,37 @@ public class ServiceDiscoveryView extends ViewPart {
 		viewer.addDoubleClickListener(dblistener);
 	}
 	
-	public void discoverNew(String jid, String node) {
+	private void addToHistory(TreeObject treeobject) {
+		if (!visited_treeobjects.isEmpty()) {
+			if (XmppTools.compareJids(
+					visited_treeobjects.getLast().getXmppItem().getJid(),
+					treeobject.getXmppItem().getJid()) == 0) {
+				visited_treeobjects.remove(visited_treeobjects.getLast());
+			}
+		}
+		visited_treeobjects.add(treeobject);
+	}
+	
+	private void discoverNew(String jid, String node) {
 		try {
 			Client client = Activator.getDefaultClientCurator().getDefaultClient();
 			IXmppItem xitem = client.getXmppItem(jid, node);
-			TreeObject firstlevelobject = new TreeObject(xitem, null, this);
+			current_firstleveltreeobject = new TreeObject(xitem, null, this);
 			contentprovider.reset();
-			contentprovider.addFirstLevelObject(firstlevelobject);
+			contentprovider.addFirstLevelObject(current_firstleveltreeobject);
+			addToHistory(current_firstleveltreeobject);
 			viewer.refresh();
-			discover(firstlevelobject);
+			viewer.expandToLevel(current_firstleveltreeobject, 1);
+			discover(current_firstleveltreeobject);
 		} catch (Exception e) {
-			viewpart.setContentDescription("Could get default client: " + e);
-			XwsConsole.writeToConsoleBlueT("Could get default client: " + e);
+			viewpart.setContentDescription("Could not get default client: " + e);
+			XwsConsole.writeToConsoleBlueT("Could not get default client: " + e);
 		}
 	}
 	
-	public void discover(TreeObject treeobject) {
+	private void discover(TreeObject treeobject) {
 		current_treeobject = treeobject;
-		if (current_treeobject != null && current_treeobject.getXmppItem() != null) {
+		if (current_treeobject != null) {
 			try {
 				current_treeobject.getXmppItem().discoverAsync(treeobject);
 				updateNavigation();
