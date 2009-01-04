@@ -349,7 +349,7 @@ public class ServiceDiscoveryView extends ViewPart {
 		action_bind.setText("Bind");
 		action_bind.setToolTipText("Create a bind for the selected function");
 		action_bind.setImageDescriptor(
-				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_ETOOL_PRINT_EDIT));
+				Activator.getImageDescriptor("icons/png/add2.png"));
 		action_bind.setEnabled(false);
 	}
 	

@@ -102,13 +102,7 @@ public class Activator extends AbstractUIPlugin {
         	reg.put("lightbulb_off", getImageDescriptor("icons/png/lightbulb_off.png"));
         	reg.put("error", getImageDescriptor("icons/png/error.png"));
         	reg.put("cog", getImageDescriptor("icons/png/cog.png"));
-        	reg.put("page_white_code", getImageDescriptor("icons/png/page_white_code.png"));
         	reg.put("bullet_yellow", getImageDescriptor("icons/png/bullet_yellow.png"));
         	reg.put("page_white_gear", getImageDescriptor("icons/png/page_white_gear.png"));
-        	reg.put("error", getImageDescriptor("icons/png/error.png"));
-        	reg.put("error", getImageDescriptor("icons/png/error.png"));
-        	reg.put("error", getImageDescriptor("icons/png/error.png"));
-        	reg.put("error", getImageDescriptor("icons/png/error.png"));
-        	
         }
 }
