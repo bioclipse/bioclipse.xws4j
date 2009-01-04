@@ -45,10 +45,10 @@ public class ToggleConnectionAction extends Action {
         public void update() {
                 if (Activator.getDefaultClientCurator().isClientConnected() == true) {
                         this.setText(DISCONNECT_DESC);
-                        setImageDescriptor(Activator.getImageDescriptor("icons/png/disconnected.png"));
+                        setImageDescriptor(Activator.getImageDescriptor("icons/png/lightbulb.png"));
                 } else {
                         this.setText(CONNECT_DESC);
-                        setImageDescriptor(Activator.getImageDescriptor("icons/png/connected.png"));
+                        setImageDescriptor(Activator.getImageDescriptor("icons/png/lightbulb_off.png"));
                 }
         }
         public void run() {

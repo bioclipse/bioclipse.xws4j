@@ -35,7 +35,7 @@
             visible="true">
          <action
                class="net.bioclipse.xws4j.actions.ActionPulldown"
-               icon="icons/png/disconnected.png"
+               icon="icons/png/lightbulb_off.png"
                id="net.bioclipse.xws4j.ToolbarActionPulldown"
                label="XMPP Toolbar Button"
                style="pulldown"

@@ -86,9 +86,9 @@ public class ActionPulldown implements IWorkbenchWindowPulldownDelegate {
                                         "Error, could not update connection icon: toolbar action not available.");
                 else {	
                         if (connected == true) {
-                                theAction.setImageDescriptor(Activator.getImageDescriptor("icons/png/connected.png"));
+                                theAction.setImageDescriptor(Activator.getImageDescriptor("icons/png/lightbulb.png"));
                         } else {
-                                theAction.setImageDescriptor(Activator.getImageDescriptor("icons/png/disconnected.png"));
+                                theAction.setImageDescriptor(Activator.getImageDescriptor("icons/png/lightbulb_off.png"));
                         }
                 }
         }

@@ -3,6 +3,7 @@ import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.xws4j.business.IXwsManager;
 import org.apache.log4j.Logger;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
@@ -29,12 +30,12 @@ import org.osgi.util.tracker.ServiceTracker;
 public class Activator extends AbstractUIPlugin {
         // The plug-in ID
         public static final String PLUGIN_ID = "net.bioclipse.xws4j";
-    private static final Logger logger = Logger.getLogger(Activator.class);
+        private static final Logger logger = Logger.getLogger(Activator.class);
         // The shared instance
         private static Activator plugin;
         private static DefaultClientCurator clientcurator;
         private static DefaultBindingDefinitions bindingdefinitions;
-    private ServiceTracker finderTracker;
+        private ServiceTracker finderTracker;
         /**
          * The constructor
          */
@@ -49,10 +50,10 @@ public class Activator extends AbstractUIPlugin {
                 plugin = this;
                 clientcurator = new DefaultClientCurator();
                 bindingdefinitions = new DefaultBindingDefinitions(context);
-        finderTracker = new ServiceTracker( context, 
+                finderTracker = new ServiceTracker( context, 
                 IXwsManager.class.getName(), 
                 null );
-        finderTracker.open();
+                finderTracker.open();
         }
         /*
          * (non-Javadoc)
@@ -94,5 +95,20 @@ public class Activator extends AbstractUIPlugin {
             throw new IllegalStateException("Could not get the XMPP Services manager");
         }
         return manager;
+        }
+
+        protected void initializeImageRegistry(ImageRegistry reg) { 
+        	reg.put("lightbulb", getImageDescriptor("icons/png/lightbulb.png"));
+        	reg.put("lightbulb_off", getImageDescriptor("icons/png/lightbulb_off.png"));
+        	reg.put("error", getImageDescriptor("icons/png/error.png"));
+        	reg.put("cog", getImageDescriptor("icons/png/cog.png"));
+        	reg.put("page_white_code", getImageDescriptor("icons/png/page_white_code.png"));
+        	reg.put("bullet_yellow", getImageDescriptor("icons/png/bullet_yellow.png"));
+        	reg.put("page_white_gear", getImageDescriptor("icons/png/page_white_gear.png"));
+        	reg.put("error", getImageDescriptor("icons/png/error.png"));
+        	reg.put("error", getImageDescriptor("icons/png/error.png"));
+        	reg.put("error", getImageDescriptor("icons/png/error.png"));
+        	reg.put("error", getImageDescriptor("icons/png/error.png"));
+        	
         }
 }

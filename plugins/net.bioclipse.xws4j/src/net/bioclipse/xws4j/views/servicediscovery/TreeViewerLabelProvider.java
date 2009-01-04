@@ -10,10 +10,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 
 import net.bioclipse.xws.client.adhoc.IFunction;
+import net.bioclipse.xws.client.adhoc.IService;
+import net.bioclipse.xws.client.IXmppItem;
+import net.bioclipse.xws.client.disco.DiscoStatus;
+import net.bioclipse.xws4j.Activator;
 
 /**
  * 
@@ -37,13 +39,32 @@ import net.bioclipse.xws.client.adhoc.IFunction;
  */
 public class TreeViewerLabelProvider extends LabelProvider implements
 ITableLabelProvider, ITableFontProvider, ITableColorProvider {
-
-	FontRegistry registry = new FontRegistry();
+	
+	private FontRegistry font_registry = new FontRegistry();
 	
 	public Image getColumnImage(Object element, int columnIndex) {
 		if (columnIndex == 0) {
-			String imageKey = ISharedImages.IMG_OBJ_FOLDER;
-			return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
+			/*if (element instanceof TempTreeObject) {
+				return null;//Activator.getDefault().getImageRegistry().get("lightbulb");
+			}*/
+			
+			if (element instanceof TreeObject) {
+				TreeObject treeobject = (TreeObject)element;
+				IXmppItem xitem = treeobject.getXmppItem();
+				if (xitem instanceof IFunction) {
+					return Activator.getDefault().getImageRegistry().get("cog");
+				}
+				if (xitem.getDiscoStatus() == DiscoStatus.DISCOVERED) {
+					if (xitem instanceof IService)
+						return Activator.getDefault().getImageRegistry().get("page_white_gear");
+
+					return Activator.getDefault().getImageRegistry().get("lightbulb");
+				}
+					
+				if (xitem.getDiscoStatus() == DiscoStatus.DISCOVERED_WITH_ERROR)
+					return Activator.getDefault().getImageRegistry().get("error");
+			}
+			return Activator.getDefault().getImageRegistry().get("bullet_yellow");
 		}
 		return null;
 	}
@@ -75,7 +96,7 @@ ITableLabelProvider, ITableFontProvider, ITableColorProvider {
 
 	public Font getFont(Object element, int columnIndex) {
 		if (element instanceof TempTreeObject) {
-			return registry.getItalic(Display.getCurrent().getSystemFont()
+			return font_registry.getItalic(Display.getCurrent().getSystemFont()
 					.getFontData()[0].getName());
 		}
 		return null;
@@ -89,9 +110,14 @@ ITableLabelProvider, ITableFontProvider, ITableColorProvider {
 		if (element instanceof TempTreeObject) {
 			return Display.getCurrent().getSystemColor(SWT.COLOR_GRAY);
 		}
-		if (columnIndex == 0 && element instanceof TreeObject) {
+		if (element instanceof TreeObject) {
+			if (((TreeObject)element).getXmppItem().getDiscoStatus() == DiscoStatus.DISCOVERED_WITH_ERROR)
+				return Display.getCurrent().getSystemColor(SWT.COLOR_RED);
+		}
+		
+		if (element instanceof TreeObject) {
 			if (((TreeObject)element).getXmppItem() instanceof IFunction)
-				return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE);
+				return Display.getCurrent().getSystemColor(SWT.COLOR_BLUE);
 		}
 		return null;
 	}

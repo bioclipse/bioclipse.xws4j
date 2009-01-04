@@ -208,7 +208,7 @@ public class ServiceDiscoveryView extends ViewPart {
 				}
 			}
 		});
-						
+		
 		// the tree viewer
 		Composite comp_treeviewer = new Composite(parent, SWT.NONE);
 		comp_treeviewer.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -361,11 +361,7 @@ public class ServiceDiscoveryView extends ViewPart {
 				Object object = event.getElement();
 				if (object != null && object instanceof TreeObject) {
 					TreeObject treeobject = (TreeObject)object;
-					IXmppItem xitem = treeobject.getXmppItem();
-						
-					if (xitem.getDiscoStatus() == DiscoStatus.NOT_DISCOVERED) {
-						discover(treeobject);
-					}
+					discover(treeobject);
 				}
 			}
 		};
@@ -383,9 +379,8 @@ public class ServiceDiscoveryView extends ViewPart {
 						if (xitem instanceof IFunction) {
 							
 							return;
-						} else if (xitem.getDiscoStatus() == DiscoStatus.NOT_DISCOVERED) {
+						} else
 							discover(treeobject);
-						}
 
 						if (treeobject.hasChildren() == true)
 							viewer.setExpandedState(treeobject, !viewer.getExpandedState(treeobject));
@@ -411,13 +406,14 @@ public class ServiceDiscoveryView extends ViewPart {
 		try {
 			Client client = Activator.getDefaultClientCurator().getDefaultClient();
 			IXmppItem xitem = client.getXmppItem(jid, node);
-			current_firstleveltreeobject = new TreeObject(xitem, null, this);
+			current_firstleveltreeobject = new TreeObject(xitem, null, this, true, true);
 			contentprovider.reset();
 			contentprovider.addFirstLevelObject(current_firstleveltreeobject);
 			addToHistory(current_firstleveltreeobject);
 			viewer.refresh();
+			current_treeobject = current_firstleveltreeobject;
+			updateNavigation();
 			viewer.expandToLevel(current_firstleveltreeobject, 1);
-			discover(current_firstleveltreeobject);
 		} catch (Exception e) {
 			viewpart.setContentDescription("Could not get default client: " + e);
 			XwsConsole.writeToConsoleBlueT("Could not get default client: " + e);
@@ -427,14 +423,13 @@ public class ServiceDiscoveryView extends ViewPart {
 	private void discover(TreeObject treeobject) {
 		current_treeobject = treeobject;
 		if (current_treeobject != null) {
-			try {
-				current_treeobject.getXmppItem().discoverAsync(treeobject);
-				updateNavigation();
-			} catch (Exception e) {
-				viewpart.setContentDescription("Could not discover: " + e);
-				XwsConsole.writeToConsoleBlueT("Could not discover: " + e);
-			}
+			current_treeobject.discover(true);
+			updateNavigation();
 		}
+	}
+	
+	protected void setErrorMessage(String message) {
+		viewpart.setContentDescription(message);
 	}
 	
 	public void setFocus() {
