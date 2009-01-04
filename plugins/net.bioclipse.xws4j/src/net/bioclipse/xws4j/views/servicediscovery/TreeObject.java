@@ -60,9 +60,11 @@ public class TreeObject implements TreeViewerContentProvider.ITreeObject, IDisco
 			Items items = xmppitem.getItems();
 			if (items != null) {
 				List<IXmppItem> xitems = items.getList();
-				Iterator<IXmppItem> it = xitems.iterator();
-				while (it.hasNext() == true) {
-					children.add(new TreeObject(it.next(), this, discoview));
+				if (xitems != null) {
+					Iterator<IXmppItem> it = xitems.iterator();
+					while (it.hasNext() == true) {
+						children.add(new TreeObject(it.next(), this, discoview));
+					}
 				}
 			}
 			
@@ -70,9 +72,11 @@ public class TreeObject implements TreeViewerContentProvider.ITreeObject, IDisco
 				Functions functions = ((IService)xmppitem).getFunctions();
 				if (functions != null) {
 					List<IFunction> xfunctions = functions.getList();
-					Iterator<IFunction> it = xfunctions.iterator();
-					while (it.hasNext() == true) {
-						children.add(new TreeObject(it.next(), this, discoview));
+					if (xfunctions != null) {
+						Iterator<IFunction> it = xfunctions.iterator();
+						while (it.hasNext() == true) {
+							children.add(new TreeObject(it.next(), this, discoview));
+						}
 					}
 				}
 			}
