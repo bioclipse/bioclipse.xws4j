@@ -19,10 +19,12 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jface.viewers.ITreeViewerListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.layout.TreeColumnLayout;
@@ -401,6 +403,24 @@ public class ServiceDiscoveryView extends ViewPart {
 			}
 		};
 		viewer.addDoubleClickListener(dblistener);
+		
+		ISelectionChangedListener sclistener = new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				ISelection selection = event.getSelection();
+				if (selection != null && selection instanceof IStructuredSelection) {
+					Object object = ((IStructuredSelection)selection).getFirstElement();
+					if (object != null && object instanceof TreeObject) {
+						TreeObject treeobject = (TreeObject)object;
+						IXmppItem xitem = treeobject.getXmppItem();
+						if (xitem instanceof IFunction)
+							action_bind.setEnabled(true);
+						else
+							action_bind.setEnabled(false);
+					}
+				}
+			}
+		};
+		viewer.addSelectionChangedListener(sclistener);
 	}
 	
 	private void addToHistory(TreeObject treeobject) {
