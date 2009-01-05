@@ -14,6 +14,7 @@ import net.bioclipse.xws.client.disco.DiscoStatus;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -37,6 +38,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeColumn;
@@ -83,6 +85,7 @@ public class ServiceDiscoveryView extends ViewPart {
 	private Action action_foward, action_reverse, action_cancel,
 					action_reload, action_home, action_bind;
 	private Button button_go;
+	private Menu menu_function;
 	private ProgressBar progressbar;
 	private TreeObject current_treeobject = null, current_firstleveltreeobject = null;
 	private TreeViewerContentProvider contentprovider;
@@ -247,10 +250,10 @@ public class ServiceDiscoveryView extends ViewPart {
 		layout.setColumnData( c3, new ColumnWeightData(25));
 		comp_treeviewer.setLayout(layout);
 
-		makeActions();
+		makeActionsAndMenus();
 		contributeToActionBars();
-		addViewerListeners();		
-		
+		addViewerListeners();
+
 		viewpart = this;
 		
 		setStatusConnected(connected);
@@ -268,7 +271,7 @@ public class ServiceDiscoveryView extends ViewPart {
 		manager.add(action_bind);
 	}
 	
-	private void makeActions() {
+	private void makeActionsAndMenus() {
 		action_foward = new Action() {
 			public void run() {
 				if (!visited_treeobjects.isEmpty()) {
@@ -357,7 +360,17 @@ public class ServiceDiscoveryView extends ViewPart {
 		
 		action_bind = new Action() {
 			public void run() {
-				//
+				ISelection selection = viewer.getSelection();
+				if (selection != null && selection instanceof IStructuredSelection) {
+					Object object = ((IStructuredSelection)selection).getFirstElement();
+					if (object != null && object instanceof TreeObject) {
+						TreeObject treeobject = (TreeObject)object;
+						IXmppItem xitem = treeobject.getXmppItem();
+						if (xitem instanceof IFunction) {
+							BindingGenerator.createBinding((IFunction)xitem);
+						}
+					}
+				}
 			}
 		};
 		action_bind.setText("Bind");
@@ -365,6 +378,10 @@ public class ServiceDiscoveryView extends ViewPart {
 		action_bind.setImageDescriptor(
 				Activator.getImageDescriptor("icons/png/add2.png"));
 		action_bind.setEnabled(false);
+		
+		MenuManager menumanager_function = new MenuManager();
+		menumanager_function.add(action_bind);
+		menu_function = menumanager_function.createContextMenu(viewer.getTree());
 	}
 	
 	private void addViewerListeners() {
@@ -388,13 +405,9 @@ public class ServiceDiscoveryView extends ViewPart {
 					Object object = ((IStructuredSelection)selection).getFirstElement();
 					if (object != null && object instanceof TreeObject) {
 						TreeObject treeobject = (TreeObject)object;
-						IXmppItem xitem = treeobject.getXmppItem();
+						//IXmppItem xitem = treeobject.getXmppItem();
 						
-						if (xitem instanceof IFunction) {
-							
-							return;
-						} else
-							discover(treeobject);
+						discover(treeobject);
 
 						if (treeobject.hasChildren() == true)
 							viewer.setExpandedState(treeobject, !viewer.getExpandedState(treeobject));
@@ -412,10 +425,13 @@ public class ServiceDiscoveryView extends ViewPart {
 					if (object != null && object instanceof TreeObject) {
 						TreeObject treeobject = (TreeObject)object;
 						IXmppItem xitem = treeobject.getXmppItem();
-						if (xitem instanceof IFunction)
+						if (xitem instanceof IFunction) {
 							action_bind.setEnabled(true);
-						else
+							viewer.getTree().setMenu(menu_function);
+						} else {
 							action_bind.setEnabled(false);
+							viewer.getTree().setMenu(null);
+						}
 					}
 				}
 			}
