@@ -31,6 +31,8 @@ import net.bioclipse.xws4j.views.servicediscovery.ServiceDiscoveryView;
  */
 public class DefaultClientCurator {
         private Client default_client = null;
+        private String clientJID = "", pwd = "", server = "", server_port = "";
+        
         private IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
         public DefaultClientCurator() {
                 // setup xws4j log pipe
@@ -48,28 +50,41 @@ public class DefaultClientCurator {
                 }
                 return false;
         }
+        private boolean isAccountDataChanged() {
+            if (preferences != null) {
+                    if (server.equals(preferences.getString(PreferenceConstants.P_STRING_SERVER)) &&
+                            clientJID.equals(preferences.getString(PreferenceConstants.P_STRING_JID) +
+                                    "/" +
+                                    preferences.getString(PreferenceConstants.P_STRING_RESOURCE)) &&
+                            pwd.equals(preferences.getString(PreferenceConstants.P_STRING_PASSWORD)) &&
+                            server_port.equals(preferences.getString(PreferenceConstants.P_STRING_SERVERPORT)))
+                    return false;
+            }
+            return true;
+        }
         protected void stop() {
                 // disconnect!
                 disconnectClient();		 
         }
         public Client getDefaultClient() throws Xws4jException {
                 // if there is already a connected client return this
-                if (default_client != null && default_client.isConnected()) {
+                if (default_client != null && !isAccountDataChanged()) {
                         return default_client;
                 }
-                // no connected client create new client with (new) default data
+                // create new client with (new) default data
                 if (!isAccountDataSet()) {
                         XwsConsole.writeToConsoleBlueT("Could not create default client:" +
                                         " the plug-in has set invalide account data in preferences.");
                         throw new Xws4jException("Could not create default client:" +
                                         " the plug-in has set invalide account data in preferences.");
                 }
-                String clientJID = preferences.getString(PreferenceConstants.P_STRING_JID) +
+                clientJID = preferences.getString(PreferenceConstants.P_STRING_JID) +
                                                         "/" +
-                                                        preferences.getString(PreferenceConstants.P_STRING_RESOURCE),
-                                pwd = preferences.getString(PreferenceConstants.P_STRING_PASSWORD),
-                                server = preferences.getString(PreferenceConstants.P_STRING_SERVER),
-                                server_port = preferences.getString(PreferenceConstants.P_STRING_SERVERPORT);
+                                                        preferences.getString(PreferenceConstants.P_STRING_RESOURCE);
+                pwd = preferences.getString(PreferenceConstants.P_STRING_PASSWORD);
+                server = preferences.getString(PreferenceConstants.P_STRING_SERVER);
+                server_port = preferences.getString(PreferenceConstants.P_STRING_SERVERPORT);
+                
                 IExecutionPipe exec = new IExecutionPipe() {
                         public void exec(Runnable r) {
                                 // Eclipse specific code to inject Runnables in the GUI thread
