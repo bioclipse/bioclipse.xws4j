@@ -38,7 +38,7 @@ import net.bioclipse.xws.binding.exceptions.XwsBindingException;
  */
 public class XwsManager implements IXwsManager {
         public String getNamespace() {
-                return "xws";
+                return "xmpp";
         }
     public Client getDefaultClient() throws Xws4jException {
     	return Activator.getDefaultClientCurator().getDefaultClient();
