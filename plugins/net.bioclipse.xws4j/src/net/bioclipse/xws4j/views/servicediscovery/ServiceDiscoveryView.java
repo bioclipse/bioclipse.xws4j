@@ -26,6 +26,8 @@ import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.layout.TreeColumnLayout;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -197,6 +199,16 @@ public class ServiceDiscoveryView extends ViewPart {
 		text_address = new Text(comp_address, SWT.SINGLE | SWT.BORDER);
 		text_address.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text_address.setEnabled(false);
+		text_address.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.character == SWT.CR) {
+					String jid = text_address.getText();
+					if (!jid.equals("")) {
+						discoverNew(jid, "");
+					}
+				}
+			}
+		});
 		button_go = new Button(comp_address, SWT.PUSH);
 		button_go.setText("Go");
 		button_go.setEnabled(false);
