@@ -23,7 +23,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -38,6 +39,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
@@ -50,7 +53,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-
 import java.util.LinkedList;
 
 /**
@@ -87,8 +89,10 @@ public class ServiceDiscoveryView extends ViewPart {
 	private Button button_go;
 	private Menu menu_function;
 	private ProgressBar progressbar;
+	TreeColumn c0, c1, c2;
 	private TreeObject current_treeobject = null, current_firstleveltreeobject = null;
 	private TreeViewerContentProvider contentprovider;
+	private TreeViewerLabelProvider labelprovider;
 	private LinkedList<TreeObject> visited_treeobjects = new LinkedList<TreeObject>();
 	
 	private static final String OFFLINE_STAT		= "Not connected to XMPP server. An active connection to a XMPP server is required to use XMPP Service Discovery.";
@@ -96,8 +100,34 @@ public class ServiceDiscoveryView extends ViewPart {
 	private static final String ONLINE_DISCOVERING	= "Discovering: ";
 	private static final String ONLINE_CANCELED		= "Discovery was canceled.";
 	private static final String ONLINE_DISCOERROR	= "Error on discovering: ";
-	
-	class NameSorter extends ViewerSorter {
+		
+	class NameComparator extends ViewerComparator {
+		public boolean isSorterProperty(Object element, String property) {
+			return true;
+		}
+		public int compare(Viewer viewer, Object e1, Object e2) {
+			if (viewer instanceof TreeViewer) {
+				TreeColumn sortColumn = ((TreeViewer)viewer).getTree().getSortColumn();
+				int index;
+				if (sortColumn == c0)
+					index = 0;
+				else if (sortColumn == c1)
+					index = 1;
+				else
+					index = 2;
+				String e1_text = labelprovider.getColumnText(e1, index);
+				if (e1_text == null)
+					e1_text = "";
+				String e2_text = labelprovider.getColumnText(e2, index);
+				if (e2_text == null)
+					e2_text = "";
+				if (((TreeViewer)viewer).getTree().getSortDirection() == SWT.UP)
+					return e1_text.compareToIgnoreCase(e2_text);
+				else
+					return e2_text.compareToIgnoreCase(e1_text);
+			}
+			return 0;
+		}
 	}
 
 	public static void setStatusConnected(boolean connected) {
@@ -230,24 +260,25 @@ public class ServiceDiscoveryView extends ViewPart {
 		Composite comp_treeviewer = new Composite(parent, SWT.NONE);
 		comp_treeviewer.setLayoutData(new GridData(GridData.FILL_BOTH));
 		contentprovider = new TreeViewerContentProvider(this);
+		labelprovider = new TreeViewerLabelProvider();
 		viewer = new TreeViewer(comp_treeviewer, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(contentprovider);
-		viewer.setLabelProvider(new TreeViewerLabelProvider());
-		viewer.setSorter(new NameSorter());
+		viewer.setLabelProvider(labelprovider);
+		viewer.setComparator(new NameComparator());
 		viewer.setInput(getViewSite());
 		viewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		viewer.getTree().setEnabled(false);
 		viewer.getTree().setHeaderVisible(true);
-		TreeColumn c1 = new TreeColumn(viewer.getTree(), SWT.LEFT),
-					c2 = new TreeColumn(viewer.getTree(), SWT.LEFT),
-					c3 = new TreeColumn(viewer.getTree(), SWT.LEFT);
-		c1.setText("Name");
-		c2.setText("Jabber-ID");
-		c3.setText("Node");
+		c0 = new TreeColumn(viewer.getTree(), SWT.LEFT);
+		c1 = new TreeColumn(viewer.getTree(), SWT.LEFT);
+		c2 = new TreeColumn(viewer.getTree(), SWT.LEFT);
+		c0.setText("Name");
+		c1.setText("Jabber-ID");
+		c2.setText("Node");
 		TreeColumnLayout layout = new TreeColumnLayout();
-		layout.setColumnData( c1, new ColumnWeightData(50));
+		layout.setColumnData( c0, new ColumnWeightData(50));
+		layout.setColumnData( c1, new ColumnWeightData(25));
 		layout.setColumnData( c2, new ColumnWeightData(25));
-		layout.setColumnData( c3, new ColumnWeightData(25));
 		comp_treeviewer.setLayout(layout);
 
 		makeActionsAndMenus();
@@ -385,6 +416,29 @@ public class ServiceDiscoveryView extends ViewPart {
 	}
 	
 	private void addViewerListeners() {
+		Listener sortListener = new Listener() {
+			public void handleEvent(Event e) {
+				//TreeItem[] items = viewer.getTree().getItems();
+				//Collator collator = Collator.getInstance(Locale.getDefault());
+				TreeColumn sortColumn = viewer.getTree().getSortColumn();
+				TreeColumn currentColumn = (TreeColumn) e.widget;
+				if (sortColumn == currentColumn) {
+					int dir = viewer.getTree().getSortDirection();
+					if (dir == SWT.UP)
+						viewer.getTree().setSortDirection(SWT.DOWN);
+					else
+						viewer.getTree().setSortDirection(SWT.UP);
+				} else
+					viewer.getTree().setSortColumn(currentColumn);
+				viewer.refresh();
+			}
+		};
+		c0.addListener(SWT.Selection, sortListener);
+		c1.addListener(SWT.Selection, sortListener);
+		c2.addListener(SWT.Selection, sortListener);
+	    viewer.getTree().setSortColumn(c0);
+	    viewer.getTree().setSortDirection(SWT.UP);
+		
 		ITreeViewerListener tvlistener = new ITreeViewerListener() {
 			public void treeCollapsed(TreeExpansionEvent event) {
 			}
