@@ -1,21 +1,18 @@
 package net.bioclipse.xws4j.views.servicediscovery;
 
+import java.io.File;
+
 import net.bioclipse.xws.binding.BindingManager;
 import net.bioclipse.xws.binding.exceptions.XwsBindingException;
 import net.bioclipse.xws.client.adhoc.IFunction;
 import net.bioclipse.xws.client.adhoc.IoSchemata;
 import net.bioclipse.xws4j.Activator;
-import net.bioclipse.xws4j.DefaultBindingDefinitions;
-
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressConstants;
 
 /**
@@ -42,6 +39,26 @@ public class BindingGenerator {
 	public static void createBinding(final IFunction function) {
 		final String job_title = "Creating a Java binding for function '" +
 		function.getName() + "' of XMPP Service " + function.getJid();
+		
+		File files[] = BindingManager.getBindingFiles(function, Activator.getDefaultBindingDefinitions());
+		if (files.length > 0) {
+			String newline = System.getProperty("line.separator");
+			// it seems bindings for this function already exist. delete them and create a binding or abort?
+			boolean replace = MessageDialog.openConfirm(
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell() ,
+                    "XMPP Service Discovery",
+                    "A binding for function '" +
+            		function.getName() + "' of XMPP Service " + function.getJid() +
+            		" exists already." + newline + 
+            		newline + "Replace old binding with a new binding?");
+			if (!replace) {
+				return;
+			}
+
+			for (int i = 0; i < files.length; i++) {
+				deleteFile(files[i]);
+			}
+		}
 		
 		Job job = new Job(job_title) {
 			
@@ -80,14 +97,7 @@ public class BindingGenerator {
 				
 				monitor.worked(1);
 				
-				try {
-					IWorkspace workspace = ResourcesPlugin.getWorkspace();
-					IWorkspaceRoot root = workspace.getRoot();
-					IProject project  = root.getProject(DefaultBindingDefinitions.WORKSPACE_PROJECT);
-					project.refreshLocal(IProject.DEPTH_ONE, null);
-				} catch (CoreException e) {
-					e.printStackTrace();
-				}
+				Activator.updateProjectExplorer();
 				
 				monitor.worked(1);
 				
@@ -98,4 +108,20 @@ public class BindingGenerator {
 		job.setUser(true);
 		job.schedule();
 	}
+	
+	public static boolean deleteFile(File path) {
+		if( path.exists() ) {
+			if (path.isDirectory()) {
+				File[] files = path.listFiles();
+				for(int i=0; i<files.length; i++) {
+					if(files[i].isDirectory()) {
+						deleteFile(files[i]);
+					} else {
+						files[i].delete();
+					}
+				}
+			}
+		}
+		return(path.delete());
+	} 
 }

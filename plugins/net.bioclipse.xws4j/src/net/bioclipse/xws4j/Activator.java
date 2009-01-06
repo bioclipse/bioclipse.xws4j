@@ -2,6 +2,11 @@ package net.bioclipse.xws4j;
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.xws4j.business.IXwsManager;
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -105,4 +110,15 @@ public class Activator extends AbstractUIPlugin {
         	reg.put("bullet_yellow", getImageDescriptor("icons/png/bullet_yellow.png"));
         	reg.put("page_white_gear", getImageDescriptor("icons/png/page_white_gear.png"));
         }
+        
+    	public static void updateProjectExplorer() {
+    		try {
+    			IWorkspace workspace = ResourcesPlugin.getWorkspace();
+    			IWorkspaceRoot root = workspace.getRoot();
+    			IProject project  = root.getProject(DefaultBindingDefinitions.WORKSPACE_PROJECT);
+    			project.refreshLocal(IProject.DEPTH_ONE, null);
+    		} catch (CoreException e) {
+    			e.printStackTrace();
+    		}
+    	}
 }
