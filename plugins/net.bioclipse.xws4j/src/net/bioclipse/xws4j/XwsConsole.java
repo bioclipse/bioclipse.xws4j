@@ -38,7 +38,7 @@ import org.eclipse.ui.console.IConsoleFactory;
  */
 public class XwsConsole implements IConsoleFactory {
         private static MessageConsole messageConsole = null;
-        private static String consoleName = "XMPP Services Console";
+        private static String consoleName = "XMPP Console";
         private static MessageConsoleStream out = null,
                                                                                 out_blue = null,
                                                                                 out_red = null;
