@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="jars/xws4j-current/xws4j-binding-09.01.05.jar"/>
+	<classpathentry exported="true" kind="lib" path="jars/xws4j-current/xws4j-binding-09.01.08.jar"/>
 	<classpathentry exported="true" kind="lib" path="jars/xws4j-current/xws4j-09.01.02.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
