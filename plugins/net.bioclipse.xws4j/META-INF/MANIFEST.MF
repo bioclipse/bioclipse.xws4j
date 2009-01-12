@@ -54,5 +54,5 @@ Bundle-ClassPath: .,
  jars/xmlbeans-2.4.0/lib/xmlbeans-qname.jar,
  jars/xmlbeans-2.4.0/lib/xmlpublic.jar,
  jars/ecj-3.4.1/ecj-3.4.1.jar,
- jars/xws4j-current/xws4j-09.01.02.jar,
- jars/xws4j-current/xws4j-binding-09.01.08.jar
+ jars/xws4j-current/xws4j-09.01.12.jar,
+ jars/xws4j-current/xws4j-binding-09.01.12.jar
