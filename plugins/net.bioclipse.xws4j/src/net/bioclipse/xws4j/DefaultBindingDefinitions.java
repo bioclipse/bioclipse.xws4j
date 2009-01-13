@@ -41,8 +41,8 @@ public class DefaultBindingDefinitions extends BindingDefinitions {
                         if (!project.exists())
                                 project.create(null);
                         if (!project.isOpen()) project.open(null);
-                } catch (CoreException e2) {
-                        e2.printStackTrace();
+                } catch (CoreException e) {
+                        PluginLogger.log(e.getMessage());
                 }
                 String target_dir=project.getLocation().toOSString();
                 XwsConsole.writeToConsole("Target directory for bindings is: " + target_dir);

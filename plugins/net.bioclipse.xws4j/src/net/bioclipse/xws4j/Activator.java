@@ -135,7 +135,7 @@ public class Activator extends AbstractUIPlugin {
     			IProject project  = root.getProject(DefaultBindingDefinitions.WORKSPACE_PROJECT);
     			project.refreshLocal(IProject.DEPTH_ONE, null);
     		} catch (CoreException e) {
-    			e.printStackTrace();
+    			PluginLogger.log(e.getMessage());
     		}
     	}
 }
