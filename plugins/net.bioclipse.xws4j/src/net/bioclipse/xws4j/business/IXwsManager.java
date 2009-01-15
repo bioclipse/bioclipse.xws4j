@@ -128,4 +128,13 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Loads an existing IoDataFactory for the specified function." )
     @Recorded
     public IIoFactory getIoFactory(IFunction function) throws XwsBindingException;
+
+    /**
+     * Checks if an IoDataFactory exists for the specified function in binding directory.
+     * @param ioschemata the IoSchemata object
+     * @return true if exists, false otherwise
+     */
+    @PublishedMethod( methodSummary = "Checks if an IoDataFactory exists for the specified function." )
+    @Recorded
+	boolean existsIoFactory(IFunction function);
 }

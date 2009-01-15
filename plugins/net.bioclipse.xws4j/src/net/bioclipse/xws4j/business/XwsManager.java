@@ -82,7 +82,24 @@ public class XwsManager implements IXwsManager {
     	Activator.updateProjectExplorer();
     	return iofactory;
     }
+    
     public IIoFactory getIoFactory(IFunction function) throws XwsBindingException {
     	return BindingManager.getIoFactory(function, Activator.getDefaultBindingDefinitions());
     }
+
+    /**
+     * Checks if IoFactory exists for a function
+     * @param function
+     * @return true if exists, false otherwise
+     */
+    public boolean existsIoFactory(IFunction function){
+    	try {
+			IIoFactory fac = BindingManager.getIoFactory(function, Activator.getDefaultBindingDefinitions());
+			if (fac==null) return false;
+		} catch (XwsBindingException e) {
+			return false;
+		}
+    	return true;
+    }
+
 }
