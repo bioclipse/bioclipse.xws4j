@@ -84,6 +84,8 @@ public class BindingGenerator {
 				if (monitor.isCanceled())
 					return Status.CANCEL_STATUS;
 				
+				monitor.setTaskName("Compiling the binding.");
+				
 				try {
 					BindingManager.getIoFactory(ioschemata, Activator.getDefaultBindingDefinitions());
 				} catch (XwsBindingException e) {
