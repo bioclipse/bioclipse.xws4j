@@ -11,6 +11,7 @@ import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.xmpp.XmppTools;
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.disco.DiscoStatus;
+import net.bioclipse.xws.exceptions.XwsException;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
@@ -479,13 +480,20 @@ public class ServiceDiscoveryView extends ViewPart {
 					if (object != null && object instanceof TreeObject) {
 						TreeObject treeobject = (TreeObject)object;
 						IXmppItem xitem = treeobject.getXmppItem();
-						if (xitem instanceof IFunction) {
-							action_bind.setEnabled(true);
-							viewer.getTree().setMenu(menu_function);
-						} else {
-							action_bind.setEnabled(false);
-							viewer.getTree().setMenu(null);
+						if (xitem instanceof IFunction &&
+								xitem.getDiscoStatus() == DiscoStatus.DISCOVERED) {
+							try {
+								if (((IFunction)xitem).isCompatibleFunction()) {
+									action_bind.setEnabled(true);
+									viewer.getTree().setMenu(menu_function);
+									return;
+								}
+							} catch (XwsException e) {
+								PluginLogger.log(e.getMessage());
+							}
 						}
+						action_bind.setEnabled(false);
+						viewer.getTree().setMenu(null);
 					}
 				}
 			}

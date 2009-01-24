@@ -15,7 +15,9 @@ import net.bioclipse.xws.client.adhoc.IFunction;
 import net.bioclipse.xws.client.adhoc.IService;
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.disco.DiscoStatus;
+import net.bioclipse.xws.exceptions.XwsException;
 import net.bioclipse.xws4j.Activator;
+import net.bioclipse.xws4j.PluginLogger;
 
 /**
  * 
@@ -51,8 +53,14 @@ ITableLabelProvider, ITableFontProvider, ITableColorProvider {
 			if (element instanceof TreeObject) {
 				TreeObject treeobject = (TreeObject)element;
 				IXmppItem xitem = treeobject.getXmppItem();
-				if (xitem instanceof IFunction) {
-					return Activator.getDefault().getImageRegistry().get("cog");
+				if (xitem instanceof IFunction &&
+						xitem.getDiscoStatus() == DiscoStatus.DISCOVERED) {
+					try {
+						if (((IFunction)xitem).isCompatibleFunction())
+							return Activator.getDefault().getImageRegistry().get("cog");
+					} catch (XwsException e) {
+						PluginLogger.log(e.getMessage());
+					}
 				}
 				if (xitem.getDiscoStatus() == DiscoStatus.DISCOVERED) {
 					if (xitem instanceof IService)
