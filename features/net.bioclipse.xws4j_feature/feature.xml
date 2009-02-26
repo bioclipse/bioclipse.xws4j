@@ -31,7 +31,7 @@ http://www.eclipse.org/legal/epl-v10.html
    </license>
 
    <requires>
-      <import feature="net.bioclipse_feature" version="2.0.0.A20081121"/>
+      <import feature="net.bioclipse.core_feature" version="2.0.0.B20090227"/>
    </requires>
 
    <plugin
