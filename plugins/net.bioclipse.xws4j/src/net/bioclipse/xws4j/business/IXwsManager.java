@@ -137,4 +137,9 @@ public interface IXwsManager extends IBioclipseManager {
     @PublishedMethod( methodSummary = "Checks if an IoDataFactory exists for the specified function." )
     @Recorded
 	boolean existsIoFactory(IFunction function);
+
+    @PublishedMethod(
+            methodSummary = "Converts a DOM element to String"
+    )
+    public String toString(org.w3c.dom.Element element);
 }

@@ -1,4 +1,7 @@
 package net.bioclipse.xws4j.business;
+import org.w3c.dom.Element;
+
+import net.bioclipse.xws.JavaDOMTools;
 import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.adhoc.IFunction;
@@ -100,6 +103,10 @@ public class XwsManager implements IXwsManager {
 			return false;
 		}
     	return true;
+    }
+
+    public String toString(Element element) {
+        return JavaDOMTools.w3cElementToString(element);
     }
 
 }
