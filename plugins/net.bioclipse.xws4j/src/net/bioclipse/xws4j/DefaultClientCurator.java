@@ -1,6 +1,9 @@
 package net.bioclipse.xws4j;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
+
 import net.bioclipse.xws4j.actions.ActionPulldown;
 import net.bioclipse.xws4j.preferences.PreferenceConstants;
 import net.bioclipse.xws4j.exceptions.Xws4jException;
@@ -124,7 +127,8 @@ public class DefaultClientCurator {
                         return default_client.isConnected();
                 return false;
         }
-        public void connectClient() throws Xws4jException {
+        public void connectClient(final boolean with_GUI_error)
+        										throws Xws4jException {
                 final Client client = getDefaultClient();
                 Runnable r = new Runnable() {
                         public void run() {
@@ -132,7 +136,22 @@ public class DefaultClientCurator {
                                 try {
                                         client.connect();
                                 } catch (Exception e) {
-                                        XwsConsole.writeToConsoleBlueT("Could not connect default client: " + e);
+                                	final String error_s = e.getLocalizedMessage();
+                                	XwsConsole.writeToConsoleBlueT("Could not connect default client: " + error_s);
+                                    if (with_GUI_error) {
+                                    	Runnable r = new Runnable() {
+                                    	public void run() {
+                                    		MessageDialog.openError(
+                                    				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                                					"XMPP Error",
+                                					"Connecting to XMPP server failed." +
+                                					System.getProperty("line.separator") +
+                                					System.getProperty("line.separator") +
+                                					error_s);
+	                                    	}
+	                                    };
+	                                	Display.getDefault().asyncExec(r);
+                                    }
                                 }
                         }
                 };

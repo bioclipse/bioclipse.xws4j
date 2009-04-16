@@ -60,7 +60,7 @@ public class ToggleConnectionAction extends Action {
                         clientcurator.disconnectClient();
                 else {
                         try {
-                                clientcurator.connectClient();
+                                clientcurator.connectClient(true);
                         } catch (Exception e) {
                                 clientcurator.disconnectClient();
                                 MessageDialog.openError(
