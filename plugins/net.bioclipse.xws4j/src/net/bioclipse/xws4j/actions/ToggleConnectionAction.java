@@ -1,6 +1,9 @@
 package net.bioclipse.xws4j.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.PlatformUI;
+
 import net.bioclipse.xws4j.Activator;
 import net.bioclipse.xws4j.DefaultClientCurator;
 /**
@@ -60,6 +63,13 @@ public class ToggleConnectionAction extends Action {
                                 clientcurator.connectClient();
                         } catch (Exception e) {
                                 clientcurator.disconnectClient();
+                                MessageDialog.openError(
+                                		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                        				"XMPP Error",
+                        				"Connecting to XMPP server failed." +
+                        				System.getProperty("line.separator") +
+                        				System.getProperty("line.separator") +
+                        				e.getLocalizedMessage());
                         }
                 }
         }
