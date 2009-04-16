@@ -40,8 +40,15 @@ public class XwsConsole implements IConsoleFactory {
         private static MessageConsole messageConsole = null;
         private static String consoleName = "XMPP Console";
         private static MessageConsoleStream out = null,
-                                                                                out_blue = null,
-                                                                                out_red = null;
+                                            out_blue = null,
+                                            out_red = null;
+        
+        private enum Colors {
+        	BLACK,
+        	BLUE,
+        	RED
+        }
+
         public void openConsole() {
                 show();
         }
@@ -77,12 +84,20 @@ public class XwsConsole implements IConsoleFactory {
                 return xwsConsole;
         }
         
-        private static void println(final MessageConsoleStream consolestream, final String message) {
+        private static void println(final Colors colors, final String message) {
         	int message_length = message.length();
         	final int MAX_SIZE = 25000;
         	if (message_length > MAX_SIZE) {
         		Runnable r = new Runnable() {
                     public void run() {
+                    	MessageConsoleStream consolestream;
+                    	if (colors == Colors.BLUE)
+                    		consolestream = getConsoleStreamBlue();
+                    	else if (colors == Colors.RED)
+                    		consolestream = getConsoleStreamRed();
+                    	else
+                    		consolestream = getConsoleStream();
+                    	
                     	consolestream.print(message.substring(0, MAX_SIZE));
                     	consolestream.println(" [...]");
                     	consolestream.println(" A String was cut: the String exceeded the maxiumum size of 25000");
@@ -92,6 +107,13 @@ public class XwsConsole implements IConsoleFactory {
         	} else {
         		Runnable r = new Runnable() {
                     public void run() {
+                    	MessageConsoleStream consolestream;
+                    	if (colors == Colors.BLUE)
+                    		consolestream = getConsoleStreamBlue();
+                    	else if (colors == Colors.RED)
+                    		consolestream = getConsoleStreamRed();
+                    	else
+                    		consolestream = getConsoleStream();
                     	consolestream.println(message);
                     }
         		};
@@ -100,14 +122,14 @@ public class XwsConsole implements IConsoleFactory {
         }
         
         public static void writeToConsole(final String message) {
-        	println(getConsoleStream(), message);
+        	println(Colors.BLACK, message);
 
         }
         public static void writeToConsoleBlue(final String message) {
-        	println(getConsoleStreamBlue(), message);
+        	println(Colors.BLUE, message);
         }
         public static void writeToConsoleRed(final String message) {
-        	println(getConsoleStreamRed(), message);
+        	println(Colors.RED, message);
         }
         // with time-stamp
         public static void writeToConsoleBlueT(String message) {
