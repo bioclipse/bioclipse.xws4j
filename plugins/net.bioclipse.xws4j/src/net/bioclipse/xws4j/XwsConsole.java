@@ -97,6 +97,8 @@ public class XwsConsole implements IConsoleFactory {
                     		consolestream = getConsoleStreamRed();
                     	else
                     		consolestream = getConsoleStream();
+                    	if (consolestream == null)
+                            return;
                     	
                     	consolestream.print(message.substring(0, MAX_SIZE));
                     	consolestream.println(" [...]");
@@ -114,6 +116,8 @@ public class XwsConsole implements IConsoleFactory {
                     		consolestream = getConsoleStreamRed();
                     	else
                     		consolestream = getConsoleStream();
+                    	if (consolestream == null)
+                            return;
                     	consolestream.println(message);
                     }
         		};
