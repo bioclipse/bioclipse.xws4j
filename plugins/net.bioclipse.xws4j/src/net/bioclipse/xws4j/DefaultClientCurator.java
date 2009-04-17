@@ -77,9 +77,9 @@ public class DefaultClientCurator {
                 // create new client with (new) default data
                 if (!isAccountDataSet()) {
                         XwsConsole.writeToConsoleBlueT("Could not create default client:" +
-                                        " the plug-in has set invalide account data in preferences.");
+                                        " Invalid or missing XMPP account data in preferences.");
                         throw new Xws4jException("Could not create default client:" +
-                                        " the plug-in has set invalide account data in preferences.");
+                                        " Invalid or missing XMPP account data in preferences.");
                 }
                 clientJID = preferences.getString(PreferenceConstants.P_STRING_JID) +
                                                         "/" +
