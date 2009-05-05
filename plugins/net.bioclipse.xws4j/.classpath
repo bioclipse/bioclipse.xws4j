@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="jars/xws4j/xws4j-09.05.05.jar"/>
+	<classpathentry exported="true" kind="lib" path="jars/xws4j/xws4j-binding-09.05.05.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
@@ -11,7 +13,5 @@
 	<classpathentry exported="true" kind="lib" path="jars/xmlbeans-2.4.0/lib/xmlbeans-qname.jar" sourcepath="net.bioclipse.xws4jsrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jars/xmlbeans-2.4.0/lib/xmlpublic.jar" sourcepath="net.bioclipse.xws4jsrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jars/ecj-3.4.1/ecj-3.4.1.jar" sourcepath="net.bioclipse.xws4jsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jars/xws4j/xws4j-09.05.03.jar" sourcepath="net.bioclipse.xws4jsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jars/xws4j/xws4j-binding-09.05.03.jar" sourcepath="net.bioclipse.xws4jsrc.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -68,6 +68,6 @@ Bundle-ClassPath: .,
  jars/xmlbeans-2.4.0/lib/xmlbeans-qname.jar,
  jars/xmlbeans-2.4.0/lib/xmlpublic.jar,
  jars/ecj-3.4.1/ecj-3.4.1.jar,
- jars/xws4j/xws4j-09.05.03.jar,
- jars/xws4j/xws4j-binding-09.05.03.jar
+ jars/xws4j/xws4j-09.05.05.jar,
+ jars/xws4j/xws4j-binding-09.05.05.jar
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
