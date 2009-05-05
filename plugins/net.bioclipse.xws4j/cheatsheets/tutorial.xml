@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="XMPP + IO Data tutorial">
+   <intro>
+      <description>
+         This tutorial shows the basics when working with XMPP + IO Data in Bioclipse.
+      </description>
+   </intro>
+
+   <item
+         skip="true"
+         title="Step 1: Set up XMPP credentials">
+      <description>
+         Open preferences  from menu (<b>Window &gt; Preferences</b>) and go to the XMPP page. Enter an existing Jabber server and your Jabber ID (JID) or use these values:<br/><br/>
+
+<b>Server:</b> ws1.bmc.uu.se<br/>
+<b>Jabber ID:</b> test@ws1.bmc.uu.se<br/>
+<b>Password:</b> test<br/> 
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=net.bioclipse.xws4j.preferencepage)"/>
+   </item>
+   <item
+         title="Step 2: Connect to the XMPP network">
+      <description>
+         In the menu, click XMPP &gt; Connect. If all goes well, the light bulb in the toolbar should turn yellow to indicate that connection has been established to the XMPP network.
+      </description>
+      
+                	<action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="xmpp.connect()"/>
+      
+   </item>
+
+   
+      <item
+            skip="true"
+            title="Step 3: Open the Service View">
+      <description>
+         Show the service view from menu: <b>Window &gt; Show view &gt; Other...</b> and select <b>XMPP &gt; XMPP Service Discovery</b>
+         
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.bioclipse.xws4j.servicediscoveryview)"/>
+   </item>
+   
+   
+         <item
+        skip="true"
+               title="Step 4: Discover services">
+      <description>
+         Enter a valid XMPP server in the Service Discovery View.<br/><br/>
+
+<b>Example:</b> ws1.bmc.uu.se<br/><br/>
+
+Note available services and expand them by clicking the arrow to the left and reveal the functions.
+         
+      </description>
+      
+   </item>
+   
+         <item
+        skip="true"
+         title="Step 5: Create binding for a service">
+      <description>
+         If you expand one of the services in the Service Discovery View and select one of its functions, then click the button in the toolbar of the Service Disvocery View looking like a plus (+), this generates Java classes at runtime needed to call the service. The folder in the navigator named XMPP Service Bindings holds the results.<br/><br/>
+
+Generate binding for the service/function: <b>CDK XMPP Services &gt; Calculate the mass of this molecule...</b>
+         
+      </description>
+      
+   </item>
+   
+ 	<item
+        skip="false"
+        title="Step 6: Show the Javascript Console">
+		<description>
+		Bioclipse scripting is built on Javascript, so te be able to enter scripting commands we need to reveal the Javascript View.<br/><br/>
+To show available views, use the main menu option <b>Window &gt; Show View &gt; Other...</b>. In the opened Views dialog, select the Javscript View.
+		</description>
+   <command
+        required="false"
+        serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=net.bioclipse.scripting.ui.views.JsConsoleView)"/>
+ 	</item>
+
+ 	<item
+        skip="true"
+        title="Step 7: Basic XMPP commands">
+		<description>
+
+Try the following commands in the JS Console, they print the functions of a service to the JS Console.<br/><br/>
+
+<b>xmpp.connect();</b><br/>
+<b>s=xmpp.getService("cdk.ws1.bmc.uu.se");</b><br/>
+<b>s.discoverSync(20000);</b><br/>
+<b>js.print(s.getFunctions());</b><br/>
+
+		</description>
+          	<action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="xmpp.connect();s=xmpp.getService(&quot;cdk.ws1.bmc.uu.se&quot;);s.discoverSync(20000);js.print(s.getFunctions());"/>
+ 	</item>
+
+ 	<item
+        skip="true"
+               title="Step 8: View available XMPP gists (scripts)">
+            <description>
+               There are several gists (scripts) available that demonstrates calling XMPP services, see:<br/><br/>
+
+<b>http://delicious.com/tag/bioclipse+xmpp+gist</b><br/><br/>
+            </description>
+            
+                  <command
+            required="false"
+            serialization="org.eclipse.ui.browser.openBrowser(url=http://delicious.com/tag/bioclipse+xmpp+gist)"/>
+            
+         </item>
+         
+
+   <item
+         title="Step 9: Download Gists into Bioclipse">
+      <description>
+
+		Bioclipse has support built-in to download Gists. Use the command:<br/><br/>
+	
+		<b>gist.download(22185)</b><br/><br/>
+		
+		The result in the Javascript console tells you where the downloaded file is located.
+		
+      </description>
+    	<action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="res=gist.download(22185,&quot;/Virtual/gencoords.js&quot;); ui.open(res); js.executeFile(res)"/>
+      
+   </item>
+
+</cheatsheet>

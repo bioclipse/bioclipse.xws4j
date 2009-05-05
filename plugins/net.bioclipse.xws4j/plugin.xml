@@ -103,4 +103,18 @@
             name="XMPP">
       </category>
    </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <cheatsheet
+            category="net.bioclipse.xws4j.category"
+            composite="false"
+            contentFile="cheatsheets/tutorial.xml"
+            id="net.bioclipse.xws4j.tutorial"
+            name="XMPP + IO Data tutorial">
+      </cheatsheet>
+      <category
+            id="net.bioclipse.xws4j.category"
+            name="XWS4J">
+      </category>
+   </extension>
 </plugin>
