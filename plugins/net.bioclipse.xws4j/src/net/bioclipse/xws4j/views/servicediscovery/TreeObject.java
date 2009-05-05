@@ -10,6 +10,8 @@ import net.bioclipse.xws.client.disco.DiscoStatus;
 import net.bioclipse.xws.client.disco.Functions;
 import net.bioclipse.xws.client.disco.Items;
 import net.bioclipse.xws.client.listeners.IDiscoListener;
+import net.bioclipse.xws.exceptions.XwsException;
+import net.bioclipse.xws4j.PluginLogger;
 import net.bioclipse.xws4j.XwsConsole;
 
 /**
@@ -91,7 +93,12 @@ public class TreeObject implements TreeViewerContentProvider.ITreeObject, IDisco
 				xmppitem.getDiscoStatus() == DiscoStatus.NOT_DISCOVERED) {
 			children.add(new TempTreeObject(this));
 		} else {
-			Items items = xmppitem.getItems();
+			Items items = null;
+			try {
+				items = xmppitem.getItems();
+			} catch (XwsException e) {
+				PluginLogger.log(e.getMessage());
+			}
 			if (items != null) {
 				List<IXmppItem> xitems = items.getList();
 				if (xitems != null) {
@@ -106,7 +113,13 @@ public class TreeObject implements TreeViewerContentProvider.ITreeObject, IDisco
 			}
 			
 			if (xmppitem instanceof IService) {
-				Functions functions = ((IService)xmppitem).getFunctions();
+				Functions functions = null;
+				try {
+					functions = ((IService)xmppitem).getFunctions();
+				} catch (XwsException e) {
+					PluginLogger.log(e.getMessage());
+				}
+				
 				if (functions != null) {
 					List<IFunction> xfunctions = functions.getList();
 					if (xfunctions != null) {
