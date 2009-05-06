@@ -1,5 +1,6 @@
 package net.bioclipse.xws4j.business;
 
+import net.bioclipse.core.PublishedClass;
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.IBioclipseManager;
@@ -13,6 +14,7 @@ import net.bioclipse.xws4j.exceptions.Xws4jException;
 import net.bioclipse.xws.binding.IIoFactory;
 import net.bioclipse.xws.binding.exceptions.XwsBindingException;
 
+@PublishedClass( "Contains methods for working with XWS4J")
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
