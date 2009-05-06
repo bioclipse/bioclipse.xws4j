@@ -78,7 +78,7 @@ Generate binding for the service/function: <b>CDK XMPP Services &gt; Calculate t
         skip="false"
         title="Step 6: Show the Javascript Console">
 		<description>
-		Bioclipse scripting is built on Javascript, so te be able to enter scripting commands we need to reveal the Javascript View.<br/><br/>
+		Bioclipse scripting is built on Javascript, so to be able to enter scripting commands we need to reveal the Javascript View.<br/><br/>
 To show available views, use the main menu option <b>Window &gt; Show View &gt; Other...</b>. In the opened Views dialog, select the Javscript View.
 		</description>
    <command
@@ -130,13 +130,16 @@ Try the following commands in the JS Console, they print the functions of a serv
 		<b>gist.download(22185)</b><br/><br/>
 		
 		The result in the Javascript console tells you where the downloaded file is located.
+		<br/><br/>
+		Alternatively: Use the menu File > New > Other... and select Download Gist. In the dialog, enter the gist number 22185.
 		
       </description>
-    	<action
-			pluginId="net.bioclipse.scripting.ui"
-			class="net.bioclipse.scripting.ui.actions.ScriptAction"
-			param1="res=gist.download(22185,&quot;/Virtual/gencoords.js&quot;); ui.open(res); js.executeFile(res)"/>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.newWizard(newWizardId=net.bioclipse.gist.wizards.NewFromGistWizard)"/>
       
    </item>
+   
+         
 
 </cheatsheet>
