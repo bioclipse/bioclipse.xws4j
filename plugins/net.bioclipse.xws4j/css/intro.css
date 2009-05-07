@@ -1,0 +1,7 @@
+a#weblink { text-align: left; }
+
+#weblink { text-align: left; color: #FF0000;}
+image-right {horizontal-align: right;}
+
+a#xmppitem img { background-image : url(graphics/xmpp-iodata48.png); }
+a#xmppitem:hover img { background-image : url(graphics/xmpp-iodata48.png); }

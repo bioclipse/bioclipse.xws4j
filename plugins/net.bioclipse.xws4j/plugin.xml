@@ -117,4 +117,11 @@
             name="XWS4J">
       </category>
    </extension>
+   
+      <extension point="org.eclipse.ui.intro.configExtension">
+      <configExtension
+            configId="org.eclipse.ui.intro.universalConfig"
+            content="configextension.xml"/>  
+   </extension>
+   
 </plugin>
