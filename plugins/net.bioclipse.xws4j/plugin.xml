@@ -112,9 +112,16 @@
             id="net.bioclipse.xws4j.tutorial"
             name="XMPP + IO Data tutorial">
       </cheatsheet>
+      <cheatsheet
+            category="net.bioclipse.xws4j.category"
+            composite="false"
+            contentFile="cheatsheets/xmppgists.xml"
+            id="net.bioclipse.xws4j.gists"
+            name="XMPP + IO Data sample scripts">
+      </cheatsheet>
       <category
             id="net.bioclipse.xws4j.category"
-            name="XWS4J">
+            name="XMPP + IO Data">
       </category>
    </extension>
    

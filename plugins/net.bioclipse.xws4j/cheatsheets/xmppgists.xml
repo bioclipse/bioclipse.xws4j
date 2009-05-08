@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="XMPP + IO Data tutorial">
+   <intro>
+      <description>
+         This tutorial shows a number of scripts for XMPP + IO Data. 
+         When "Click to perform" is clicked, Bioclipse downloads the Gist and 
+         opens it in the Javascript Editor. The toolbar of this editor has a 
+         run button that should be used to execute the script.
+      </description>
+   </intro>
+   
+   <item
+         skip="true"
+         title="Gist 106878: Connect to the XMPP server if not connected already">
+      <description>
+	This script calls connects to the XMPP server if not connected already.
+
+      </description>
+          	<action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="res=gist.download(106878)"
+			param2="ui.open(res)"/>
+   </item>
+
+
+   <item
+         skip="true"
+         title="Gist 106880: Disconnect from the server">
+      <description>
+	This script disconnects from the XMPP server.
+
+      </description>
+          	<action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="res=gist.download(106880)"
+			param2="ui.open(res)"/>
+   </item>
+
+   <item
+         skip="true"
+         title="Gist 106659: Do discovery on an XMPP item">
+      <description>
+	This script does discovery on an XMPP item.
+
+      </description>
+          	<action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="res=gist.download(106659)"
+			param2="ui.open(res)"/>
+   </item>
+
+   <item
+         skip="true"
+         title="Gist 106665: Do asynchronous discovery on an XMPP item">
+      <description>
+	Do asynchronous discovery on an XMPP item. Must be run from the Javascript Editor.
+    
+      </description>
+          	<action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="res=gist.download(106665)"
+			param2="ui.open(res)"/>
+   </item>
+
+   <item
+         skip="true"
+         title="Gist 47421: Synchronous service invocation + using binding (HIVPred)">
+      <description>
+	Synchronous service invocation + using binding (HIVPred).
+    
+      </description>
+          	<action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="res=gist.download(47421)"
+			param2="ui.open(res)"/>
+   </item>
+   
+      <item
+         skip="true"
+         title="Gist 106022: Asynchronous service invocation (+ using binding)">
+      <description>
+	Asynchronous service invocation (+ using binding)    
+    
+      </description>
+          	<action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="res=gist.download(106022)"
+			param2="ui.open(res)"/>
+   </item>
+
+</cheatsheet>
