@@ -102,7 +102,10 @@ Try the following commands in the JS Console, they print the functions of a serv
           	<action
 			pluginId="net.bioclipse.scripting.ui"
 			class="net.bioclipse.scripting.ui.actions.ScriptAction"
-			param1="xmpp.connect();s=xmpp.getService(&quot;cdk.ws1.bmc.uu.se&quot;);s.discoverSync(20000);js.print(s.getFunctions());"/>
+			param1="xmpp.connect()"
+			param2="s=xmpp.getService(&quot;cdk.ws1.bmc.uu.se&quot;)"
+			param3="s.discoverSync(20000)"
+			param4="js.print(s.getFunctions())"/>
  	</item>
 
  	<item
