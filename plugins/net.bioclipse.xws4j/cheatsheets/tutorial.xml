@@ -78,8 +78,8 @@ Generate binding for the service/function: <b>CDK XMPP Services &gt; Calculate t
         skip="false"
         title="Step 6: Show the Javascript Console">
 		<description>
-		Bioclipse scripting is built on Javascript, so to be able to enter scripting commands we need to reveal the Javascript View.<br/><br/>
-To show available views, use the main menu option <b>Window &gt; Show View &gt; Other...</b>. In the opened Views dialog, select the Javscript View.
+		Bioclipse scripting is built on Javascript, so to be able to enter scripting commands we need to reveal the Javascript Console view.<br/><br/>
+To show available views, use the main menu option <b>Window &gt; Show View &gt; Other...</b>. In the opened Views dialog, select the Javscript Console view.
 		</description>
    <command
         required="false"
@@ -91,10 +91,10 @@ To show available views, use the main menu option <b>Window &gt; Show View &gt; 
         title="Step 7: Basic XMPP commands">
 		<description>
 
-Try the following commands in the JS Console, they print the functions of a service to the JS Console.<br/><br/>
+Try the following commands in the Javascript Console, they print the functions of a service to the Javascript Console.<br/><br/>
 
 <b>xmpp.connect();</b><br/>
-<b>s=xmpp.getService("cdk.ws1.bmc.uu.se");</b><br/>
+<b>s=xmpp.getService(&quot;cdk.ws1.bmc.uu.se&quot;);</b><br/>
 <b>s.discoverSync(20000);</b><br/>
 <b>js.print(s.getFunctions());</b><br/>
 
@@ -130,19 +130,21 @@ Try the following commands in the JS Console, they print the functions of a serv
 
 		Bioclipse has support built-in to download Gists. Use the command:<br/><br/>
 	
-		<b>gist.download(22185)</b><br/><br/>
+		<b>gist.download(109331)</b><br/><br/>
 		
-		The result in the Javascript console tells you where the downloaded file is located.
+		The result in the Javascript Console tells you where the downloaded file is located.
 		<br/><br/>
-		Alternatively: Use the menu File > New > Other... and select Download Gist. In the dialog, enter the gist number 22185.
+		Alternatively: Use the menu File &gt; New &gt; Gists (gist.github.com) and select Download Gist. In the dialog, enter the gist number 109331.
+		<br/><br/>
+		The downloaded Gist is a javascript and should have a filename ending with .js<br/><br/>
+		<b>Javascript files open in the Javascript Editor, the toolbar of this editor has a run button that should be used to execute the script.</b>
 		
       </description>
-      <command
-            required="false"
-            serialization="org.eclipse.ui.newWizard(newWizardId=net.bioclipse.gist.wizards.NewFromGistWizard)"/>
-      
-   </item>
-   
-         
+      <action
+			pluginId="net.bioclipse.scripting.ui"
+			class="net.bioclipse.scripting.ui.actions.ScriptAction"
+			param1="res=gist.download(109331)"
+			param2="ui.open(res)"/>
+   </item>        
 
 </cheatsheet>
