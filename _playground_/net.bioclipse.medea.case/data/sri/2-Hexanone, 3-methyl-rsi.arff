@@ -1,0 +1,18 @@
+@relation  RadicalSiteInitiation 
+@attribute PartialSigmaChargeDescriptor_PB numeric 
+@attribute PartialPiChargeDescriptor_PB numeric 
+@attribute EffectiveAtomPolarizabilityDescriptor_PB numeric 
+@attribute PartialSigmaChargeDescriptor_PA numeric 
+@attribute PartialPiChargeDescriptor_PA numeric 
+@attribute EffectiveAtomPolarizabilityDescriptor_PA numeric 
+@attribute StructureResonanceCount_PA numeric 
+@attribute NumberCarbons_PA numeric 
+@attribute SigmaElectronegativityDescriptor_R numeric 
+@attribute LonePairCount_R numeric 
+@attribute ConnectedAtomsCount_R numeric 
+@attribute class {0_00,0_01,0_02,0_03,0_04,0_05,0_06,0_07,0_08,0_09,0_10,0_11,0_12,0_13,0_14,0_15,0_16,0_17,0_18,0_19,0_20,0_21,0_22,0_23,0_24,0_25,0_26,0_27,0_28,0_29,0_30,0_31,0_32,0_33,0_34,0_35,0_36,0_37,0_38,0_39,0_40,0_41,0_42,0_43,0_44,0_45,0_46,0_47,0_48,0_49,0_50,0_51,0_52,0_53,0_54,0_55,0_56,0_57,0_58,0_59,0_60,0_61,0_62,0_63,0_64,0_65,0_66,0_67,0_68,0_69,0_70,0_71,0_72,0_73,0_74,0_75,0_76,0_77,0_78,0_79,0_80,0_81,0_82,0_83,0_84,0_85,0_86,0_87,0_88,0_89,0_90,0_91,0_92,0_93,0_94,0_95,0_96,0_97,0_98,0_99} 
+@data 
+-00.0409,  05.6831,  01.0000, -04.2457,  00.1176,  02.9235,  00.0000,  13.0102,  01.0000,  01.0000,  02.1161, 0_97, 
+-00.0409,  05.6831,  01.0000, -04.2457,  00.1176,  02.9235,  00.0000,  13.0102,  01.0000,  01.0000,  02.1161, 0_97, 
+-00.0678,  02.2250,  01.0000, -04.2393,  00.1185,  04.6526,  01.0000,  13.0102,  01.0000,  01.0000,  01.0141, 0_00, 
+-00.0678,  02.2250,  01.0000, -04.2393,  00.1185,  04.6526,  01.0000,  13.0102,  01.0000,  01.0000,  01.0141, 0_00, 
