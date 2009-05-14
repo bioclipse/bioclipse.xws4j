@@ -3,7 +3,7 @@ package net.bioclipse.xws4j.business;
 import net.bioclipse.core.PublishedClass;
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
-import net.bioclipse.core.business.IBioclipseManager;
+import net.bioclipse.managers.business.IBioclipseManager;
 import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.client.IXmppItem;
 import net.bioclipse.xws.client.adhoc.IoSchemata;
