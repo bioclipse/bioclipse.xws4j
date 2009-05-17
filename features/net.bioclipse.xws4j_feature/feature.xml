@@ -32,10 +32,6 @@ is available at http://www.eclipse.org/legal/epl-v10.html
       <update label="Bioclipse2 update site" url="http://update2.bioclipse.net"/>
    </url>
 
-   <requires>
-      <import feature="net.bioclipse.core.patch" version="2.0.0.B20090515"/>
-   </requires>
-
    <plugin
          id="net.bioclipse.xws4j"
          download-size="0"
