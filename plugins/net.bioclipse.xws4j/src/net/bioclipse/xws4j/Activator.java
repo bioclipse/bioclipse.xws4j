@@ -1,6 +1,7 @@
 package net.bioclipse.xws4j;
 
 import net.bioclipse.core.util.LogUtils;
+import net.bioclipse.xws.binding.Config;
 import net.bioclipse.xws4j.business.IXwsManager;
 
 import org.apache.log4j.Logger;
@@ -65,11 +66,11 @@ public class Activator extends AbstractUIPlugin {
 		clientcurator = new DefaultClientCurator();
 		bindingdefinitions = new DefaultBindingDefinitions(context);
 		
-                finderTracker = new ServiceTracker( context, 
-                IXwsManager.class.getName(), 
-                null );
-                finderTracker.open();
-
+		Config.setStaticBindingDefinitions(bindingdefinitions);
+		finderTracker = new ServiceTracker( context, 
+				IXwsManager.class.getName(), 
+				null );
+		finderTracker.open();
 	}
 
 	/*
