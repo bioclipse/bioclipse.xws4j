@@ -123,7 +123,7 @@ public interface IXwsManager extends IBioclipseManager {
     
     /**
      * Loads an existing IoDataFactory for the specified function from binding directory.
-     * @param ioschemata the IoSchemata object
+     * @param function the function that should be used to find a binding for
      * @return The created IoDataFactory
      * @throws Xws4jException
      */
@@ -133,15 +133,19 @@ public interface IXwsManager extends IBioclipseManager {
 
     /**
      * Checks if an IoDataFactory exists for the specified function in binding directory.
-     * @param ioschemata the IoSchemata object
+     * @param function the function that should be used to find a binding for
      * @return true if exists, false otherwise
      */
     @PublishedMethod( methodSummary = "Checks if an IoDataFactory exists for the specified function." )
     @Recorded
 	boolean existsIoFactory(IFunction function);
 
-    @PublishedMethod(
-            methodSummary = "Converts a DOM element to String"
-    )
+    /**
+     * Converts a DOM element to String
+     * @param element the Java DOM Element to translate into a String
+     * @return the element converted to a string
+     */
+    @PublishedMethod( methodSummary = "Converts a DOM element to String" )
+    @Recorded
     public String toString(org.w3c.dom.Element element);
 }
