@@ -34,7 +34,7 @@ import net.bioclipse.xws.binding.exceptions.XwsBindingException;
  * @author Johannes Wagener, Ola Spjuth
  */
 public class XwsManager implements IXwsManager {
-        public String getNamespace() {
+        public String getManagerName() {
                 return "xmpp";
         }
     public Client getDefaultClient() throws Xws4jException {
