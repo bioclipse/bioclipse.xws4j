@@ -1,0 +1,122 @@
+<cml xmlns="http://www.xml-cml.org/schema"><molecule id="m1">
+  <atomArray>
+    <atom id="a1" elementType="C" x2="227.0451" y2="214.5642" formalCharge="0" hydrogenCount="0" />
+    <atom id="a2" elementType="C" x2="180.0018" y2="198.3283" formalCharge="0" hydrogenCount="0" />
+    <atom id="a3" elementType="C" x2="251.0469" y2="190.5625" formalCharge="0" hydrogenCount="0" />
+    <atom id="a4" elementType="O" x2="235.6858" y2="247.2066" formalCharge="0" hydrogenCount="0" />
+    <atom id="a5" elementType="C" x2="156.0" y2="226.0851" formalCharge="0" hydrogenCount="0" />
+    <atom id="a6" elementType="C" x2="280.809" y2="206.8837" formalCharge="0" hydrogenCount="0" />
+    <atom id="a7" elementType="C" x2="251.0469" y2="156.0" formalCharge="0" hydrogenCount="0" />
+    <atom id="a8" elementType="C" x2="176.1615" y2="244.3264" formalCharge="0" hydrogenCount="0" />
+    <atom id="a9" elementType="C" x2="315.3715" y2="206.8837" formalCharge="0" hydrogenCount="0" />
+    <atom id="a10" elementType="C" x2="159.8403" y2="274.0885" formalCharge="0" hydrogenCount="0" />
+    <atom id="a11" elementType="C" x2="200.1632" y2="244.3264" formalCharge="0" hydrogenCount="0" />
+    <atom id="a12" elementType="C" x2="332.6528" y2="236.6458" formalCharge="0" hydrogenCount="0" />
+    <atom id="a13" elementType="C" x2="184.8021" y2="306.7309" formalCharge="0" hydrogenCount="0" />
+    <atom id="a14" elementType="C" x2="302.8906" y2="253.9271" formalCharge="0" hydrogenCount="0" />
+    <atom id="a15" elementType="C" x2="365.2951" y2="245.2865" formalCharge="0" hydrogenCount="0" />
+    <atom id="a16" elementType="C" x2="224.1649" y2="292.3299" formalCharge="0" hydrogenCount="0" />
+    <atom id="a17" elementType="C" x2="302.8906" y2="288.4896" formalCharge="0" hydrogenCount="0" />
+    <atom id="a18" elementType="C" x2="382.5764" y2="275.0486" formalCharge="0" hydrogenCount="0" />
+    <atom id="a19" elementType="C" x2="258.7274" y2="311.5312" formalCharge="0" hydrogenCount="0" />
+    <atom id="a20" elementType="O" x2="335.533" y2="297.1302" formalCharge="0" hydrogenCount="0" />
+    <atom id="a21" elementType="O" x2="275.0486" y2="333.6129" formalCharge="0" hydrogenCount="0" />
+    <atom id="a22" elementType="C" x2="247.2066" y2="342.2535" formalCharge="0" hydrogenCount="0" />
+    <atom id="a23" elementType="O" x2="415.5651" y2="285.3594" formalCharge="0" hydrogenCount="0" />
+    <atom id="a24" elementType="C" x2="386.2601" y2="217.8085" formalCharge="0" hydrogenCount="0" />
+  </atomArray>
+  <bondArray>
+    <bond id="b1" atomRefs2="a2 a1" order="S" />
+    <bond id="b2" atomRefs2="a1 a3" order="S" />
+    <bond id="b3" atomRefs2="a1 a4" order="S">
+      <bondStereo dictRef="mdl:H" />
+    </bond>
+    <bond id="b4" atomRefs2="a2 a5" order="S" />
+    <bond id="b5" atomRefs2="a3 a6" order="S" />
+    <bond id="b6" atomRefs2="a3 a7" order="S" />
+    <bond id="b7" atomRefs2="a5 a8" order="S" />
+    <bond id="b8" atomRefs2="a6 a9" order="S" />
+    <bond id="b9" atomRefs2="a8 a10" order="D" />
+    <bond id="b10" atomRefs2="a8 a11" order="S" />
+    <bond id="b11" atomRefs2="a9 a12" order="S" />
+    <bond id="b12" atomRefs2="a13 a10" order="S" />
+    <bond id="b13" atomRefs2="a12 a14" order="S" />
+    <bond id="b14" atomRefs2="a12 a15" order="S">
+      <bondStereo dictRef="mdl:H" />
+    </bond>
+    <bond id="b15" atomRefs2="a16 a13" order="S" />
+    <bond id="b16" atomRefs2="a14 a17" order="S" />
+    <bond id="b17" atomRefs2="a15 a18" order="S" />
+    <bond id="b18" atomRefs2="a19 a16" order="S" />
+    <bond id="b19" atomRefs2="a17 a19" order="S" />
+    <bond id="b20" atomRefs2="a17 a20" order="S">
+      <bondStereo dictRef="mdl:H" />
+    </bond>
+    <bond id="b21" atomRefs2="a18 a20" order="S" />
+    <bond id="b22" atomRefs2="a19 a21" order="S">
+      <bondStereo dictRef="mdl:H" />
+    </bond>
+    <bond id="b23" atomRefs2="a19 a22" order="S">
+      <bondStereo dictRef="mdl:W" />
+    </bond>
+    <bond id="b24" atomRefs2="a18 a23" order="D" />
+    <bond id="b25" atomRefs2="a15 a24" order="D" />
+  </bondArray>
+</molecule><spectrum format="MASS" id="sid_4100e4c136f730d9c1fa27448dec9c2538c958b5" type="NMR">
+  <peakList>
+    <peak yValue="0.0" xValue="33.0" atomRefs="a12" />
+    <peak xValue="28.5" yValue="0.0" peakMultiplicity="" atomRefs="a14" />
+    <peak xValue="83.7" yValue="0.0" peakMultiplicity="" atomRefs="a17" />
+    <peak xValue="74.2" yValue="0.0" peakMultiplicity="" atomRefs="a19" />
+    <peak xValue="38.8" yValue="0.0" peakMultiplicity="" atomRefs="a16" />
+    <peak xValue="22.3" yValue="0.0" peakMultiplicity="" atomRefs="a13" />
+    <peak xValue="124.4" yValue="0.0" peakMultiplicity="" atomRefs="a10" />
+    <peak xValue="136.2" yValue="0.0" peakMultiplicity="" atomRefs="a8" />
+    <peak xValue="32.9" yValue="0.0" peakMultiplicity="" atomRefs="a5" />
+    <peak xValue="30.5" yValue="0.0" peakMultiplicity="" atomRefs="a2" />
+    <peak xValue="73.0" yValue="0.0" peakMultiplicity="" atomRefs="a1" />
+    <peak xValue="147.9" yValue="0.0" peakMultiplicity="" atomRefs="a3" />
+    <peak xValue="29.7" yValue="0.0" peakMultiplicity="" atomRefs="a6" />
+    <peak xValue="31.4" yValue="0.0" peakMultiplicity="" atomRefs="a9" />
+    <peak xValue="139.8" yValue="0.0" peakMultiplicity="" atomRefs="a15" />
+    <peak xValue="166.6" yValue="0.0" peakMultiplicity="" atomRefs="a18" />
+    <peak xValue="126.8" yValue="0.0" peakMultiplicity="" atomRefs="a24" />
+    <peak xValue="25.0" yValue="0.0" peakMultiplicity="" atomRefs="a22" />
+    <peak xValue="15.7" yValue="0.0" peakMultiplicity="" atomRefs="a11" />
+    <peak yValue="0.0" xValue="109.1" atomRefs="a7" />
+  </peakList>
+<entry xmlns="http://bibtexml.sf.net/" xmlns:bibtex="http://bibtexml.sf.net/" id="maaranolide">
+  <article>
+    <author>Jui-Hsin Su, Atallah F. Ahmed, Ping-Jyun Sung, Chih-Hua Chao, Yao-Haur Kuo, and Jyh-Horng Sheu</author>
+
+    <title>Manaarenolides A-I, Diterpenoids from the Soft Coral Sinularia manaarensis</title>
+
+    <journal>Journal of Natural Products</journal>
+
+    <year>2006</year>
+    <volume>69</volume>
+
+
+    <pages>1134-1139</pages>
+    <number>8</number>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </article>
+</entry><conditionList><scalar dictRef="jcamp:.OBSERVE FREQUENCY" dataType="xsd:string">100</scalar><scalar dictRef="jcamp:.SOLVENTNAME" dataType="xsd:string">CDCl3</scalar><scalar dictRef="jcamp:TEMPERATURE" dataType="xsd:string">Unreported</scalar></conditionList><metadataList><metadata name="nmr:assignmentMethod" content="Unreported" /><metadata name="nmr:OBSERVENUCLEUS" content="13C" /></metadataList></spectrum></cml>
