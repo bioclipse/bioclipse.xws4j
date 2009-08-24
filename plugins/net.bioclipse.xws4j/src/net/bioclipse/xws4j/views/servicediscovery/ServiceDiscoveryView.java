@@ -49,6 +49,7 @@ import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -95,6 +96,8 @@ public class ServiceDiscoveryView extends ViewPart {
 	private TreeViewerContentProvider contentprovider;
 	private TreeViewerLabelProvider labelprovider;
 	private LinkedList<TreeObject> visited_treeobjects = new LinkedList<TreeObject>();
+
+    private ISelectionChangedListener sclistener;
 	
 	private static final String OFFLINE_STAT		= "Not connected to XMPP server. An active connection to a XMPP server is required to use XMPP Service Discovery.";
 	private static final String ONLINE_READY		= "Ready.";
@@ -133,6 +136,13 @@ public class ServiceDiscoveryView extends ViewPart {
 
 	public static void setStatusConnected(boolean connected) {
 		ServiceDiscoveryView.connected = connected;
+		
+		//Check if viewpart is on screen
+		IViewPart v = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+		                .getActivePage().findView( ID_SERVICEDISCOVIEW );
+		if (v==null)
+		    return;
+		
 		if (viewpart != null) {
 			viewpart.text_address.setEnabled(connected);
 			viewpart.viewer.getTree().setEnabled(connected);
@@ -472,7 +482,7 @@ public class ServiceDiscoveryView extends ViewPart {
 		};
 		viewer.addDoubleClickListener(dblistener);
 		
-		ISelectionChangedListener sclistener = new ISelectionChangedListener() {
+		sclistener = new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
 				if (selection != null && selection instanceof IStructuredSelection) {
@@ -546,4 +556,13 @@ public class ServiceDiscoveryView extends ViewPart {
 		if (viewpart != null)
 			text_address.setFocus();
 	}
+	
+	@Override
+    public void dispose() {
+
+	        //Clean up on dispose
+	        viewer.removeSelectionChangedListener(sclistener);
+
+        super.dispose();
+    }
 }
