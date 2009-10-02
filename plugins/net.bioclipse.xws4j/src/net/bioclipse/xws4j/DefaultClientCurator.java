@@ -10,6 +10,7 @@ import net.bioclipse.xws4j.exceptions.Xws4jException;
 import net.bioclipse.xws.client.Client;
 import net.bioclipse.xws.client.IExecutionPipe;
 import net.bioclipse.xws.client.listeners.IConnectionListener;
+import net.bioclipse.xws.exceptions.XmppException;
 import net.bioclipse.xws.XwsLogger;
 import net.bioclipse.xws4j.views.servicediscovery.ServiceDiscoveryView;
 /**
@@ -136,6 +137,11 @@ public class DefaultClientCurator {
                                 try {
                                         client.connect();
                                 } catch (Exception e) {
+                                    try {
+                                        //Try to disconnect to get bulb non-yellow
+                                        client.disconnect();
+                                    } catch ( Exception e1 ) {
+                                    }
                                 	final String error_s = e.getLocalizedMessage();
                                 	XwsConsole.writeToConsoleBlueT("Could not connect default client: " + error_s);
                                     if (with_GUI_error) {
@@ -146,8 +152,10 @@ public class DefaultClientCurator {
                                 					"XMPP Error",
                                 					"Connecting to XMPP server failed." +
                                 					System.getProperty("line.separator") +
-                                					System.getProperty("line.separator") +
-                                					error_s);
+                                          System.getProperty("line.separator") +
+                                          "Please verify XMPP account in " +
+                                          "preferences and network connection.");
+//                                					error_s);
 	                                    	}
 	                                    };
 	                                	Display.getDefault().asyncExec(r);
