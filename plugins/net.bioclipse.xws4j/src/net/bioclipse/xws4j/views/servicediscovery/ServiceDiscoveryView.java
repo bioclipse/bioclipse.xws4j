@@ -49,7 +49,6 @@ import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -136,13 +135,7 @@ public class ServiceDiscoveryView extends ViewPart {
 
 	public static void setStatusConnected(boolean connected) {
 		ServiceDiscoveryView.connected = connected;
-		
-		//Check if viewpart is on screen
-		IViewPart v = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-		                .getActivePage().findView( ID_SERVICEDISCOVIEW );
-		if (v==null)
-		    return;
-		
+
 		if (viewpart != null) {
 			viewpart.text_address.setEnabled(connected);
 			viewpart.viewer.getTree().setEnabled(connected);
