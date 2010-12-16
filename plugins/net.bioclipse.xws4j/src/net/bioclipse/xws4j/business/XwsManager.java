@@ -8,11 +8,11 @@ import net.bioclipse.xws.client.adhoc.IFunction;
 import net.bioclipse.xws.client.adhoc.IService;
 import net.bioclipse.xws.client.adhoc.IoSchemata;
 import net.bioclipse.xws.exceptions.XmppException;
-import net.bioclipse.xws4j.Activator;
-import net.bioclipse.xws4j.exceptions.Xws4jException;
 import net.bioclipse.xws.binding.BindingManager;
 import net.bioclipse.xws.binding.IIoFactory;
 import net.bioclipse.xws.binding.exceptions.XwsBindingException;
+import net.sf.xws4j.Activator;
+import net.sf.xws4j.exceptions.Xws4jException;
 /**
  * 
  * This file is part of the Bioclipse xws4j Plug-in.

@@ -20,7 +20,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * 
  * This file is part of the Bioclipse xws4j Plug-in.
  * 
- * Copyright (C) 2008 Johannes Wagener
+ * Copyright (C) 2008 Johannes Wagener, Ola Spjuth
  * 
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -35,6 +35,8 @@ import org.osgi.util.tracker.ServiceTracker;
  * this program; if not, see <http://www.gnu.org/licenses>.
  * 
  * @author Johannes Wagener
+ * @author Ola Spjuth
+ *
  */
 public class Activator extends AbstractUIPlugin {
 
@@ -45,8 +47,6 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
-	private static DefaultClientCurator clientcurator;
-	private static DefaultBindingDefinitions bindingdefinitions;
 
         private ServiceTracker finderTracker;
 
@@ -63,10 +63,7 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		clientcurator = new DefaultClientCurator();
-		bindingdefinitions = new DefaultBindingDefinitions(context);
-		
-		Config.setStaticBindingDefinitions(bindingdefinitions);
+
 		finderTracker = new ServiceTracker( context, 
 				IXwsManager.class.getName(), 
 				null );
@@ -78,9 +75,7 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
-		bindingdefinitions = null;
-		clientcurator.stop();
-		clientcurator = null;
+
 		plugin = null;
 		super.stop(context);
 	}
@@ -89,14 +84,6 @@ public class Activator extends AbstractUIPlugin {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 	
-	public static DefaultClientCurator getDefaultClientCurator() {
-		return clientcurator;
-	}
-	
-	public static DefaultBindingDefinitions getDefaultBindingDefinitions() {
-		return bindingdefinitions;
-	}
-		
 	/**
 	 * Returns the shared instance
 	 *
@@ -120,23 +107,4 @@ public class Activator extends AbstractUIPlugin {
         return manager;
 	}
 
-        protected void initializeImageRegistry(ImageRegistry reg) { 
-        	reg.put("lightbulb", getImageDescriptor("icons/png/lightbulb.png"));
-        	reg.put("lightbulb_off", getImageDescriptor("icons/png/lightbulb_off.png"));
-        	reg.put("error", getImageDescriptor("icons/png/error.png"));
-        	reg.put("cog", getImageDescriptor("icons/png/cog.png"));
-        	reg.put("bullet_yellow", getImageDescriptor("icons/png/bullet_yellow.png"));
-        	reg.put("page_white_gear", getImageDescriptor("icons/png/page_white_gear.png"));
-        }
-        
-    	public static void updateProjectExplorer() {
-    		try {
-    			IWorkspace workspace = ResourcesPlugin.getWorkspace();
-    			IWorkspaceRoot root = workspace.getRoot();
-    			IProject project  = root.getProject(DefaultBindingDefinitions.WORKSPACE_PROJECT);
-    			project.refreshLocal(IProject.DEPTH_ONE, null);
-    		} catch (CoreException e) {
-    			PluginLogger.log(e.getMessage());
-    		}
-    	}
 }
