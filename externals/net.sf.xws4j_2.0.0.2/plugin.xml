@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="net.sf.xws4j.preferences.PreferencePage"
+            id="net.sf.xws4j.preferencepage"
+            name="XMPP">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="net.sf.xws4j.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="net.sf.xws4j.actionSet"
+            label="xws4j Action Set"
+            visible="true">
+         <action
+               class="net.sf.xws4j.actions.ActionPulldown"
+               icon="icons/png/lightbulb_off.png"
+               id="net.sf.xws4j.ToolbarActionPulldown"
+               label="XMPP Toolbar Button"
+               style="pulldown"
+               toolbarPath="Xws4jGroup"
+               tooltip="&amp;XMPP - Show Service Discovery View">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         id="add.item"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="net.bc.dummyMenu"
+               label="XMPP">
+            <dynamic
+                  class="net.sf.xws4j.actions.ToggleConnectionAction$ToggleConnectionActionContribution"
+                  id="net.sf.xws4j.dynamic.toggleConnectionAction">
+            </dynamic>
+            <separator
+                  name="net.sf.xws4j.menu.separator1"
+                  visible="true">
+            </separator>
+            <menu
+                  label="Options">
+               <dynamic
+                     class="net.sf.xws4j.actions.DebugModeAction$DebugModeActionContribution"
+                     id="net.sf.xws4j.dynamic.debugModeAction">
+               </dynamic>
+            </menu>
+            <separator
+                  name="net.sf.xws4j.menu.separator2"
+                  visible="true">
+            </separator>
+            <dynamic
+                  class="net.sf.xws4j.actions.ShowServiceDiscoveryViewAction$ShowServiceDiscoveryViewContribution"
+                  id="net.sf.xws4j.dynamic.showDiscoViewAction">
+            </dynamic>
+            <dynamic
+                  class="net.sf.xws4j.actions.ShowConsoleAction$ShowConsoleActionContribution"
+                  id="net.sf.xws4j.dynamic.showConsoleAction">
+            </dynamic>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            class="net.sf.xws4j.XwsConsole"
+            label="XMPP Console">
+      </consoleFactory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="net.sf.xws4j.category"
+            class="net.sf.xws4j.views.servicediscovery.ServiceDiscoveryView"
+            id="net.sf.xws4j.servicediscoveryview"
+            name="XMPP Service Discovery"
+            restorable="true">
+      </view>
+      <category
+            id="net.sf.xws4j.category"
+            name="XMPP">
+      </category>
+   </extension>
+
+</plugin>

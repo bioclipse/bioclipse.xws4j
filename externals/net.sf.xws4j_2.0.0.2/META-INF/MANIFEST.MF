@@ -1,0 +1,67 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.1
+Created-By: 19.1-b02-334 (Apple Inc.)
+Bundle-ManifestVersion: 2
+Bundle-Name: xws4j Eclipse Plug-in
+Bundle-SymbolicName: net.sf.xws4j;singleton:=true
+Bundle-Version: 2.0.0.2
+Bundle-Activator: net.sf.xws4j.Activator
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.ui
+ .console,org.eclipse.core.resources,org.eclipse.ui.ide
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Johannes Wagener
+Export-Package: net.bioclipse.xws,net.bioclipse.xws.binding,net.biocli
+ pse.xws.binding.exceptions,net.bioclipse.xws.binding.tools,net.biocli
+ pse.xws.client,net.bioclipse.xws.client.adhoc,net.bioclipse.xws.clien
+ t.disco,net.bioclipse.xws.client.listeners,net.bioclipse.xws.client.x
+ mpp,net.bioclipse.xws.client.xmpp.adhoc,net.bioclipse.xws.client.xmpp
+ .connection,net.bioclipse.xws.client.xmpp.disco,net.bioclipse.xws.cli
+ ent.xmpp.modules,net.bioclipse.xws.client.xmpp.tools,net.bioclipse.xw
+ s.component,net.bioclipse.xws.component.adhoc.function,net.bioclipse.
+ xws.component.adhoc.function.testfunctions,net.bioclipse.xws.componen
+ t.adhoc.process,net.bioclipse.xws.component.functions,net.bioclipse.x
+ ws.component.xmpp.adhoc,net.bioclipse.xws.component.xmpp.admin,net.bi
+ oclipse.xws.component.xmpp.admin.adhoc.function,net.bioclipse.xws.com
+ ponent.xmpp.modules,net.bioclipse.xws.component.xmpp.process,net.bioc
+ lipse.xws.exceptions,net.bioclipse.xws.xmpp,net.bioclipse.xws.xmpp.io
+ data,net.sf.xws4j; uses:="net.bioclipse.xws,  org.eclipse.jface.resou
+ rce,  net.bioclipse.xws.client,  net.bioclipse.xws.binding,  org.ecli
+ pse.ui.console,  net.bioclipse.xws4j.business,  org.eclipse.ui.plugin
+ ,  org.osgi.framework",net.sf.xws4j.actions; uses:="org.eclipse.core.
+ runtime,  net.bioclipse.core.business,  net.bioclipse.xws.client,  ne
+ t.bioclipse.xws.client.adhoc,  net.bioclipse.xws.binding",net.sf.xws4
+ j.exceptions,net.sf.xws4j.preferences,net.sf.xws4j.views.servicedisco
+ very,org.apache.xmlbeans,org.apache.xmlbeans.impl.common,org.apache.x
+ mlbeans.impl.config,org.apache.xmlbeans.impl.inst2xsd,org.apache.xmlb
+ eans.impl.inst2xsd.util,org.apache.xmlbeans.impl.jam,org.apache.xmlbe
+ ans.impl.jam.annotation,org.apache.xmlbeans.impl.jam.internal,org.apa
+ che.xmlbeans.impl.jam.internal.classrefs,org.apache.xmlbeans.impl.jam
+ .internal.elements,org.apache.xmlbeans.impl.jam.internal.javadoc,org.
+ apache.xmlbeans.impl.jam.internal.parser,org.apache.xmlbeans.impl.jam
+ .internal.reflect,org.apache.xmlbeans.impl.jam.mutable,org.apache.xml
+ beans.impl.jam.provider,org.apache.xmlbeans.impl.jam.visitor,org.apac
+ he.xmlbeans.impl.jam.xml,org.apache.xmlbeans.impl.piccolo.io,org.apac
+ he.xmlbeans.impl.piccolo.util,org.apache.xmlbeans.impl.piccolo.xml,or
+ g.apache.xmlbeans.impl.regex,org.apache.xmlbeans.impl.richParser,org.
+ apache.xmlbeans.impl.schema,org.apache.xmlbeans.impl.soap,org.apache.
+ xmlbeans.impl.store,org.apache.xmlbeans.impl.tool,org.apache.xmlbeans
+ .impl.util,org.apache.xmlbeans.impl.validator,org.apache.xmlbeans.imp
+ l.values,org.apache.xmlbeans.impl.xb.ltgfmt,org.apache.xmlbeans.impl.
+ xb.ltgfmt.impl,org.apache.xmlbeans.impl.xb.substwsdl,org.apache.xmlbe
+ ans.impl.xb.substwsdl.impl,org.apache.xmlbeans.impl.xb.xmlconfig,org.
+ apache.xmlbeans.impl.xb.xmlconfig.impl,org.apache.xmlbeans.impl.xb.xm
+ lschema,org.apache.xmlbeans.impl.xb.xmlschema.impl,org.apache.xmlbean
+ s.impl.xb.xsdownload,org.apache.xmlbeans.impl.xb.xsdownload.impl,org.
+ apache.xmlbeans.impl.xb.xsdschema,org.apache.xmlbeans.impl.xb.xsdsche
+ ma.impl,org.apache.xmlbeans.impl.xpath.saxon,org.apache.xmlbeans.impl
+ .xpathgen,org.apache.xmlbeans.impl.xquery.saxon,org.apache.xmlbeans.i
+ mpl.xsd2inst,org.apache.xmlbeans.soap,org.apache.xmlbeans.xml.stream,
+ org.apache.xmlbeans.xml.stream.events,org.apache.xmlbeans.xml.stream.
+ utils
+Bundle-ClassPath: .,jars/jso-0.12.5/bin/jso-full.jar,jars/xmlbeans-2.4
+ .0/lib/jsr173_1.0_api.jar,jars/xmlbeans-2.4.0/lib/resolver.jar,jars/x
+ mlbeans-2.4.0/lib/xbean_xpath.jar,jars/xmlbeans-2.4.0/lib/xbean.jar,j
+ ars/xmlbeans-2.4.0/lib/xmlpublic.jar,jars/ecj-3.4.1/ecj-3.4.1.jar,jar
+ s/xws4j/xws4j-09.05.19.jar,jars/xws4j/xws4j-binding-09.05.19.jar
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
