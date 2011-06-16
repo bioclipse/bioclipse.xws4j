@@ -16,6 +16,15 @@ Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: net.bioclipse.xws4j,
  net.bioclipse.xws4j.business
-Import-Package: net.bioclipse.xws.client,
+Import-Package: net.bioclipse.xws,
+ net.bioclipse.xws.binding,
+ net.bioclipse.xws.binding.exceptions,
+ net.bioclipse.xws.client,
+ net.bioclipse.xws.client.adhoc,
  net.bioclipse.xws.exceptions,
+ net.sf.xws4j,
+ net.sf.xws4j.actions,
+ net.sf.xws4j.exceptions,
+ net.sf.xws4j.preferences,
+ net.sf.xws4j.views.servicediscovery,
  org.apache.log4j
