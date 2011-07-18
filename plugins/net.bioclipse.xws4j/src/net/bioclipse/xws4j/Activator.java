@@ -1,19 +1,13 @@
 package net.bioclipse.xws4j;
 
-import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.xws4j.business.IXwsManager;
 
-import org.apache.log4j.Logger;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -42,7 +36,7 @@ public class Activator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "net.bioclipse.xws4j";
 
-        private static final Logger logger = Logger.getLogger(Activator.class);
+    private static final Logger logger = LoggerFactory.getLogger(Activator.class);
 
 	// The shared instance
 	private static Activator plugin;
@@ -97,8 +91,7 @@ public class Activator extends AbstractUIPlugin {
         try {
             manager = (IXwsManager) finderTracker.waitForService(1000*10);
         } catch (InterruptedException e) {
-            logger.warn("Exception occurred while attempting to get the XwsManager" + e);
-            LogUtils.debugTrace(logger, e);
+            logger.warn("Exception occurred while attempting to get the XwsManager" + e.getMessage(),e);
         }
         if(manager == null) {
             throw new IllegalStateException("Could not get the XMPP Services manager");

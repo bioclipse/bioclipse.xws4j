@@ -27,4 +27,4 @@ Import-Package: net.bioclipse.xws,
  net.sf.xws4j.exceptions,
  net.sf.xws4j.preferences,
  net.sf.xws4j.views.servicediscovery,
- org.apache.log4j
+ org.slf4j;version="1.5.11"
