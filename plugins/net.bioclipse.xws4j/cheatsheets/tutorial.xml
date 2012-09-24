@@ -114,12 +114,12 @@ Try the following commands in the Javascript Console, they print the functions o
             <description>
                There are several gists (scripts) available that demonstrates calling XMPP services, see:<br/><br/>
 
-<b>http://delicious.com/tag/bioclipse+xmpp+gist</b><br/><br/>
+<b>http://www.diigo.com/user/Chemblaics/bioclipse&#37;20gist&#37;20xmpp/b><br/><br/>
             </description>
             
                   <command
             required="false"
-            serialization="org.eclipse.ui.browser.openBrowser(url=http://delicious.com/tag/bioclipse+xmpp+gist)"/>
+            serialization="org.eclipse.ui.browser.openBrowser(url=http://www.diigo.com/user/Chemblaics/bioclipse gist xmpp)"/>
             
          </item>
          
