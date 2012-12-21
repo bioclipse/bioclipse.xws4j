@@ -2,7 +2,7 @@
 <feature
       id="net.bioclipse.xws4j_feature"
       label="XMPP Web Services"
-      version="2.6.0.qualifier"
+      version="2.6.0.vqualifier"
       provider-name="The Bioclipse Project"
       plugin="net.bioclipse.xws4j">
 
