@@ -4,7 +4,7 @@ Created-By: 19.1-b02-334 (Apple Inc.)
 Bundle-ManifestVersion: 2
 Bundle-Name: xws4j Eclipse Plug-in
 Bundle-SymbolicName: net.sf.xws4j;singleton:=true
-Bundle-Version: 2.0.0.2
+Bundle-Version: 2.6.0.vqualifier
 Bundle-Activator: net.sf.xws4j.Activator
 Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.ui
  .console,org.eclipse.core.resources,org.eclipse.ui.ide
