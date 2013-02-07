@@ -1,5 +1,6 @@
 package net.bioclipse.xws4j;
 
+import net.bioclipse.usermanager.business.IUserManager;
 import net.bioclipse.xws4j.business.IXwsManager;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -35,13 +36,13 @@ public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "net.bioclipse.xws4j";
-
+	private XwsLoginOutListener xwsLoginOutListener;
     private static final Logger logger = LoggerFactory.getLogger(Activator.class);
 
 	// The shared instance
 	private static Activator plugin;
 
-        private ServiceTracker finderTracker;
+	private ServiceTracker finderTracker;
 
 	/**
 	 * The constructor
@@ -61,6 +62,10 @@ public class Activator extends AbstractUIPlugin {
 				IXwsManager.class.getName(), 
 				null );
 		finderTracker.open();
+		IUserManager userManager = net.bioclipse.usermanager.Activator
+		        .getDefault().getUserManager();
+		xwsLoginOutListener = XwsLoginOutListener.getInstance( userManager );
+		userManager.addListener( xwsLoginOutListener );
 	}
 
 	/*
@@ -68,7 +73,6 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
-
 		plugin = null;
 		super.stop(context);
 	}

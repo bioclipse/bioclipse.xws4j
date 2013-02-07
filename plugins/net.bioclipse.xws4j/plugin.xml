@@ -10,6 +10,85 @@
             service="net.bioclipse.xws4j.business.XwsManagerFactory">
       </scriptContribution>
    </extension>
+   <extension
+         point="net.bioclipse.usermanager.accountType">
+      <AccountType
+            logoPath="platform:/plugin/net.bioclipse.xws4j/icons/jabber_96x96.png"
+            name="XMPP">
+         <property
+               name="Server"
+               required="true"
+               secret="false">
+         </property>
+         <property
+               name="Jabber ID"
+               required="true"
+               secret="false">
+         </property>
+         <property
+               name="Password"
+               required="true"
+               secret="true">
+         </property>
+         <property
+               defaultValue="5222"
+               name="Port"
+               required="false"
+               secret="false">
+         </property>
+         <property
+               defaultValue="Bioclipse"
+               name="Resource"
+               required="false"
+               secret="false">
+         </property>
+      </AccountType>
+   </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <category
+            id="net.bioclipse.xws4j.category1"
+            name="XMPP">
+      </category>
+      <cheatsheet
+            category="net.bioclipse.xws4j.category1"
+            composite="false"
+            contentFile="cheatsheets/tutorial.xml"
+            id="net.bioclipse.xws4j.cheatsheet1"
+            name="XMPP + IO Data basics">
+      </cheatsheet>
+      <cheatsheet
+            category="net.bioclipse.xws4j.category1"
+            composite="false"
+            contentFile="cheatsheets/xmppgists.xml"
+            id="net.bioclipse.xws4j.cheatsheet2"
+            name="XMPP + IO Data scripts">
+      </cheatsheet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.activities">
+      <activity
+            id="net.bioclipse.xws4j.hideXMPPmenu"
+            name="Hide the XMPP menu">
+      </activity>
+      <activityPatternBinding
+            activityId="forbiddenViewActivityId"
+            isEqualityPattern="false"
+            pattern=".*/net.sf.xws4j.dynamic.*">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="forbiddenViewActivityId"
+            isEqualityPattern="false"
+            pattern=".*/net.sf.xws4j.preferencepage">
+      </activityPatternBinding>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true">
+      </toc>
+   </extension>
 
 
 </plugin>
