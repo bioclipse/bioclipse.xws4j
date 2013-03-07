@@ -89,6 +89,12 @@
             primary="true">
       </toc>
    </extension>
+   <extension
+         point="net.bioclipse.usermanager.testLogin">
+      <TestLogin
+            testClass="net.bioclipse.xws4j.XwsTestLogin">
+      </TestLogin>
+   </extension>
 
 
 </plugin>
