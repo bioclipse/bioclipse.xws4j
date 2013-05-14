@@ -28,10 +28,6 @@ The Eclipse Public License accompanies this distribution, and
 is available at http://www.eclipse.org/legal/epl-v10.html
    </license>
 
-   <url>
-      <update label="Bioclipse2 update site" url="http://update2.bioclipse.net"/>
-   </url>
-
    <requires>
       <import feature="net.bioclipse.core_feature" version="2.2.0.v20100127" match="greaterOrEqual"/>
       <import plugin="slf4j.api"/>
