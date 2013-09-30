@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="XMPP">
+	<topic href="html/XMPPHelp.html" label="About XMPP">
+ </topic>
+ <topic href="html/CreateAccount.html" label="Add a XMPP-account">
+ </topic>
+ <topic href="html/EditAccount.html" label="Edit a XMPP-account">
+ </topic>
+ <topic href="html/LoggingInOut.html" label="Loggin and out">
+ </topic> 
+</toc>

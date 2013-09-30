@@ -2,14 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Xws4j
 Bundle-SymbolicName: net.bioclipse.xws4j;singleton:=true
-Bundle-Version: 2.6.0.vqualifier
+Bundle-Version: 2.6.1.qualifier
 Bundle-Activator: net.bioclipse.xws4j.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.console,
  net.bioclipse.core,
  org.eclipse.core.resources,
- org.eclipse.ui.cheatsheets
+ org.eclipse.ui.cheatsheets,
+ net.bioclipse.usermanager,
+ org.eclipse.help
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Johannes Wagener, Ola Spjuth
 Bundle-ClassPath: .
@@ -27,4 +29,6 @@ Import-Package: net.bioclipse.xws,
  net.sf.xws4j.exceptions,
  net.sf.xws4j.preferences,
  net.sf.xws4j.views.servicediscovery,
- org.slf4j;version="1.5.0"
+ org.apache.log4j,
+ org.slf4j
+

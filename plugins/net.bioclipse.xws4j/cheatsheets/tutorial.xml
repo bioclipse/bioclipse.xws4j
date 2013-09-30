@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cheatsheet
-      title="XMPP + IO Data tutorial">
+      title="XMPP + IO Data basics">
    <intro>
       <description>
          This tutorial shows the basics when working with XMPP + IO Data in Bioclipse.
@@ -11,36 +11,35 @@
          skip="true"
          title="Step 1: Set up XMPP credentials">
       <description>
-         Open preferences  from menu (<b>Window &gt; Preferences</b>) and go to the XMPP page. Enter an existing Jabber server and your Jabber ID (JID) or use these values:<br/><br/>
+         The XMPP settings is administrated as a account under your Bioclipse user. It is created via the new account wizard (<b>File &gt; New... &gt; General &gt; Account</b>).
+         Open the wizard and login to your account, or create one if you do not have one. Choose next and then choose XMPP in the drop-down menu at the top 
+         (called &quot;Select account type&quot;), if you want you may also choose a name for your XMPP-account in the text-box below the drop-down menu. <br/>
+         Then enter an existing Jabber server and your Jabber ID (JID) or use these values:<br/><br/>
 
 <b>Server:</b> ws1.bmc.uu.se<br/>
 <b>Jabber ID:</b> test@ws1.bmc.uu.se<br/>
-<b>Password:</b> test<br/> 
+<b>Password:</b> test<br/><br/>
+        And then press <b>Finish</b>.
       </description>
       <command
             required="false"
-            serialization="org.eclipse.ui.window.preferences(preferencePageId=net.bioclipse.xws4j.preferencepage)"/>
+            serialization="org.eclipse.ui.newWizard(newWizardId=net.bioclipse.usermanager.newAccountWizard)"/>
    </item>
    <item
          title="Step 2: Connect to the XMPP network">
       <description>
-         In the menu, click XMPP &gt; Connect. If all goes well, the light bulb in the toolbar should turn yellow to indicate that connection has been established to the XMPP network.
+         If all goes well, the light bulb in the toolbar should turn yellow, and the padlock in the bottom of the Bioclipse window should turn green to indicate that connection 
+         has been established to the XMPP network.
+         If it not goes well, try to logout and then login again to your user account once more, if it still not work check
+         the settings of the XMPP-account in <b>Prefernces &gt; user</b>.
       </description>
-      
-                	<action
-			pluginId="net.bioclipse.scripting.ui"
-			class="net.bioclipse.scripting.ui.actions.ScriptAction"
-			param1="xmpp.connect()"/>
-      
-   </item>
 
-   
+   </item>   
       <item
             skip="true"
             title="Step 3: Open the Service View">
       <description>
          Show the service view from menu: <b>Window &gt; Show view &gt; Other...</b> and select <b>XMPP &gt; XMPP Service Discovery</b>
-         
       </description>
       <command
             required="false"
@@ -114,7 +113,7 @@ Try the following commands in the Javascript Console, they print the functions o
             <description>
                There are several gists (scripts) available that demonstrates calling XMPP services, see:<br/><br/>
 
-<b>http://www.diigo.com/user/Chemblaics/bioclipse&#37;20gist&#37;20xmpp/b><br/><br/>
+<b>http://www.diigo.com/user/Chemblaics/bioclipse&#37;20gist&#37;20xmpp</b><br/><br/>
             </description>
             
                   <command
